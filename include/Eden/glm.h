@@ -169,8 +169,8 @@ extern "C" {
         GLfloat *vertices;
         GLfloat *normals;
         GLfloat *texcoords;
-        GLushort *indices;
-        GLushort indexCount;
+        GLuint *indices;
+        GLuint indexCount;
         GLMmaterial *material;
         struct _GLMarray *next;
     } GLMarray;
@@ -491,6 +491,34 @@ extern "C" {
     
     GLubyte*
     glmReadPPM(const char* filename, int* width, int* height);
+    
+    /** glmCreateLargeArrays: Creates a linked list of vertex, normal, and texcoord data arrays and
+     * a set of triangle indices for the model specified using the mode specified.
+     * Remove the limitation of GLushort. Now the indices extends to 32 bit unsigned int.
+     *
+     * Each node in the list represents one group in the model.
+     * The created arrays are added to the model and do not track any other state changes in
+     * the model apart from material properties, so if you change the model, or if you wish
+     * to draw using a different mode, you will need  to regenerate the arrays by calling
+     * glmCreateArrays again.
+     *
+     * This function must be called before any call to glmDrawArrays().
+     *
+     * By Philip Lamb, phil@eden.net.nz, 2008-07-30
+     * By Kaichegn Yu, yukaicheng@hotmail.com, 2016-01-27
+     *
+     * model - initialized GLMmodel structure.
+     * mode  - a bitwise OR of values describing what is to be rendered.
+     *             GLM_NONE     -  render with only vertices
+     *             GLM_FLAT     -  render with facet normals
+     *             GLM_SMOOTH   -  render with vertex normals
+     *             GLM_TEXTURE  -  render with texture coords
+     *             GLM_COLOR    -  render with colors (color material)
+     *             GLM_MATERIAL -  render with materials
+     *             GLM_COLOR and GLM_MATERIAL should not both be specified.
+     *             GLM_FLAT and GLM_SMOOTH should not both be specified.
+     */
+    GLvoid glmCreateLargeArrays(GLMmodel* model, GLuint mode);
     
     /* glmCreateArrays: Creates a linked list of vertex, normal, and texcoord data arrays and
      * a set of triangle indices for the model specified using the mode specified.

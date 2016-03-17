@@ -73,6 +73,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2017F3CF1C73326C00A66620 /* VEObjectOBJMoive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017F3CE1C73326C00A66620 /* VEObjectOBJMoive.m */; };
 		208722D71C4F4C5F009B754A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */; };
 		20A835C61C3E6BE8000E4DA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C51C3E6BE8000E4DA5 /* main.m */; };
 		20A835C91C3E6BE8000E4DA5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C81C3E6BE8000E4DA5 /* AppDelegate.m */; };
@@ -1672,6 +1673,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2017F3CD1C73250800A66620 /* tempBoard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tempBoard; path = MVViewer/tempBoard; sourceTree = "<group>"; };
+		2017F3CE1C73326C00A66620 /* VEObjectOBJMoive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VEObjectOBJMoive.m; sourceTree = "<group>"; };
+		2017F3D01C79D3DA00A66620 /* VEObjectOBJMovie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJMovie.h; sourceTree = "<group>"; };
 		208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		20A835C21C3E6BE8000E4DA5 /* MVViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A835C51C3E6BE8000E4DA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -3945,6 +3949,8 @@
 				20A836061C3E6C7F000E4DA5 /* VEObject.m */,
 				20A836071C3E6C7F000E4DA5 /* VEObjectMovie.h */,
 				20A836081C3E6C7F000E4DA5 /* VEObjectMovie.m */,
+				2017F3CE1C73326C00A66620 /* VEObjectOBJMoive.m */,
+				2017F3D01C79D3DA00A66620 /* VEObjectOBJMovie.h */,
 				20A836091C3E6C7F000E4DA5 /* VEObjectOBJ.h */,
 				20A8360A1C3E6C7F000E4DA5 /* VEObjectOBJ.m */,
 				20A8360B1C3E6C7F000E4DA5 /* VEObjectOSG.h */,
@@ -6588,6 +6594,7 @@
 		78BB3DD208E482DA00D7CA2D = {
 			isa = PBXGroup;
 			children = (
+				2017F3CD1C73250800A66620 /* tempBoard */,
 				4A752F68116238DD009877B3 /* README (ARToolKit for iOS).txt */,
 				4AE6FE7F0BC24FFC0084390C /* ChangeLog.txt */,
 				4AF9714D1B5F58A6001BFEB5 /* LICENSE.txt */,
@@ -7752,6 +7759,7 @@
 				20A836161C3E6C7F000E4DA5 /* EAGLView.m in Sources */,
 				20A835C61C3E6BE8000E4DA5 /* main.m in Sources */,
 				20A836141C3E6C7F000E4DA5 /* ARMarkerSquare.m in Sources */,
+				2017F3CF1C73326C00A66620 /* VEObjectOBJMoive.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8710,7 +8718,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.MVViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8756,7 +8764,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.MVViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8803,7 +8811,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.MVViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

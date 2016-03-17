@@ -46,6 +46,19 @@
 //  Author(s): Philip Lamb
 //
 
+/**
+    Final Year Project:
+    Author: Yu Kaicheng
+    Update:
+        Add the method 
+            addObjectsFromFolderPath: 
+                Read all objects under a given folder, create a new VEObjectOBJMovie
+                and add into the environment.
+                Also, it is connected to the ARMarker(QRCode) specified.
+ 
+ */
+
+
 #import "VirtualEnvironment.h"
 #import "../ARViewController.h"
 
@@ -185,6 +198,24 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 {
     [object willBeRemovedFromEnvironment:self];
     [objects removeObject:object];
+}
+
+- (int) addObjectsFromFolderPath: (NSString *)objectFolderPath connectToARMarkers: (ARMarker *)marker
+{
+    return ([self addObjectsFromFolderPath:objectFolderPath connectToARMarkers:marker autoParentTo:nil]);
+}
+
+
+/**
+    Read the obj file, with identification of
+    Markers shall have size 1.
+
+ */
+- (int) addObjectsFromFolderPath: (NSString *)objectFolderPath connectToARMarkers: (ARMarker *) marker autoParentTo:(VEObject *)autoParent
+{
+    
+    int timeFrameCount = 0;
+    return 0;
 }
 
 - (int) addObjectsFromObjectListFile:(NSString *)objectDataFilePath connectToARMarkers:(NSArray *)markers

@@ -189,6 +189,40 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     [objects removeObject:object];
 }
 
+- (int) addObjectsFromPatientListFile: (NSString *)patientDataFilePath connectToARMarkers:(NSArray *)marders
+{
+    NSString *patientDataFileFullPath;
+    FILE *fp;
+    char buf[MAXPATHLEN];
+    int i;
+    ARdouble translation[3], rotation[4], scale[3];
+    int objectsAdded = 0;
+    
+    // Locate and open the patientData file
+    if ([patientDataFilePath hasPrefix: @"/"]) {
+         patientDataFileFullPath = patientDataFilePath;
+    } else {
+        patientDataFileFullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:patientDataFilePath];
+    }
+    char patientDataFilePathC[MAXPATHLEN];
+    [patientDataFileFullPath getFileSystemRepresentation:patientDataFilePathC maxLength:MAXPATHLEN];
+    if ((fp = fopen(patientDataFilePathC, "r")) == NULL) {
+        NSLog(@"Error: unable to locate patient file %@.\n", patientDataFileFullPath);
+        return (objectsAdded);
+    }
+    
+    // Read the number of patients
+    int numPatient = 0;
+    get_buff(buf, MAXPATHLEN, fp, 1);
+    if (sscanf(buf, "%d",&numPatient)) {
+        NSLog(@"Error: Unable to load the number of patient");
+        fclose(fp);
+        return objectsAdded;
+    }
+    
+    
+}
+
 - (int) addObjectsFromObjectListFile:(NSString *)objectDataFilePath connectToARMarkers:(NSArray *)markers
 {
     return ([self addObjectsFromObjectListFile:objectDataFilePath connectToARMarkers:markers autoParentTo:nil]);

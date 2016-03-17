@@ -105,7 +105,7 @@ typedef struct _GLMnode {
 /* _GLMnode: general purpose node, used by glmDrawArrays() to build a
  linked list of triangles containing a particular vertex. */
 typedef struct _GLMnode2 {
-    GLushort          index; // Index into list of per-vertex data values. Each 3 defines a triangle.
+    GLuint          index; // Index into list of per-vertex data values. Each 3 defines a triangle.
     struct _GLMnode2* next;		// The next node in the list, or NULL if this node is the tail.
 } GLMnode2;
 
@@ -882,6 +882,7 @@ glmFirstPass(GLMmodel* model, FILE* file, const int contextIndex, const GLboolea
     group = model->groups;
     while (group) {
         if (group->numtriangles) group->triangles = (GLuint*)malloc(sizeof(GLuint) * group->numtriangles);
+        EDEN_LOGe("glmFirstPass: Group num of triangles %d\n",group->numtriangles);
         group->numtriangles = 0; // Reset count in prep. for second pass.
         group = group->next;
     }
@@ -922,6 +923,7 @@ glmSecondPass(GLMmodel* model, FILE* file)
     vertices	= model->vertices;
     normals		= model->normals;
     texcoords	= model->texcoords;
+    group = model->groups;
     
     /* on the second pass through the file, read all the data into the
      allocated arrays */
@@ -937,6 +939,7 @@ glmSecondPass(GLMmodel* model, FILE* file)
             case 'v':               /* v, vn, vt */
                 switch(buf[1]) {
                     case '\0':          /* vertex */
+                        // KCY debug testing, 0 1 2 -> 2 1 0
                         fscanf(file, "%f %f %f",
                                &vertices[3 * numvertices + 0],
                                &vertices[3 * numvertices + 1],
@@ -945,9 +948,9 @@ glmSecondPass(GLMmodel* model, FILE* file)
                         break;
                     case 'n':           /* normal */
                         fscanf(file, "%f %f %f",
-                               &normals[3 * numnormals + 0],
+                               &normals[3 * numnormals + 2],
                                &normals[3 * numnormals + 1],
-                               &normals[3 * numnormals + 2]);
+                               &normals[3 * numnormals + 0]);
                         numnormals++;
                         break;
                     case 't':           /* texcoord */
@@ -1105,6 +1108,12 @@ glmSecondPass(GLMmodel* model, FILE* file)
                 break;
         }	/* switch(buf[0]); */
     }	/* !EOF */
+    
+    if(group->numtriangles != numtriangles){
+        EDEN_LOGe("glmSecondPass: numtriangle %d, groupTriangles %d", numtriangles, group->numtriangles);
+    }
+    
+    EDEN_LOGe("glmSecondPass: numtriangle %d, numnormals %d, numtexture %d", numtriangles, numnormals, numtexcoords);
     
     // Dispose of allocations.
     if (groupName) free(groupName);
@@ -1936,10 +1945,12 @@ glmReadOBJ3(const char *filename, const int contextIndex, const GLboolean readTe
                                             2 * (model->numtexcoords + 1));		// Uses + 1 because vertices, normals and texcoords are numbered from 1, not 0.
     }
     
+    EDEN_LOGe("glmReadObj3() model reading: Num triangle %d, Num of normals %d, Num of Texture %d", model->numtriangles, model->numnormals, model->numtexcoords);
     /* rewind to beginning of file and read in the data this pass */
     rewind(file);
     
     glmSecondPass(model, file);
+    
     
     /* close the file */
     fclose(file);
@@ -2519,15 +2530,14 @@ bail:
     return (NULL);
 }
 
-GLvoid glmCreateArrays(GLMmodel* model, GLuint mode)
-{
+GLvoid glmCreateLargeArrays(GLMmodel* model, GLuint mode){
     GLMgroup* group;
     GLMtriangle* triangle;
     GLMarray *array = NULL, *arrayTail;
     GLMnode2 *node, **members, *tail;
     GLfloat *vertices, *normals, *texcoords;
-    GLushort *indices;
-    GLushort indexCount, vntCount;
+    GLuint *indices;
+    GLuint indexCount, vntCount;
     int i, j;
     
     assert(model);
@@ -2567,9 +2577,11 @@ GLvoid glmCreateArrays(GLMmodel* model, GLuint mode)
         mode &= ~GLM_COLOR;
     }
     
+    
     group = model->groups;
+    int counter = 0;
     while (group) {
-        
+        counter ++;
         if (group->numtriangles) {
             
             int needNormals;
@@ -2607,10 +2619,12 @@ GLvoid glmCreateArrays(GLMmodel* model, GLuint mode)
             else texcoords = NULL;
             vntCount = 0;
             
-            indices = (GLushort *)malloc(sizeof(GLushort) * group->numtriangles * 3); // 1 index per v/n/t, 3 v/n/ts per triangle.
+            indices = (GLuint *)malloc(sizeof(GLuint) * group->numtriangles * 3); // 1 index per v/n/t, 3 v/n/ts per triangle.
             indexCount = 0;
-            
-            for (i = 0; i < glmMin(group->numtriangles, (USHRT_MAX + 1) / 3); i++) { // We are using GLushorts for indices, so limit to USHRT_MAX / 3 triangles per group.
+            EDEN_LOGe("glmCreateArray:: group num triangles %d\n",group->numtriangles);
+   //         for (i = 0; i < glmMin(group->numtriangles, (USHRT_MAX + 1) / 3); i++) {
+            /** KCY Change the indices from GLushort to GLuint.     */
+            for (i = 0; i < group->numtriangles; i++) {
                 triangle = &(T(group->triangles[i]));
                 for (j = 0; j < 3; j++) {
                     // We are now examining the linked list for vertex with index (1-based) T(i).vindices[j].
@@ -2694,11 +2708,201 @@ GLvoid glmCreateArrays(GLMmodel* model, GLuint mode)
             if (group->material) array->material = &(model->materials[group->material]);
             
         } // if group->numtriangles
-        
+        //
         group = group->next;
     } // while group
     
+    EDEN_LOGe("glmCreateArray:: Number of group : %d\n",counter);
+
+    
 }
+
+GLvoid glmCreateArrays(GLMmodel* model, GLuint mode)
+{
+    GLMgroup* group;
+    GLMtriangle* triangle;
+    GLMarray *array = NULL, *arrayTail;
+    GLMnode2 *node, **members, *tail;
+    GLfloat *vertices, *normals, *texcoords;
+    GLuint *indices;
+    GLuint indexCount, vntCount;
+    int i, j;
+    
+    assert(model);
+    assert(model->vertices);
+    
+    if (model->arrays) glmDeleteArrays(model);
+    
+    /* do a bit of warning */
+    if (mode & GLM_FLAT && !model->facetnorms) {
+        EDEN_LOGe("glmCreateArrays() warning: flat render mode requested "
+                  "with no facet normals defined.\n");
+        mode &= ~GLM_FLAT;
+    }
+    if (mode & GLM_SMOOTH && !model->normals) {
+        EDEN_LOGe("glmCreateArrays() warning: smooth render mode requested "
+                  "with no normals defined.\n");
+        mode &= ~GLM_SMOOTH;
+    }
+    if (mode & GLM_TEXTURE && !model->texcoords) {
+        EDEN_LOGe("glmCreateArrays() warning: texture render mode requested "
+                  "with no texture coordinates defined.\n");
+        mode &= ~GLM_TEXTURE;
+    }
+    if (mode & GLM_COLOR && !model->materials) {
+        EDEN_LOGe("glmCreateArrays() warning: color render mode requested "
+                  "with no materials defined.\n");
+        mode &= ~GLM_COLOR;
+    }
+    if (mode & GLM_MATERIAL && !model->materials) {
+        EDEN_LOGe("glmCreateArrays() warning: material render mode requested "
+                  "with no materials defined.\n");
+        mode &= ~GLM_MATERIAL;
+    }
+    if (mode & GLM_COLOR && mode & GLM_MATERIAL) {
+        EDEN_LOGe("glmCreateArrays() warning: color and material render mode requested "
+                  "using only material mode.\n");
+        mode &= ~GLM_COLOR;
+    }
+    
+    group = model->groups;
+    int counter = 0;
+    while (group) {
+        counter ++;
+        if (group->numtriangles) {
+            
+            int needNormals;
+            int needFacetnorms;
+            int needTexcoords;
+            
+            arrayTail = array;
+            array = (GLMarray *)calloc(1, sizeof(GLMarray)); // implicit array->next = NULL;
+            if (!arrayTail) {
+                model->arrays = array;
+                model->arrayMode = mode;
+            } else arrayTail->next = array;
+            
+            // For every point in every triangle in the group, look to see if another point in another
+            // triangle in the group already has the exact same vertex, normal and texcooord.
+            // If it does, stash the index for that data in our list of indices.
+            // If not, then copy the vertex, normal and texcoord from the model, stash the index
+            // AND record that this data exists by adding to the existing per-vertex
+            // linked-list (the members array) of GLMnodes.
+            
+            // Allocate a structure that will hold a linked list of triangle
+            // indices for each vertex.
+            members = (GLMnode2**)calloc(model->numvertices + 1, sizeof(GLMnode2 *)); // + 1 because indices in model are 1-based.
+            
+            needNormals = mode & GLM_SMOOTH;
+            needFacetnorms = mode & GLM_FLAT;
+            needTexcoords = mode & GLM_TEXTURE;
+            
+            // Allocate arrays to hold the new vertex, normal and texcoord data.
+            // The arrays will be the maximum theoretical size, and we will shrink them at the end.
+            vertices = (GLfloat *)malloc(sizeof(GLfloat) * 3 * group->numtriangles * 3); // 3 floats per vertex, 3 vertices per triangle.
+            if (needNormals || needFacetnorms) normals = (GLfloat *)malloc(sizeof(GLfloat) * 3 * group->numtriangles * 3); // 3 floats per normal, 3 normals per triangle.
+            else normals = NULL;
+            if (needTexcoords) texcoords = (GLfloat *)malloc(sizeof(GLfloat) * 2 * group->numtriangles * 3); // 2 floats per texcoord, 3 texcoords per triangle.
+            else texcoords = NULL;
+            vntCount = 0;
+            
+            indices = (GLuint *)malloc(sizeof(GLuint) * group->numtriangles * 3); // 1 index per v/n/t, 3 v/n/ts per triangle.
+            indexCount = 0;
+//           for (i = 0; i < glmMin(group->numtriangles, (USHRT_MAX + 1) / 3); i++) {
+            for (i = 0; i < group->numtriangles; i++) { // We are using GLushorts for indices, so limit to USHRT_MAX / 3 triangles per group.
+                triangle = &(T(group->triangles[i]));
+                for (j = 0; j < 3; j++) {
+                    // We are now examining the linked list for vertex with index (1-based) T(i).vindices[j].
+                    node = members[triangle->vindices[j]]; // Get current head of linked-list.
+                    while (node) {
+                        if (!needNormals || ((model->normals[triangle->nindices[j] * 3    ] == normals[node->index * 3    ]) &&
+                                             (model->normals[triangle->nindices[j] * 3 + 1] == normals[node->index * 3 + 1]) &&
+                                             (model->normals[triangle->nindices[j] * 3 + 2] == normals[node->index * 3 + 2]))) {
+                            if (!needFacetnorms || ((model->facetnorms[triangle->findex * 3    ] == normals[node->index * 3    ]) &&
+                                                    (model->facetnorms[triangle->findex * 3 + 1] == normals[node->index * 3 + 1]) &&
+                                                    (model->facetnorms[triangle->findex * 3 + 2] == normals[node->index * 3 + 2]))) {
+                                if (!needTexcoords || ((model->texcoords[triangle->tindices[j] * 2    ] == texcoords[node->index * 2    ]) &&
+                                                       (model->texcoords[triangle->tindices[j] * 2 + 1] == texcoords[node->index * 2 + 1]))) {
+                                    break; // The data for "node" is a match, so reuse its index.
+                                }
+                            }
+                        }
+                        node = node->next;
+                    }
+                    if (!node) {
+                        // No re-usable set of data (vertex, texcoord, normal) was found, make a new one.
+                        // First make a node to point to it.
+                        node = (GLMnode2 *)malloc(sizeof(GLMnode2));
+                        node->index = vntCount;
+                        node->next = members[triangle->vindices[j]];     // Link to the current head of the list
+                        members[triangle->vindices[j]] = node;			// and make this node the new head.
+                        // Now copy the data; (vx, vy, vz), (nx, ny, nz), (tu, tv).
+                        vertices[vntCount * 3    ] = model->vertices[triangle->vindices[j] * 3    ];
+                        vertices[vntCount * 3 + 1] = model->vertices[triangle->vindices[j] * 3 + 1];
+                        vertices[vntCount * 3 + 2] = model->vertices[triangle->vindices[j] * 3 + 2];
+                        if (needNormals) {
+                            normals[vntCount * 3    ] = model->normals[triangle->nindices[j] * 3    ];
+                            normals[vntCount * 3 + 1] = model->normals[triangle->nindices[j] * 3 + 1];
+                            normals[vntCount * 3 + 2] = model->normals[triangle->nindices[j] * 3 + 2];
+                        } else if (needFacetnorms) {
+                            normals[vntCount * 3    ] = model->facetnorms[triangle->findex * 3    ];
+                            normals[vntCount * 3 + 1] = model->facetnorms[triangle->findex * 3 + 1];
+                            normals[vntCount * 3 + 2] = model->facetnorms[triangle->findex * 3 + 2];
+                        }
+                        if (needTexcoords) {
+                            texcoords[vntCount * 2    ] = model->texcoords[triangle->tindices[j] * 2    ];
+                            texcoords[vntCount * 2 + 1] = model->texcoords[triangle->tindices[j] * 2 + 1];
+                        }
+                        indices[indexCount++] = vntCount++;
+                    } else {
+                        indices[indexCount++] = node->index;
+                    }
+                } // for j
+            } // for i
+            
+            // Compress the v/n/t arrays by creating new allocation and copying the data.
+            array->vertices = (GLfloat *)malloc(sizeof(GLfloat) * 3 * vntCount);
+            for (i = 0; i < 3 * vntCount; i++) array->vertices[i] = vertices[i];
+            free (vertices);
+            if (needNormals) {
+                array->normals = (GLfloat *)malloc(sizeof(GLfloat) * 3 * vntCount);
+                for (i = 0; i < 3 * vntCount; i++) array->normals[i] = normals[i];
+                free (normals);
+            }
+            if (needTexcoords) {
+                array->texcoords = (GLfloat *)malloc(sizeof(GLfloat) * 2 * vntCount);
+                for (i = 0; i < 2 * vntCount; i++) array->texcoords[i] = texcoords[i];
+                free (texcoords);
+            }
+            
+            // Clean up the members array.
+            for (i = 1; i <= model->numvertices; i++) {
+                node = members[i];
+                while (node) {
+                    tail = node;
+                    node = node->next;
+                    free(tail);
+                }
+            }
+            free(members);
+            
+            array->indices = indices;
+            array->indexCount = indexCount;
+            
+            // If this group has a material set, stash a pointer to it.
+            if (group->material) array->material = &(model->materials[group->material]);
+            
+        } // if group->numtriangles
+        //
+        group = group->next;
+    } // while group
+    
+    EDEN_LOGe("glmCreateArray:: Number of group : %d\n",counter);
+    
+    
+}
+
+
 
 GLvoid glmDeleteArrays(GLMmodel *model)
 {
@@ -2819,7 +3023,7 @@ GLvoid glmDrawArrays(GLMmodel* model, const int contextIndex)
             }
             
             // Draw the group.
-            glDrawElements(GL_TRIANGLES, array->indexCount, GL_UNSIGNED_SHORT, array->indices);
+            glDrawElements(GL_TRIANGLES, array->indexCount, GL_UNSIGNED_INT_OES, array->indices);
         }
     } // transparency pass.
     

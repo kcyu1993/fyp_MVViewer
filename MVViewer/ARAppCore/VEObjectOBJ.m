@@ -60,6 +60,7 @@
 
 #import "ARView.h"
 #import "../ARViewController.h"
+
 @interface VEObjectOBJ()
 -(void) drawCoordinates;
 @end

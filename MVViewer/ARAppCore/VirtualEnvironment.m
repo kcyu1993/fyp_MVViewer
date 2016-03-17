@@ -208,14 +208,53 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 
 /**
     Read the obj file, with identification of
-    Markers shall have size 1.
+    Markers shall have size 1， directly passed the marker.
 
  */
 - (int) addObjectsFromFolderPath: (NSString *)objectFolderPath connectToARMarkers: (ARMarker *) marker autoParentTo:(VEObject *)autoParent
 {
     
     int timeFrameCount = 0;
+    
+    // Get the file directory (Access to documents folder)
+    // NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
+    // NSString* documentsPath = [resourcePath stringByAppendingString:@"Documents"];
+    NSError* error;
+    // Get all directory
+    NSArray* directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:objectFolderPath error:&error];
+    
+    NSMutableArray* objContents = [[NSMutableArray alloc] init];
+    
+    
+    // Prepare for loading datas
+    FILE *fp;
+    char buf[MAXPATHLEN];
+    int i;
+    Class type;
+    // Loop through all the files among the given directory.
+    for (NSString *objectPath in directoryContent) {
+        // Check the file ended with obj.
+        NSString* objectPathExtension = [[objectPath pathExtension] lowercaseString];
+        if ([objectPathExtension isEqualToString:@"obj"]) {
+            NSLog(@"Read obj file (%@). \n", objectPath);
+            NSString* objectFullPath;
+            if ([objectPath hasPrefix:@"/"]) {
+                objectFullPath = objectPath;
+            }
+            else {
+                objectFullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:objectPath];
+            }
+            // Get the true obj tile
+            [objContents addObject:objectFullPath];
+        }
+        
+    }
+    VEObject* tmpObject;
+    //tmpObject = [(VEObject *) ]
+    
+    
     return 0;
+
 }
 
 - (int) addObjectsFromObjectListFile:(NSString *)objectDataFilePath connectToARMarkers:(NSArray *)markers

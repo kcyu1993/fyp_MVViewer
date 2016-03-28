@@ -951,6 +951,7 @@
 		4AF9712B1B5F5709001BFEB5 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9706A1B5F5708001BFEB5 /* timers.cpp */; };
 		4AF9712D1B5F5709001BFEB5 /* freak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF970771B5F5708001BFEB5 /* freak.cpp */; };
 		4AF9712E1B5F5709001BFEB5 /* hough_similarity_voting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9707A1B5F5708001BFEB5 /* hough_similarity_voting.cpp */; };
+		6762AC721CA926DC00C7FB35 /* ARMarkerQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6762AC711CA926DC00C7FB35 /* ARMarkerQRcode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3382,6 +3383,8 @@
 		4AF9711E1B5F5709001BFEB5 /* point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = point.h; sourceTree = "<group>"; };
 		4AF9711F1B5F5709001BFEB5 /* kpmPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kpmPrivate.h; sourceTree = "<group>"; };
 		4AF9714D1B5F58A6001BFEB5 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		6762AC701CA926DC00C7FB35 /* ARMarkerQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARMarkerQRcode.h; path = mvviewer/ARAppCore/ARMarkerQRcode.h; sourceTree = SOURCE_ROOT; };
+		6762AC711CA926DC00C7FB35 /* ARMarkerQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ARMarkerQRcode.m; path = mvviewer/ARAppCore/ARMarkerQRcode.m; sourceTree = SOURCE_ROOT; };
 		78BB3E5E08E482F400D7CA2D /* arMultiFreeConfig.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiFreeConfig.c; sourceTree = "<group>"; };
 		78BB3E5F08E482F400D7CA2D /* arMultiGetTransMat.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMat.c; sourceTree = "<group>"; };
 		78BB3E6008E482F400D7CA2D /* arMultiGetTransMatStereo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMatStereo.c; sourceTree = "<group>"; };
@@ -3926,6 +3929,8 @@
 		20A835DA1C3E6C7F000E4DA5 /* ARAppCore */ = {
 			isa = PBXGroup;
 			children = (
+				6762AC701CA926DC00C7FB35 /* ARMarkerQRcode.h */,
+				6762AC711CA926DC00C7FB35 /* ARMarkerQRcode.m */,
 				20A835DB1C3E6C7F000E4DA5 /* ARMarker.h */,
 				20A835DC1C3E6C7F000E4DA5 /* ARMarker.m */,
 				20A835DD1C3E6C7F000E4DA5 /* ARMarkerMulti.h */,
@@ -7743,6 +7748,7 @@
 				20A836461C3E6F69000E4DA5 /* ARMarkerMulti.m in Sources */,
 				20A836241C3E6C7F000E4DA5 /* VEObject.m in Sources */,
 				20A836281C3E6C7F000E4DA5 /* VirtualEnvironment.m in Sources */,
+				6762AC721CA926DC00C7FB35 /* ARMarkerQRcode.m in Sources */,
 				20A836261C3E6C7F000E4DA5 /* VEObjectOBJ.m in Sources */,
 				20A836151C3E6C7F000E4DA5 /* ARView.m in Sources */,
 				20A836481C3E6FFB000E4DA5 /* VEObjectSTL.m in Sources */,

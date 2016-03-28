@@ -7289,7 +7289,7 @@
 				TargetAttributes = {
 					20A835C11C3E6BE8000E4DA5 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 6QF55R36XF;
+						DevelopmentTeam = A78GTFG3M6;
 					};
 					4A2F72D7117840A600F35FA7 = {
 						DevelopmentTeam = 6QF55R36XF;
@@ -8716,7 +8716,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.helen.MVViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8762,7 +8762,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.helen.MVViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8809,7 +8809,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.helen.MVViewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

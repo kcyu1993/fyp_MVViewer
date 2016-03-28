@@ -10,6 +10,7 @@
 #import <AR/gsub_es.h>
 #import "ARAppCore/ARMarkerSquare.h"
 #import "ARAppCore/ARMarkerMulti.h"
+#import "ARAppCore/ARMarkerQRcode.h"
 #import "ARAppCore/VirtualEnvironment.h"
 
 #define VIEW_DISTANCE_MIN   5.0f
@@ -42,6 +43,10 @@
     // MVView          *glView;
     // MVVirtualEnvironment  *virtualEnvironment;
     ARGL_CONTEXT_SETTINGS_REF   arglContextSettings;
+    
+    /* Helen */
+    CameraVideo *cameraVideo;
+    NSArray *cObjects;
     
 }
 
@@ -165,7 +170,7 @@ static void startCallback(void* userData) {
     ARViewController *vc = (__bridge ARViewController *) userData;
     [vc start2];
 }
-
+ // Helen : I need to change here !!!
 - (void) start2 {
 
     int xsize, ysize;
@@ -234,7 +239,7 @@ static void startCallback(void* userData) {
     // libARvideo on iPhone uses an underlying class called CameraVideo. Here, we
     // access the instance of this class to get/set some special types of information.
     
-    CameraVideo *cameraVideo = ar2VideoGetNativeVideoInstanceiPhone(gVid->device.iPhone);
+    cameraVideo = ar2VideoGetNativeVideoInstanceiPhone(gVid->device.iPhone);
 //    CameraVideo *cameraVideo = [[CameraVideo alloc] init];
     if (!cameraVideo) {
         NSLog(@"Error: Unable to set up AR camera: missing CameraVideo instance.\n");
@@ -307,14 +312,21 @@ static void startCallback(void* userData) {
     /**
      // -- Notice for Helen!
      //
-     */
-    NSString *markerConfigDataFilename = @"Data/markers.dat";
-    int mode;
+    */
+    
+    
+    //NSString *markerConfigDataFilename = @"Data/markers.dat";
+    int mode = AR_MATRIX_CODE_DETECTION;
+    
+    markers = [ARMarker newQRcodeMarker];
+    //Helen
+    /*
     if ((markers = [ARMarker newMarkersFromConfigDataFile:markerConfigDataFilename arPattHandle:gARPattHandle arPatternDetectionMode:&mode]) == nil) {
         NSLog(@"Error loading markers.\n");
         [self stop];
         return;
-    }
+    }*/
+    
 #ifdef DEBUG
     NSLog(@"Marker count = %lu\n", (unsigned long)[markers count]);
 #endif
@@ -381,18 +393,80 @@ static void startCallback(void* userData) {
             arUtilTimerReset();
         }
 #endif
+        //Helen
+        cObjects = [cameraVideo codeObjects];
+        
+        int markerNum = (int)[cObjects count];
+        NSLog(@"MetaObject count = %lu", (unsigned long)[cObjects count]);
+
+        
+        gARHandle->marker_num = markerNum;
+        ARMarkerInfo *markerInfo = arGetMarker(gARHandle);
+        
+        CGPoint cgpoint;
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        CGFloat screenWidth = gARHandle->xsize;
+        CGFloat screenHeight = gARHandle->ysize;
+        NSLog(@"screen width%f", screenWidth);
+        NSLog(@"screen height%f", screenHeight);
+
+        if (markerNum > 0)
+        {
+            int i=0;
+            NSArray *metacorners=[(AVMetadataMachineReadableCodeObject *) cObjects[0] corners];
+            while (i < 4)
+            {
+
+                CGPointMakeWithDictionaryRepresentation((CFDictionaryRef) metacorners[i], &cgpoint);
+                markerInfo[0].vertex[i][0]=(ARdouble)cgpoint.x * screenHeight; //need to turn the iPad to test it
+                markerInfo[0].vertex[i][1]=(ARdouble)cgpoint.y * screenWidth;
+                
+                i++;
+            }
+            markerInfo->id=1;
+            markerInfo->dir=0;
+                        
+            markerInfo->cf=1.0;
+        }
+
+        /*for (AVMetadataObject *metadataObject in cObjects)
+        {
+            int i=0;
+            for (NSValue *point in [(AVMetadataMachineReadableCodeObject *) metadataObject corners]){
+                NSLog(@"point %@\n", point);
+                
+            }
+        }*/
+        
+        
+        
+        
         
         // Detect the markers in the video frame.
+        //Helen
+        /*
         if (arDetectMarker(gARHandle, buffer->buff) < 0) return;
         int markerNum = arGetMarkerNum(gARHandle);
         ARMarkerInfo *markerInfo = arGetMarker(gARHandle);
+         */
         
 #ifdef DEBUG
-        NSLog(@"found %d marker(s).\n", markerNum);
+        //NSLog(@"found %d marker(s).\n", markerNum);
 #endif
+        NSLog(@"markers has: %lu", (unsigned long)[markers count]);
+        for (ARMarker *marker in markers) {
+            if ([marker isKindOfClass:[ARMarkerQRcode class]]) {
+                NSLog(@"Found");
+                [(ARMarkerQRcode *)marker updateWithDetectedMarkers:markerInfo count:markerNum ar3DHandle:gAR3DHandle];
+            } else {
+                [marker update];
+            }
+        }
+
         
         // Update all marker objects with detected markers.
-        for (ARMarker *marker in markers) {
+        /*Helen
+         for (ARMarker *marker in markers) {
             if ([marker isKindOfClass:[ARMarkerSquare class]]) {
                 [(ARMarkerSquare *)marker updateWithDetectedMarkers:markerInfo count:markerNum ar3DHandle:gAR3DHandle];
             } else if ([marker isKindOfClass:[ARMarkerMulti class]]) {
@@ -400,7 +474,7 @@ static void startCallback(void* userData) {
             } else {
                 [marker update];
             }
-        }
+        }*/
         
         // Get current time (units = seconds).
         /**
@@ -465,7 +539,7 @@ static void startCallback(void* userData) {
 }
 
 
-// ARToolKit-specific methods.
+/*// ARToolKit-specific methods.
 - (BOOL)markersHaveWhiteBorders
 {
     int mode;
@@ -478,6 +552,7 @@ static void startCallback(void* userData) {
     arSetLabelingMode(gARHandle, (markersHaveWhiteBorders ? AR_LABELING_WHITE_REGION : AR_LABELING_BLACK_REGION));
 }
 
+*/
 
 
 @end

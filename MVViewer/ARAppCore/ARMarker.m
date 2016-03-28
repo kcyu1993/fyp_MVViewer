@@ -49,6 +49,11 @@
 #import "ARMarker.h"
 #import "ARMarkerSquare.h"
 #import "ARMarkerMulti.h"
+
+//Helen
+#import "ARMarkerQRcode.h"
+
+
 #ifdef WITH_NFT
 #  import "ARMarkerNFT.h"
 #endif
@@ -99,6 +104,17 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 }
 
 @synthesize name, valid, pose, marker_width, marker_height, positionScalefactor;
+
++ (NSMutableArray *) newQRcodeMarker
+{
+    NSMutableArray *markers;
+    markers = [NSMutableArray array];
+    ARMarker *tempObject =[[ARMarkerQRcode alloc] init];
+    tempObject.name = @"hiro";
+    [markers addObject:tempObject];
+    NSLog(@"Marker count inside = %lu", [markers count]);
+    return markers;
+}
 
 + (NSMutableArray *)newMarkersFromConfigDataFile:(NSString *)markersConfigDataFilePath arPattHandle:(ARPattHandle *)arPattHandle_in arPatternDetectionMode:(int *)patternDetectionMode_out
 {
@@ -321,6 +337,7 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
         arglCameraViewRHf(trans, pose.T, positionScalefactor);
         needToCalculatePoseInverse = TRUE;
         // Tell any dependent objects about the update.
+        
         [[NSNotificationCenter defaultCenter] postNotificationName:ARMarkerUpdatedPoseNotification object:self];
         
     } else {

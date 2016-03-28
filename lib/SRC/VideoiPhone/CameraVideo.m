@@ -102,6 +102,9 @@ typedef struct {
     AVCaptureDevicePosition captureDevicePosition;
     AVCaptureVideoDataOutput *captureVideoDataOutput;
     AVCaptureStillImageOutput *captureStillImageOutput;
+    /* Helen */
+    AVCaptureMetadataOutput *captureMetadataOutput;
+    
     UInt64 latestFrameHostTime;
     
     BOOL running;
@@ -321,7 +324,31 @@ typedef struct {
         [captureVideoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
     }
 	[captureVideoDataOutput setAlwaysDiscardsLateVideoFrames:YES]; // Discard if the data output queue is blocked (including during processing of any still image).
-
+    
+    /* Helen*/
+    
+    //
+    // Set up the meta data output.
+    //
+    captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
+    if (!captureMetadataOutput) {
+        NSLog(@"Unable to init meta data output.\n");
+        goto bail1;
+    }
+    if ([captureSession canAddOutput:captureMetadataOutput]) {
+        [captureSession addOutput:captureMetadataOutput];
+        // Set delegate and use the default dispatch queue to execute the call back
+        if (multithreaded) {
+            [captureMetadataOutput setMetadataObjectsDelegate:self queue:captureQueue];
+        } else {
+            [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        }
+        [captureMetadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
+    }
+    
+    
+/////////////////////////
+    
     if ([captureSession canAddOutput:captureVideoDataOutput]) [captureSession addOutput:captureVideoDataOutput];
     
     if ([captureSession canSetSessionPreset:captureSessionPreset]) {
@@ -433,71 +460,6 @@ bail0:
 
     if (!planes) {
         pixelFormat = CVPixelBufferGetPixelFormatType(imageBuffer);
-        //CFDictionaryRef pfDesc = CVPixelFormatDescriptionCreateWithPixelFormatType(CFAllocatorGetDefault(), pixelFormat);
-        /* pfDesc for 'BGRA'
-        {
-            BitsPerBlock = 32;
-            BlackBlock = <000000ff>;
-            CGBitmapContextCompatibility = 1;
-            CGBitmapInfo = 8196;
-            CGImageCompatibility = 1;
-            ContainsAlpha = 1;
-            FillExtendedPixelsCallback = <00000000 5539de31 00000000>;
-            IOSurfaceCoreAnimationCompatibility = 1;
-            IOSurfaceOpenGLESFBOCompatibility = 1;
-            IOSurfaceOpenGLESTextureCompatibility = 1;
-            OpenGLESCompatibility = 1;
-            PixelFormat = 1111970369;
-        }
-        */
-        /* pfDesc for '420f'
-        {
-            ContainsAlpha = 0;
-            IOSurfaceCoreAnimationCompatibility = 1;
-            IOSurfaceOpenGLESFBOCompatibility = 1;
-            IOSurfaceOpenGLESTextureCompatibility = 1;
-            OpenGLESCompatibility = 1;
-            PixelFormat = 875704422;
-            Planes =     (
-                        {
-                    BitsPerBlock = 8;
-                    BlackBlock = <00>;
-                    FillExtendedPixelsCallback = <00000000 a93cde31 00000000>;
-                },
-                        {
-                    BitsPerBlock = 16;
-                    BlackBlock = <8080>;
-                    FillExtendedPixelsCallback = <00000000 993bde31 00000000>;
-                    HorizontalSubsampling = 2;
-                    VerticalSubsampling = 2;
-                }
-            );
-        }
-        */
-        /* pfDesc for '420v'
-        {
-            ContainsAlpha = 0;
-            IOSurfaceCoreAnimationCompatibility = 1;
-            IOSurfaceOpenGLESFBOCompatibility = 1;
-            IOSurfaceOpenGLESTextureCompatibility = 1;
-            OpenGLESCompatibility = 1;
-            PixelFormat = 875704438;
-            Planes =     (
-                        {
-                    BitsPerBlock = 8;
-                    BlackBlock = <10>;
-                    FillExtendedPixelsCallback = <00000000 a93cde31 00000000>;
-                },
-                        {
-                    BitsPerBlock = 16;
-                    BlackBlock = <8080>;
-                    FillExtendedPixelsCallback = <00000000 993bde31 00000000>;
-                    HorizontalSubsampling = 2;
-                    VerticalSubsampling = 2;
-                }
-            );
-        }
-        */
         size_t pixelSize;
         switch (pixelFormat) {
             case kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange: // All devices except iPhone 3G recommended.
@@ -650,6 +612,42 @@ bail0:
     if (tookPictureDelegate) [tookPictureDelegate cameraVideoTookPicture:self userData:tookPictureDelegateUserData];
 }
 
+/* Helen */
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
+{
+    self.codeObjects = nil;
+    
+    for (AVMetadataObject *metadataObject in metadataObjects)
+    {
+        [self.codeObjects addObject:metadataObject];
+    }
+    
+    
+    
+    /*for (AVMetadataObject *metadataObject in metadataObjects)
+    {
+        
+        for (NSValue *point in [(AVMetadataMachineReadableCodeObject *) metadataObject corners]){
+           
+            //NSLog(@"point %@\n", point);
+        }
+    }*/
+    
+    
+    
+}
+
+- (NSMutableArray *)codeObjects
+{
+    if (!_codeObjects)
+    {
+        _codeObjects = [NSMutableArray new];
+    }
+    return _codeObjects;
+}
+
+////////////////////////////////
 - (size_t)width
 {
     if (planes) {

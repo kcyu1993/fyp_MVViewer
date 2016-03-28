@@ -209,7 +209,9 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 /**
     Read the obj file, with identification of
     Markers shall have size 1， directly passed the marker.
-
+ 
+    @param objectFolderPath Path to the folder which patient's model is stored.
+    @return (int) the number of patient's model added.
  */
 - (int) addObjectsFromFolderPath: (NSString *)objectFolderPath connectToARMarkers: (ARMarker *) marker autoParentTo:(VEObject *)autoParent
 {
@@ -222,15 +224,10 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     NSError* error;
     // Get all directory
     NSArray* directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:objectFolderPath error:&error];
-    
+    NSLog(@"The folder path is (%@). \n", objectFolderPath);
     NSMutableArray* objContents = [[NSMutableArray alloc] init];
     
     
-    // Prepare for loading datas
-    FILE *fp;
-    char buf[MAXPATHLEN];
-    int i;
-    Class type;
     // Loop through all the files among the given directory.
     for (NSString *objectPath in directoryContent) {
         // Check the file ended with obj.
@@ -244,16 +241,23 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
             else {
                 objectFullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:objectPath];
             }
-            // Get the true obj tile
+            // Add the file to it.
             [objContents addObject:objectFullPath];
         }
         
     }
+    
+    // Prepare for loading datas
+    FILE *fp;
+    char buf[MAXPATHLEN];
+    int i;
+    Class type;
+    
     VEObject* tmpObject;
     //tmpObject = [(VEObject *) ]
     
-    
-    return 0;
+    timeFrameCount = (int) objContents.count;
+    return timeFrameCount;
 
 }
 

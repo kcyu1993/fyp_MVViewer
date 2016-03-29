@@ -3930,6 +3930,8 @@
 		20A835DA1C3E6C7F000E4DA5 /* ARAppCore */ = {
 			isa = PBXGroup;
 			children = (
+				2059FEBC1CAA94BD00441BD8 /* ARMarkerQRcode.h */,
+				2059FEBD1CAA94BD00441BD8 /* ARMarkerQRcode.m */,
 				20A835DB1C3E6C7F000E4DA5 /* ARMarker.h */,
 				20A835DC1C3E6C7F000E4DA5 /* ARMarker.m */,
 				20A835DD1C3E6C7F000E4DA5 /* ARMarkerMulti.h */,
@@ -7750,6 +7752,7 @@
 				20A836461C3E6F69000E4DA5 /* ARMarkerMulti.m in Sources */,
 				20A836241C3E6C7F000E4DA5 /* VEObject.m in Sources */,
 				20A836281C3E6C7F000E4DA5 /* VirtualEnvironment.m in Sources */,
+				2059FEBE1CAA94BD00441BD8 /* ARMarkerQRcode.m in Sources */,
 				20A836261C3E6C7F000E4DA5 /* VEObjectOBJ.m in Sources */,
 				20A836151C3E6C7F000E4DA5 /* ARView.m in Sources */,
 				20A836481C3E6FFB000E4DA5 /* VEObjectSTL.m in Sources */,

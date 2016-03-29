@@ -56,16 +56,13 @@
 #import <string.h>
 #import <sys/param.h> // MAXPATHLEN
 #import <Eden/EdenMath.h>
-
+#import <Eden/glm.h>
 
 #import "ARView.h"
 #import "../ARViewController.h"
-@interface VEObjectOBJ()
--(void) drawCoordinates;
-@end
 
 @implementation VEObjectOBJ {
-//    GLMmodel *glmModel;
+    GLMmodel *glmModel;
 }
 
 + (void)load
@@ -100,9 +97,7 @@
         if (scale && (scale[0] != 1.0f || scale[1] != 1.0f || scale[2] != 1.0f)) glmScale(glmModel, (scale[0] + scale[1] + scale[2]) / 3.0f);
         if (translation && (translation[0] != 0.0f || translation[1] != 0.0f || translation[2] != 0.0f)) glmTranslate(glmModel, translation);
         if (rotation && (rotation[0] != 0.0f)) glmRotate(glmModel, rotation[0]*DTOR, rotation[1], rotation[2], rotation[3]);
-        
-        //glmCreateArrays(glmModel, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
-        glmCreateLargeArrays(glmModel, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
+        glmCreateArrays(glmModel, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
         
         _drawable = TRUE;
 
@@ -127,72 +122,34 @@
 -(void) draw:(NSNotification *)notification
 {
     // Lighting setup.
-    const GLfloat green[] = {0, 1, 0, 0.3};
-    //const GLfloat red[] = {1 , 0, 0, 0.7};
+    // Ultimately, this should be cached via the app-wide OpenGL state cache.
+    const GLfloat lightWhite100[]        =    {1.00, 1.00, 1.00, 1.0};    // RGBA all on full.
+    const GLfloat lightWhite75[]        =    {0.75, 0.75, 0.75, 1.0};    // RGBA all on three quarters.
+    const GLfloat lightPosition0[]     =    {1.0f, 1.0f, 2.0f, 0.0f}; // A directional light (i.e. non-positional).
+    
     if (_visible) {
         glPushMatrix();
         glMultMatrixf(_poseInEyeSpace.T);
         glMultMatrixf(_localPose.T);
-        
         if (_lit) {
-            
-            /** Specilaized GL settings getting from Audrey. */
-
-            /* Light information */
-            GLfloat pos[] = {1.0, 3.0, 2.0, 0.0 };
-            GLfloat light_ambient[] =  { 0.0f, 0.0f, -2.0f, 0.0f };
-            GLfloat light_diffuse[] = { 0.25, 0.25, 0.25, 0.0f };
-            glLightfv(GL_LIGHT1, GL_POSITION,pos);
-            glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
-            glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
-            
-            glEnable(GL_LIGHTING);
-            glEnable(GL_LIGHT1);
-            
-            /* Set light model */
-            GLfloat lmodel_ambient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-            //            GLfloat local_view[] = { 0, 0 };
-            glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
-            //            glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, local_view);
-            
-            /* Material */
-            GLfloat no_mat[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-            GLfloat mat_diffuse[] = { 0.1f, 0.5f, 0.8f, 1.0f };
-            GLfloat no_shininess[] = { 0.0f };
-            
-            /*----- Set material features -----*/
-            glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
-            glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-            glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
-            glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
-            glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
-            glEnable(GL_BLEND); // Add this to generate blend effect, for transparency.
-            glDepthMask(false);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+            glLightfv(GL_LIGHT0, GL_DIFFUSE, lightWhite100);
+            glLightfv(GL_LIGHT0, GL_SPECULAR, lightWhite100);
+            glLightfv(GL_LIGHT0, GL_AMBIENT, lightWhite75);            // Default ambient = {0,0,0,0}.
+            glLightfv(GL_LIGHT0, GL_POSITION, lightPosition0);
+            glEnable(GL_LIGHT0);
+            glDisable(GL_LIGHT1);
+            glDisable(GL_LIGHT2);
+            glDisable(GL_LIGHT3);
+            glDisable(GL_LIGHT4);
+            glDisable(GL_LIGHT5);
+            glDisable(GL_LIGHT6);
+            glDisable(GL_LIGHT7);
             glShadeModel(GL_SMOOTH);                // Do not flat shade polygons.
             glStateCacheEnableLighting();
         } else glStateCacheDisableLighting();
-        
-        glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green);
         glmDrawArrays(glmModel, 0);
-
         glPopMatrix();
-        glDepthMask(true);
-        glDisable(GL_LIGHTING);
-        glDisable(GL_BLEND);
     }
-}
-
--(void) drawCoordinates
-{
-    GLfloat axis[4][3] = {{0,0,0},{1,0,0},{0,1,0},{0,0,1}};
-    GLbyte indice[3][2] = { { 0,1}, {0,2},{0,3}};
-    GLbyte color[3][4] = {{255,0,0,255},{0,255,0,255},{0,0,255,255}};
-    
-    glVertexPointer(3, GL_FLOAT, 0, axis);
-    glLineWidth(2);
-    glDrawElements(GL_LINES, 3, GL_BYTE, indice);
-    
 }
 
 -(void) dealloc

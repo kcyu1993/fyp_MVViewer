@@ -350,21 +350,8 @@ static void startCallback(void* userData) {
      *
      */
     self.virtualEnvironment = [[VirtualEnvironment alloc] initWithARViewController:self] ;
-    
-    /**
-     Function:
-        1. Implement a FileHandler that can
-            Get folder names from /Documents/ (The file directory that can be access from iTunes
-            Pass the list to GUI, let user to choose
-            Pass the choice (file directory path or simply folder name
-     
-        2. Look up the table and retrieve the file path from Handler
-     
-        3. Call Virtual Environment method, to load all time series objects to virtual env
-     
-     */
-    
     [self.virtualEnvironment addObjectsFromObjectListFile:@"Data/models.dat" connectToARMarkers:markers];
+    
     // Because in this example we're not currently assigning a world coordinate system
     // (we're just using local marker coordinate systems), set the camera pose now, to
     // the default (i.e. the identity matrix).
@@ -375,7 +362,7 @@ static void startCallback(void* userData) {
     arUtilTimerReset();
     gCallCountMarkerDetect = 0;
     
-    // Create our runloop timer
+    //Create our runloop timer
     [self setRunLoopInterval:2]; // Target 30 fps on a 60 fps device.
     [self startRunLoop];
 
@@ -386,8 +373,6 @@ static void startCallback(void* userData) {
     AR2VideoBufferT *buffer = ar2VideoGetImage(gVid);
     if (buffer) [self processFrame:buffer];
 }
-
-
 
 - (void) processFrame:(AR2VideoBufferT *)buffer
 {
@@ -458,22 +443,13 @@ static void startCallback(void* userData) {
         
         
         // Detect the markers in the video frame.
-        /** Comment !
-         -- Kaicheng Yu
-         */
-        // input buffer->buff --> gARHandle)
-        // <AVCaputureMetadataOuputObject> --> get paramters.
-        // Calibration by ourself.
-        // update the gARHandle.
-        
+        //Helen
+        /*
         if (arDetectMarker(gARHandle, buffer->buff) < 0) return;
         int markerNum = arGetMarkerNum(gARHandle);
         ARMarkerInfo *markerInfo = arGetMarker(gARHandle);
-//        if(markerInfo != NULL){
-//            NSLog(@"==================================\n");
-//            NSLog(@"MarkerInfo direction %d\n",markerInfo->dir);
-//            NSLog(@"==================================\n");
-//        }
+         */
+        
 #ifdef DEBUG
         //NSLog(@"found %d marker(s).\n", markerNum);
 #endif
@@ -498,8 +474,7 @@ static void startCallback(void* userData) {
             } else {
                 [marker update];
             }
-            
-        }
+        }*/
         
         // Get current time (units = seconds).
         /**

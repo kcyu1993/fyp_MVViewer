@@ -155,18 +155,6 @@
             } else {
                 err = arGetTransMatSquare(ar3DHandle, &markerInfo[k], marker_width, trans);
             }
-            for (int i=0; i<4; ++i){
-                for (int j=0; j<2; ++j)
-                    NSLog(@"markerinfo %d %d %f", i, j, markerInfo[0].vertex[i][j]);
-            }
-            NSLog(@"==================================\n");
-            NSLog(@"MarkerInfo direction %d\n",markerInfo->dir);
-            NSLog(@"==================================\n");
-            ;
-            //
-//            for (int i=0; i<3; ++i)
-//                for (int j=0; j<4; ++j)
-//                    NSLog(@"trans %d %d %f", i, j, trans[i][j]);
         } else {
             valid = FALSE;
         }

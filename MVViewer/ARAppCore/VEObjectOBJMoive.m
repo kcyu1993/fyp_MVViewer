@@ -45,7 +45,7 @@
 }
 
 +(void)load{
-    // VEObjectRegistryRegister(self, @"obj");
+    VEObjectRegistryRegister(self, @"objs");
 }
 
 -(id)initFromListOfFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale

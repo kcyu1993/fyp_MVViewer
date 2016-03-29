@@ -73,6 +73,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2059FEBE1CAA94BD00441BD8 /* ARMarkerQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2059FEBD1CAA94BD00441BD8 /* ARMarkerQRcode.m */; };
 		208722D71C4F4C5F009B754A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */; };
 		20A835C61C3E6BE8000E4DA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C51C3E6BE8000E4DA5 /* main.m */; };
 		20A835C91C3E6BE8000E4DA5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C81C3E6BE8000E4DA5 /* AppDelegate.m */; };
@@ -1672,6 +1673,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2059FEBC1CAA94BD00441BD8 /* ARMarkerQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMarkerQRcode.h; sourceTree = "<group>"; };
+		2059FEBD1CAA94BD00441BD8 /* ARMarkerQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMarkerQRcode.m; sourceTree = "<group>"; };
 		208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		20A835C21C3E6BE8000E4DA5 /* MVViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A835C51C3E6BE8000E4DA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -3926,6 +3929,8 @@
 		20A835DA1C3E6C7F000E4DA5 /* ARAppCore */ = {
 			isa = PBXGroup;
 			children = (
+				2059FEBC1CAA94BD00441BD8 /* ARMarkerQRcode.h */,
+				2059FEBD1CAA94BD00441BD8 /* ARMarkerQRcode.m */,
 				20A835DB1C3E6C7F000E4DA5 /* ARMarker.h */,
 				20A835DC1C3E6C7F000E4DA5 /* ARMarker.m */,
 				20A835DD1C3E6C7F000E4DA5 /* ARMarkerMulti.h */,
@@ -7743,6 +7748,7 @@
 				20A836461C3E6F69000E4DA5 /* ARMarkerMulti.m in Sources */,
 				20A836241C3E6C7F000E4DA5 /* VEObject.m in Sources */,
 				20A836281C3E6C7F000E4DA5 /* VirtualEnvironment.m in Sources */,
+				2059FEBE1CAA94BD00441BD8 /* ARMarkerQRcode.m in Sources */,
 				20A836261C3E6C7F000E4DA5 /* VEObjectOBJ.m in Sources */,
 				20A836151C3E6C7F000E4DA5 /* ARView.m in Sources */,
 				20A836481C3E6FFB000E4DA5 /* VEObjectSTL.m in Sources */,

@@ -77,6 +77,7 @@
 		207ACA921C9ABAD300F5C1F8 /* VEObjectOBJBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA911C9ABAD300F5C1F8 /* VEObjectOBJBase.m */; };
 		207ACA941C9ABADE00F5C1F8 /* VEObjectOBJValve.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA931C9ABADE00F5C1F8 /* VEObjectOBJValve.m */; };
 		207ACAAC1CA909A200F5C1F8 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACAAB1CA909A200F5C1F8 /* ResourceManager.m */; };
+		207C36321CB38C8800B1A39F /* ARMarkerQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 207C36311CB38C8800B1A39F /* ARMarkerQRcode.m */; };
 		208722D71C4F4C5F009B754A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */; };
 		20A835C61C3E6BE8000E4DA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C51C3E6BE8000E4DA5 /* main.m */; };
 		20A835C91C3E6BE8000E4DA5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C81C3E6BE8000E4DA5 /* AppDelegate.m */; };
@@ -1685,6 +1686,8 @@
 		207ACA931C9ABADE00F5C1F8 /* VEObjectOBJValve.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VEObjectOBJValve.m; sourceTree = "<group>"; };
 		207ACAAB1CA909A200F5C1F8 /* ResourceManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResourceManager.m; sourceTree = "<group>"; };
 		207ACAAD1CA909B100F5C1F8 /* ResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
+		207C36301CB38C8800B1A39F /* ARMarkerQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMarkerQRcode.h; sourceTree = "<group>"; };
+		207C36311CB38C8800B1A39F /* ARMarkerQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMarkerQRcode.m; sourceTree = "<group>"; };
 		208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		20A835C21C3E6BE8000E4DA5 /* MVViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A835C51C3E6BE8000E4DA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -3949,6 +3952,8 @@
 		20A835DA1C3E6C7F000E4DA5 /* ARAppCore */ = {
 			isa = PBXGroup;
 			children = (
+				207C36301CB38C8800B1A39F /* ARMarkerQRcode.h */,
+				207C36311CB38C8800B1A39F /* ARMarkerQRcode.m */,
 				20A835DB1C3E6C7F000E4DA5 /* ARMarker.h */,
 				20A835DC1C3E6C7F000E4DA5 /* ARMarker.m */,
 				20A835DD1C3E6C7F000E4DA5 /* ARMarkerMulti.h */,
@@ -7781,6 +7786,7 @@
 				20A835C91C3E6BE8000E4DA5 /* AppDelegate.m in Sources */,
 				20A836111C3E6C7F000E4DA5 /* ARMarker.m in Sources */,
 				20A836291C3E6C7F000E4DA5 /* ARViewController.m in Sources */,
+				207C36321CB38C8800B1A39F /* ARMarkerQRcode.m in Sources */,
 				20A836161C3E6C7F000E4DA5 /* EAGLView.m in Sources */,
 				20A835C61C3E6BE8000E4DA5 /* main.m in Sources */,
 				20A836141C3E6C7F000E4DA5 /* ARMarkerSquare.m in Sources */,

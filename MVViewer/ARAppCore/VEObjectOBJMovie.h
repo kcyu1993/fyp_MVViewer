@@ -15,7 +15,11 @@
 #import "VEObject.h"
 
 @interface VEObjectOBJMovie : VEObject{
+
     
 }
+@property(readonly) NSComparator renderedObjectComparator;
+@property(getter=currentTimeStamp, readonly) int currentTimeStamp;
+-(void) nextTimeStamp;
 
 @end

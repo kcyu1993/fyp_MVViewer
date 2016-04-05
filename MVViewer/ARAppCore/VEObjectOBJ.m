@@ -182,6 +182,9 @@
         glDisable(GL_LIGHTING);
         glDisable(GL_BLEND);
     }
+#ifdef DEBUG
+    CHECK_GL_ERROR();
+#endif
 }
 
 -(void) drawCoordinates

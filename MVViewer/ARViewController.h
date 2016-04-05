@@ -35,6 +35,9 @@
 /** KC defined method */
 - (void) loadPatient:(NSString*) patient;
 
+/* Helen */
+@property (nonatomic) NSArray *cObjects;
+
 /** KC defined attributes */
 @property (nonatomic, setter=loadPatient: ) NSString* patientInfo;
 

@@ -273,6 +273,7 @@ NSString *const ARViewTouchNotification = @"ARViewTouchNotification";
 	
     [self clearBuffers];
 
+    /// Drwa the background image. May updated with a HKU marker
     arglDispImage(arViewController.arglContextSettings);
     
     // Set up 3D mode.
@@ -321,7 +322,7 @@ NSString *const ARViewTouchNotification = @"ARViewTouchNotification";
     // If you added external OpenGL code above, and that code doesn't use the glStateCache routines,
     // then uncomment the line below.
     //glStateCacheFlush();
-
+/*
 #ifdef DEBUG
     // Example of 2D drawing. It just draws a white border line.
     const GLfloat square_vertices [4][2] = { {0.5f, 0.5f}, {0.5f, height - 0.5f}, {width - 0.5f, height - 0.5f}, {width - 0.5f, 0.5f} };
@@ -337,7 +338,7 @@ NSString *const ARViewTouchNotification = @"ARViewTouchNotification";
     glStateCacheDisableClientStateNormalArray();
     glDrawArrays(GL_LINE_LOOP, 0, 4);
 #endif
-    
+    */
 #ifdef DEBUG
     CHECK_GL_ERROR();
 #endif

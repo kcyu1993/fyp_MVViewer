@@ -34,61 +34,112 @@
  VEObjectOBJMovie. The VEObject attached to this object should not responds 
  to DefaultNotificationCenter for markers, and should not be added to 
  VirtualEnvironment as well.
+ 
+ 
+ Workflow:
+    1. At load phase, it register the objs as an identifier
+    2. In init phase,
+        a. Load all base and valve models from file and using the code blocks in VEObjectOBJ
+            to generate correspoinding GLModel.
+        b. Load it with order of time stamps.
+    3. Display phase,
+        a. Set up a counter and current display index
+        b. draw current display index model when visiable flag is true.
+        Note: all the counter modification shall be done in ARViewController processFrame.
+ 
 */
 
+
+struct renderModel {
+    GLMmodel* base;
+    GLMmodel* valve;
+    int timeStamp;
+    BOOL hasValve;
+};
+
+typedef struct renderModel renderModel;
+
+
 @implementation VEObjectOBJMovie{
-    NSMutableArray *baseOBJArray;
-    NSMutableArray *valveOBJArray;
-    int size;
+    // NSMutableArray *baseOBJArray;
+    // NSMutableArray *valveOBJArray;
+    // NSMutableIndexSet *timeStampArray;
+    NSMutableArray* renderedObjects;
+    
+    NSUInteger size;
+    NSUInteger valveSize;
     BOOL hasValve;
     int current;
 }
+
 
 +(void)load{
     VEObjectRegistryRegister(self, @"objs");
 }
 
--(id)initFromListOfFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
+-(id)initFromListOfFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
 {
-    // Given a list of files, read from.
-    if(valveFiles != NULL){
-        if(baseFiles.count != valveFiles.count){
-            NSLog(@"Error! number of valve and base are not match");
-            return NULL;
-        }
-        valveOBJArray = [valveOBJArray initWithCapacity:size];
-    }
-    else{
-        valveOBJArray = NULL;
-        hasValve = FALSE;
-    }
+    valveSize = 0;
+    // Create a new empty array.
+    renderedObjects = [NSMutableArray array];
+    renderModel* tmpModel;
+    NSString* file;
     
+    NSComparator comparator = ^(id obj1, id obj2){
+        return NSOrderedSame;
+    };
+    
+    for (int i = 0; i < [baseFiles count]; i++) {
+        tmpModel = (renderModel*) malloc(sizeof(renderModel));
+        file = (NSString *) [baseFiles objectAtIndex:i];
+        tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+        if (!tmpModel->base) {
+            NSLog(@"Error: Unable to load model %@.\n", file);
+            return (nil);
+        }
+        [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->base translation:translation rotation:rotation scale:scale config:nil];
+        
+        tmpModel->hasValve = FALSE;
+        file = (NSString *) [valveFiles objectAtIndex:i];
+        if (!file) {
+            tmpModel->valve = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+            if (!tmpModel->valve) {
+                NSLog(@"Error: Unable to load model %@.\n", file);
+                return (nil);
+            }
+            tmpModel->hasValve = TRUE;
+            [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->valve translation:translation rotation:rotation scale:scale config:nil];
+            valveSize++;
+        }
+        // NSNumber
+        tmpModel->timeStamp = [(NSNumber*) [timeStamp objectAtIndex:i] intValue];
+        /// Need to check which pointer is good for release.
+        [renderedObjects addObject:CFBridgingRelease(tmpModel)];
+    }
+    /*
+    [renderedObjects sortUsingComparator:^NSComparisonResult(renderModel* obj1, renderModel* obj2) {
+        return obj1->timeStamp < obj2->timeStamp ? obj1 : obj2;
+    }];
+     */
+    _drawable = TRUE;
     return self;
 }
 
--(GLMmodel*)initOBJFromFile:(NSString *)file translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale config:(char *)config
++(GLMmodel*)generateArraysWithTransformation:(GLMmodel*) glmModel translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale config:(char *)config
 {
     BOOL flipV = FALSE;
-        if(config){
-            char *a = config;
-            for (;;) {
-                while( *a == ' ' || *a == '\t' ) a++; // Skip whitespace.
-                if( *a == '\0' ) break; // End of string.
-                
-                if (strncmp(a, "TEXTURE_FLIPV", 13) == 0) flipV = TRUE;
-                
-                while( *a != ' ' && *a != '\t' && *a != '\0') a++; // Move to next token.
-            }
-
+    if(config){
+        char *a = config;
+        for (;;) {
+            while( *a == ' ' || *a == '\t' ) a++; // Skip whitespace.
+            if( *a == '\0' ) break; // End of string.
+            
+            if (strncmp(a, "TEXTURE_FLIPV", 13) == 0) flipV = TRUE;
+            
+            while( *a != ' ' && *a != '\t' && *a != '\0') a++; // Move to next token.
         }
-    
-    GLMmodel *glmModel;
-    glmModel = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE); // 0 -> contextIndex, FALSE -> read textures later.
-    if (!glmModel) {
-        NSLog(@"Error: Unable to load model %@.\n", file);
-        return (nil);
+        
     }
-    
     if (scale && (scale[0] != 1.0f || scale[1] != 1.0f || scale[2] != 1.0f)) glmScale(glmModel, (scale[0] + scale[1] + scale[2]) / 3.0f);
     if (translation && (translation[0] != 0.0f || translation[1] != 0.0f || translation[2] != 0.0f)) glmTranslate(glmModel, translation);
     if (rotation && (rotation[0] != 0.0f)) glmRotate(glmModel, rotation[0]*DTOR, rotation[1], rotation[2], rotation[3]);
@@ -96,8 +147,6 @@
     //glmCreateArrays(glmModel, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
     glmCreateLargeArrays(glmModel, GLM_SMOOTH | GLM_MATERIAL | GLM_TEXTURE);
     
-    _drawable = TRUE;
-
     return glmModel;
 }
 
@@ -118,20 +167,14 @@
 
 - (void) draw: (NSNotification *)notification
 {
+    /// Main function to override.
+    
+    
     GLMmodel *baseModel = NULL;
     GLMmodel *valveModel = NULL;
     // Draw the current context.
     // If animated, then draw with a fresh rate.
-    if ([baseOBJArray objectAtIndex:current] != NULL) {
-        baseModel = (__bridge GLMmodel *) [baseOBJArray objectAtIndex:current];
-        
-    };
-    
-    if(hasValve){
-        if ([valveOBJArray objectAtIndex:current] != NULL) {
-            valveModel = (__bridge GLMmodel *) [valveOBJArray objectAtIndex:current];
-        }
-    }
+
     const GLfloat lightWhite100[]        =    {1.00, 1.00, 1.00, 1.0};    // RGBA all on full.
     const GLfloat lightWhite75[]        =    {0.75, 0.75, 0.75, 1.0};    // RGBA all on three quarters.
     const GLfloat lightPosition0[]     =    {1.0f, 1.0f, 2.0f, 0.0f}; // A directional light (i.e. non-positional).
@@ -165,6 +208,11 @@
         }
         glPopMatrix();
     }
+}
+
+-(void) nextTimeStamp
+{
+    
 }
 
 @end

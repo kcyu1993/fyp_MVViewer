@@ -102,6 +102,10 @@ typedef struct {
     AVCaptureDevicePosition captureDevicePosition;
     AVCaptureVideoDataOutput *captureVideoDataOutput;
     AVCaptureStillImageOutput *captureStillImageOutput;
+    
+    /* Helen */
+    AVCaptureMetadataOutput *captureMetadataOutput;
+    
     UInt64 latestFrameHostTime;
     
     BOOL running;
@@ -322,6 +326,30 @@ typedef struct {
     }
 	[captureVideoDataOutput setAlwaysDiscardsLateVideoFrames:YES]; // Discard if the data output queue is blocked (including during processing of any still image).
 
+    /* Helen*/
+    
+    //
+    // Set up the meta data output.
+    //
+    captureMetadataOutput = [[AVCaptureMetadataOutput alloc] init];
+    if (!captureMetadataOutput) {
+        NSLog(@"Unable to init meta data output.\n");
+        goto bail1;
+    }
+    if ([captureSession canAddOutput:captureMetadataOutput]) {
+        [captureSession addOutput:captureMetadataOutput];
+        // Set delegate and use the default dispatch queue to execute the call back
+        if (multithreaded) {
+            [captureMetadataOutput setMetadataObjectsDelegate:self queue:captureQueue];
+        } else {
+            [captureMetadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        }
+        [captureMetadataOutput setMetadataObjectTypes:@[AVMetadataObjectTypeQRCode]];
+    }
+    
+    
+    /////////////////////////
+    
     if ([captureSession canAddOutput:captureVideoDataOutput]) [captureSession addOutput:captureVideoDataOutput];
     
     if ([captureSession canSetSessionPreset:captureSessionPreset]) {
@@ -648,6 +676,41 @@ bail0:
     pthread_mutex_unlock(&frameLock_pthread_mutex);
     
     if (tookPictureDelegate) [tookPictureDelegate cameraVideoTookPicture:self userData:tookPictureDelegateUserData];
+}
+
+/* Helen */
+
+- (void)captureOutput:(AVCaptureOutput *)captureOutput didOutputMetadataObjects:(NSArray *)metadataObjects fromConnection:(AVCaptureConnection *)connection
+{
+    self.codeObjects = nil;
+    
+    for (AVMetadataObject *metadataObject in metadataObjects)
+    {
+        [self.codeObjects addObject:metadataObject];
+    }
+    
+    
+    
+    /*for (AVMetadataObject *metadataObject in metadataObjects)
+     {
+     
+     for (NSValue *point in [(AVMetadataMachineReadableCodeObject *) metadataObject corners]){
+     
+     //NSLog(@"point %@\n", point);
+     }
+     }*/
+    
+    
+    
+}
+
+- (NSMutableArray *)codeObjects
+{
+    if (!_codeObjects)
+    {
+        _codeObjects = [NSMutableArray new];
+    }
+    return _codeObjects;
 }
 
 - (size_t)width

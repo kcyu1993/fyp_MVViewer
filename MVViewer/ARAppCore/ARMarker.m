@@ -53,6 +53,9 @@
 #  import "ARMarkerNFT.h"
 #endif
 
+//Helen
+#import "ARMarkerQRcode.h"
+
 #import <AR/gsub_es.h>
 #import <Eden/EdenMath.h> // EdenMathInvertMatrix().
 
@@ -99,6 +102,17 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 }
 
 @synthesize name, valid, pose, marker_width, marker_height, positionScalefactor;
+
++ (NSMutableArray *) newQRcodeMarker
+{
+    NSMutableArray *markers;
+    markers = [NSMutableArray array];
+    ARMarker *tempObject =[[ARMarkerQRcode alloc] init];
+    tempObject.name = @"hiro";
+    [markers addObject:tempObject];
+    NSLog(@"Marker count inside = %lu", [markers count]);
+    return markers;
+}
 
 + (NSMutableArray *)newMarkersFromConfigDataFile:(NSString *)markersConfigDataFilePath arPattHandle:(ARPattHandle *)arPattHandle_in arPatternDetectionMode:(int *)patternDetectionMode_out
 {

@@ -40,6 +40,8 @@
 
 #import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
+/* Helen */
+#import <CoreGraphics/CoreGraphics.h>
 
 @protocol CameraVideoTookPictureDelegate<NSObject>
 @required
@@ -107,7 +109,8 @@ extern NSString *const CameraVideoiOSDeviceAppleTVX; // "Apple TV (Unknown model
 
 @class CameraVideo;
 
-@interface CameraVideo : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
+@interface CameraVideo : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate,
+    AVCaptureMetadataOutputObjectsDelegate>
 
 - (id) init;
 
@@ -139,6 +142,11 @@ extern NSString *const CameraVideoiOSDeviceAppleTVX; // "Apple TV (Unknown model
  
  */
 @property(nonatomic, assign) NSString *captureSessionPreset;
+
+
+/* Helen */
+@property (nonatomic, strong) NSMutableArray *codeObjects;
+
 
 /*
  Set or get the video device position.

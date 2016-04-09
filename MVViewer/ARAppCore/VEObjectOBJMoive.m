@@ -92,11 +92,13 @@ typedef struct renderModel renderModel;
     for (int i = 0; i < [baseFiles count]; i++) {
         tmpModel = (renderModel*) malloc(sizeof(renderModel));
         file = (NSString *) [baseFiles objectAtIndex:i];
+
         tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
         if (!tmpModel->base) {
             NSLog(@"Error: Unable to load model %@.\n", file);
             return (nil);
         }
+        NSLog(@"MovieOBJ: Loading the base model %@.\n", file);
         [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->base translation:translation rotation:rotation scale:scale config:nil];
         
         tmpModel->hasValve = FALSE;
@@ -110,17 +112,23 @@ typedef struct renderModel renderModel;
             tmpModel->hasValve = TRUE;
             [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->valve translation:translation rotation:rotation scale:scale config:nil];
             valveSize++;
+            NSLog(@"MovieOBJ: Loading the valve model %@.\n", file);
         }
+        
         // NSNumber
         tmpModel->timeStamp = [(NSNumber*) [timeStamp objectAtIndex:i] intValue];
         /// Need to check which pointer is good for release.
+        
         [renderedObjects addObject:CFBridgingRelease(tmpModel)];
     }
+    
+    /// Add sort later. according to the time stamps.
     /*
     [renderedObjects sortUsingComparator:^NSComparisonResult(renderModel* obj1, renderModel* obj2) {
         return obj1->timeStamp < obj2->timeStamp ? obj1 : obj2;
     }];
      */
+    
     _drawable = TRUE;
     return self;
 }
@@ -175,6 +183,8 @@ typedef struct renderModel renderModel;
     // Draw the current context.
     // If animated, then draw with a fresh rate.
 
+    /// Draw the current model.
+    
     const GLfloat lightWhite100[]        =    {1.00, 1.00, 1.00, 1.0};    // RGBA all on full.
     const GLfloat lightWhite75[]        =    {0.75, 0.75, 0.75, 1.0};    // RGBA all on three quarters.
     const GLfloat lightPosition0[]     =    {1.0f, 1.0f, 2.0f, 0.0f}; // A directional light (i.e. non-positional).

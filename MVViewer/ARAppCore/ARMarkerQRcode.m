@@ -34,11 +34,12 @@
         for ( int i=0; i<4; ++i )
             for (int j=0; j<2; ++j)
                 NSLog(@"markerinfo %f", markerInfo[0].vertex[i][j]);
+        NSLog(@"direction %d", markerInfo[0].dir);
         err = arGetTransMatSquare(ar3DHandle, &markerInfo[0], marker_width, trans);
-        NSLog(@"err= %f", err);
-        for ( int i=0; i<3; ++i )
-            for (int j=0; j<4; ++j)
-                NSLog(@"trans %f", trans[i][j]);
+        //NSLog(@"err= %f", err);
+        //for ( int i=0; i<3; ++i )
+        //    for (int j=0; j<4; ++j)
+        //        NSLog(@"trans %f", trans[i][j]);
         
     } else {
         valid = FALSE;

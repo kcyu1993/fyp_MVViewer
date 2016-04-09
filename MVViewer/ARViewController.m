@@ -432,7 +432,7 @@ static void startCallback(void* userData) {
 //        }
         
         CGPoint cgpoint;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        //CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = gARHandle->xsize;
         CGFloat screenHeight = gARHandle->ysize;
         NSLog(@"screen width%f", screenWidth);
@@ -446,19 +446,45 @@ static void startCallback(void* userData) {
             NSLog(@"found %d marker(s).\n", markerNum);
 #endif
             int i=0;
+            ARdouble tempVector[4][2];
             NSArray *metacorners=[(AVMetadataMachineReadableCodeObject *) cObjects[0] corners];
             while (i < 4)
             {
                 
                 CGPointMakeWithDictionaryRepresentation((CFDictionaryRef) metacorners[i], &cgpoint);
-                markerInfo[0].vertex[i][0]=(ARdouble)cgpoint.x * screenHeight; //need to turn the iPad to test it
-                markerInfo[0].vertex[i][1]=(ARdouble)cgpoint.y * screenWidth;
+                tempVector[i][0]=(ARdouble)cgpoint.x * screenHeight; //need to turn the iPad to test it
+                tempVector[i][1]=(ARdouble)cgpoint.y * screenWidth;
                 
                 i++;
             }
+            ARdouble angleX = (tempVector[0][0]-tempVector[2][0]) / fabsf(tempVector[0][0]-tempVector[2][0]);
+            ARdouble angleY = (tempVector[0][1]-tempVector[2][1]) / fabsf(tempVector[0][1]-tempVector[2][1]);
+            ARdouble sin = angleY / sqrtf(angleX * angleX + angleY * angleY);
+            ARdouble cos = angleX / sqrtf(angleX * angleX + angleY * angleY);
+            int dir= 0;
+            ARdouble sin45 = 0.707106781;
+            if (sin >= sin45){
+                dir = 2;
+            }
+            else if (sin > -sin45 && cos >= sin45){
+                dir = 1;
+            }
+            else if (sin > -sin45 && cos <= -sin45){
+                dir = 3;
+            }
+            else dir = 0;
+            markerInfo->dir = dir;
+            int index= (4 - dir)%4;
+            i=0;
+            while (i < 4)
+            {
+                markerInfo[0].vertex[index][0]=tempVector[i][0]; //need to turn the iPad to test it
+                markerInfo[0].vertex[index][1]=tempVector[i][1];
+                index++;
+                index = index % 4;
+                i++;
+            }
             markerInfo->id=1;
-            markerInfo->dir=0;
-            
             markerInfo->cf=1.0;
         }
 

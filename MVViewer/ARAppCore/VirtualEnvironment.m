@@ -69,6 +69,7 @@
 #import <sys/param.h> // MAXPATHLEN
 #import <Eden/EdenMath.h>
 #import "VEObject.h"
+#import "VEObjectOBJMovie.h"
 
 // --------
 //
@@ -200,6 +201,85 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     [objects removeObject:object];
 }
 
+
+- (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile
+{
+    
+    
+    NSString* configFileFullPath;
+    FILE* fp;
+    char buf[MAXPATHLEN];
+    
+    ARdouble translation[3], rotation[4], scale[3];
+    int objectsAdded = 0;
+    if ([configFile hasPrefix:@"/"]) {
+        configFileFullPath = configFile;
+    }
+    else{
+        configFileFullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:configFile];
+    }
+    
+    char configFileFullPathC[MAXPATHLEN];
+    [configFileFullPath getFileSystemRepresentation:configFileFullPathC maxLength:MAXPATHLEN];
+    if((fp = fopen(configFileFullPathC, "r"))==NULL){
+        NSLog(@"Error: unable to open the config file %@", configFileFullPath);
+        return objectsAdded;
+    }
+    
+    // Read translation
+    get_buff(buf,MAXPATHLEN,fp,1);
+#ifdef ARDOUBLE_IS_FLOAT
+    if (sscanf(buf, "%f %f %f", &translation[0], &translation[1], &translation[2]) != 3)
+#else
+        if (sscanf(buf, "%lf %lf %lf", &translation[0], &translation[1], &translation[2]) != 3)
+#endif
+        {
+            fclose(fp);
+            return (objectsAdded);
+        }
+    // Read rotation.
+    get_buff(buf, MAXPATHLEN, fp, 1);
+#ifdef ARDOUBLE_IS_FLOAT
+    if (sscanf(buf, "%f %f %f %f", &rotation[0], &rotation[1], &rotation[2], &rotation[3]) != 4)
+#else
+        if (sscanf(buf, "%lf %lf %lf %lf", &rotation[0], &rotation[1], &rotation[2], &rotation[3]) != 4)
+#endif
+        {
+            fclose(fp);
+            return (objectsAdded);
+        }
+    // Read scale.
+    get_buff(buf, MAXPATHLEN, fp, 1);
+#ifdef ARDOUBLE_IS_FLOAT
+    if (sscanf(buf, "%f %f %f", &scale[0], &scale[1], &scale[2]) != 3)
+#else
+        if (sscanf(buf, "%lf %lf %lf", &scale[0], &scale[1], &scale[2]) != 3)
+#endif
+        {
+            fclose(fp);
+            return (objectsAdded);
+        }
+    fclose(fp);
+    
+    // Got all options, then create VEObjectOBJMovie
+    
+    Class type = VEObjectRegistryGetClassForExtension(@"objs");
+    if (!type) {
+        NSLog(@"Error: unsupported model file type (%@). Ignoring.\n", @"objs");
+    }
+    
+    VEObject* tempObject;
+    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale];
+    
+    if (marker) {
+        tempObject.visible = FALSE;
+        [tempObject startObservingARMarker:marker];
+    }
+    [self addObject:tempObject];
+    objectsAdded++;
+    return objectsAdded;
+}
+
 - (int) addObjectsFromFolderPath: (NSString *)objectFolderPath connectToARMarkers: (ARMarker *)marker
 {
     return ([self addObjectsFromFolderPath:objectFolderPath connectToARMarkers:marker autoParentTo:nil]);
@@ -247,13 +327,7 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
         
     }
     
-    // Prepare for loading datas
-    FILE *fp;
-    char buf[MAXPATHLEN];
-    int i;
-    Class type;
     
-    VEObject* tmpObject;
     //tmpObject = [(VEObject *) ]
     
     timeFrameCount = (int) objContents.count;

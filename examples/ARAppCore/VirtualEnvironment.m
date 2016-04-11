@@ -189,8 +189,10 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     [objects removeObject:object];
 }
 
-- (int) addObjectsFromPatientListFile: (NSString *)patientDataFilePath connectToARMarkers:(NSArray *)marders
+- (int) addObjectsFromPatientListFile: (NSString *)patientName: patientBaseFilesLocation:(NSArray*) baseFiles patientValveFilesLocation:(NSArray*) valveFiles connectToARMarkers:(NSArray *)marders
 {
+    
+    
     NSString *patientDataFileFullPath;
     FILE *fp;
     char buf[MAXPATHLEN];

@@ -75,6 +75,8 @@
 
 - (void) removeObject:(VEObject *)object;
 
+- (int)  addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile;
+
 // Add objects to a VirtualEnvironment by reading object definitions
 // from an objects list file.
 //

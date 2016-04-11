@@ -7,7 +7,7 @@
 //
 
 //#import <Foundation/Foundation.h>
-#import "VEObjectOBJ.h"
+
 #import "VEObjectOBJMovie.h"
 
 #import "VirtualEnvironment.h"
@@ -50,22 +50,24 @@
 */
 
 
-struct renderModel {
+Class RenderModels;
+
+struct RenderModel {
     GLMmodel* base;
     GLMmodel* valve;
     int timeStamp;
     BOOL hasValve;
 };
 
-typedef struct renderModel renderModel;
+typedef struct RenderModel RenderModel;
 
 
 @implementation VEObjectOBJMovie{
     // NSMutableArray *baseOBJArray;
     // NSMutableArray *valveOBJArray;
     // NSMutableIndexSet *timeStampArray;
-    NSMutableArray* renderedObjects;
-    
+    NSMutableDictionary* renderedObjects;
+    NSArray* timeStampArray;
     NSUInteger size;
     NSUInteger valveSize;
     BOOL hasValve;
@@ -79,20 +81,37 @@ typedef struct renderModel renderModel;
 
 -(id)initFromListOfFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
 {
+    self = [super initFromFile:nil translation:translation rotation:rotation scale:scale];
+    
     valveSize = 0;
     // Create a new empty array.
-    renderedObjects = [NSMutableArray array];
-    renderModel* tmpModel;
+    renderedObjects = [[NSMutableDictionary alloc] initWithCapacity:[baseFiles count]];
+    
+    RenderModel* tmpModel;
     NSString* file;
     
-    NSComparator comparator = ^(id obj1, id obj2){
-        return NSOrderedSame;
-    };
+    if (valveFiles == nil) {
+        hasValve = NO;
+    }
+    
+    if (timeStamp == nil) {
+        NSMutableArray* tempTime = [[NSMutableArray alloc]initWithCapacity:[baseFiles count]];
+        for (int i = 0; i < [baseFiles count]; i++) {
+            [tempTime addObject:[NSNumber numberWithInt:i]];
+        }
+        timeStamp = tempTime;
+    }
+    
+    timeStampArray = timeStamp;
     
     for (int i = 0; i < [baseFiles count]; i++) {
-        tmpModel = (renderModel*) malloc(sizeof(renderModel));
+        
+        // Initialize the render model structure
+        tmpModel = (RenderModel*) malloc(sizeof(RenderModel));
+        
+        // Load base file
         file = (NSString *) [baseFiles objectAtIndex:i];
-
+        
         tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
         if (!tmpModel->base) {
             NSLog(@"Error: Unable to load model %@.\n", file);
@@ -101,9 +120,11 @@ typedef struct renderModel renderModel;
         NSLog(@"MovieOBJ: Loading the base model %@.\n", file);
         [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->base translation:translation rotation:rotation scale:scale config:nil];
         
+        
+        // Load Valve file
         tmpModel->hasValve = FALSE;
         file = (NSString *) [valveFiles objectAtIndex:i];
-        if (!file) {
+        if (file != nil) {
             tmpModel->valve = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
             if (!tmpModel->valve) {
                 NSLog(@"Error: Unable to load model %@.\n", file);
@@ -118,17 +139,18 @@ typedef struct renderModel renderModel;
         // NSNumber
         tmpModel->timeStamp = [(NSNumber*) [timeStamp objectAtIndex:i] intValue];
         /// Need to check which pointer is good for release.
-        
-        [renderedObjects addObject:CFBridgingRelease(tmpModel)];
+        [renderedObjects setObject: [NSValue valueWithPointer:(tmpModel)] forKey:[timeStamp  objectAtIndex:i]];
     }
     
     /// Add sort later. according to the time stamps.
     /*
-    [renderedObjects sortUsingComparator:^NSComparisonResult(renderModel* obj1, renderModel* obj2) {
+    [renderedObjects sortUsingComparator:^NSComparisonResult(RenderModel* obj1, RenderModel* obj2) {
         return obj1->timeStamp < obj2->timeStamp ? obj1 : obj2;
     }];
      */
-    
+    size = [renderedObjects count];
+    NSLog(@"VEObjectOBJMovie: in total %li base and %li valve", [renderedObjects count], valveSize);
+    current = [(NSNumber*)[timeStamp firstObject] intValue];
     _drawable = TRUE;
     return self;
 }
@@ -178,8 +200,12 @@ typedef struct renderModel renderModel;
     /// Main function to override.
     
     
-    GLMmodel *baseModel = NULL;
-    GLMmodel *valveModel = NULL;
+    RenderModel* renderCurrentModel = (RenderModel*) [(NSValue*)[renderedObjects objectForKey:[NSNumber numberWithInt:current]] pointerValue];
+    if (renderCurrentModel == nil) {
+        return;
+    }
+    GLMmodel *baseModel = renderCurrentModel->base;
+    GLMmodel *valveModel = renderCurrentModel->valve;
     // Draw the current context.
     // If animated, then draw with a fresh rate.
 
@@ -220,9 +246,16 @@ typedef struct renderModel renderModel;
     }
 }
 
+
 -(void) nextTimeStamp
 {
+    NSUInteger index = [timeStampArray indexOfObject:[NSNumber numberWithInt: current]];
+    index++;
+    if (index == [timeStampArray count]) {
+        index = 0;
+    }
     
+    current = [[timeStampArray objectAtIndex:index] intValue];
 }
 
 @end

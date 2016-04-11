@@ -13,6 +13,9 @@
 #import "ARAppCore/ARMarkerQRcode.h"
 #import "ARAppCore/VirtualEnvironment.h"
 
+
+#import "ModelHandler.h"
+
 #define VIEW_DISTANCE_MIN   5.0f
 #define VIEW_DISTANCE_MAX   2000.0f
 
@@ -47,6 +50,8 @@
     /* Helen */
     CameraVideo *cameraVideo;
     NSArray *cObjects;
+    
+    ModelHandler* modelHandler;
     
 }
 
@@ -172,7 +177,7 @@ static void startCallback(void* userData) {
 }
 
 - (void) start2 {
-
+    
     int xsize, ysize;
     if (ar2VideoGetSize(gVid, &xsize, &ysize)){
         NSLog(@"ERROR: sizeGetError");
@@ -361,7 +366,20 @@ static void startCallback(void* userData) {
      
      */
     
+    _patientInfo = @"B939XXXX-1";
+    
+    modelHandler = [[ModelHandler alloc] init];
+    [modelHandler readPatientFoldersWithRootFolder:@"Data/mvmodels"];
+    NSArray* baseFiles = [modelHandler getPatientBaseModelPaths:_patientInfo];
+    NSArray* valveFiles = [modelHandler getPatientValveModelPaths:_patientInfo];
+    
+    [self.virtualEnvironment addOBJMovieObjectsForPatient:_patientInfo baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:[markers firstObject] config:@"Data/param.dat"];
+    
+    
+    /*
     [self.virtualEnvironment addObjectsFromObjectListFile:@"Data/models.dat" connectToARMarkers:markers];
+     */
+    
     // Because in this example we're not currently assigning a world coordinate system
     // (we're just using local marker coordinate systems), set the camera pose now, to
     // the default (i.e. the identity matrix).

@@ -74,6 +74,8 @@
 
 /* Begin PBXBuildFile section */
 		2017F3CF1C73326C00A66620 /* VEObjectOBJMoive.m in Sources */ = {isa = PBXBuildFile; fileRef = 2017F3CE1C73326C00A66620 /* VEObjectOBJMoive.m */; };
+		206D76EC1CBA6F040003EADF /* ModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76EB1CBA6F040003EADF /* ModelHandler.m */; };
+		206D76F01CBA71D70003EADF /* PatientsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76EF1CBA71D70003EADF /* PatientsArray.m */; };
 		207ACA921C9ABAD300F5C1F8 /* VEObjectOBJBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA911C9ABAD300F5C1F8 /* VEObjectOBJBase.m */; };
 		207ACA941C9ABADE00F5C1F8 /* VEObjectOBJValve.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA931C9ABADE00F5C1F8 /* VEObjectOBJValve.m */; };
 		207ACAAC1CA909A200F5C1F8 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACAAB1CA909A200F5C1F8 /* ResourceManager.m */; };
@@ -281,11 +283,6 @@
 		4A33B6DA18ADB97A0028A979 /* VEObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6BD18ADB7C50028A979 /* VEObject.m */; };
 		4A33B6DB18ADB97B0028A979 /* VEObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6BD18ADB7C50028A979 /* VEObject.m */; };
 		4A33B6DC18ADB97B0028A979 /* VEObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6BD18ADB7C50028A979 /* VEObject.m */; };
-		4A33B6DD18ADB9A20028A979 /* VirtualEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6C518ADB8280028A979 /* VirtualEnvironment.m */; };
-		4A33B6DE18ADB9A20028A979 /* VirtualEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6C518ADB8280028A979 /* VirtualEnvironment.m */; };
-		4A33B6DF18ADB9A30028A979 /* VirtualEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6C518ADB8280028A979 /* VirtualEnvironment.m */; };
-		4A33B6E018ADB9A30028A979 /* VirtualEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6C518ADB8280028A979 /* VirtualEnvironment.m */; };
-		4A33B6E118ADB9A40028A979 /* VirtualEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6C518ADB8280028A979 /* VirtualEnvironment.m */; };
 		4A33B6E318ADBA0F0028A979 /* ARMarkerNFT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6B418ADB7C50028A979 /* ARMarkerNFT.m */; };
 		4A33B6E418ADBA100028A979 /* ARMarkerNFT.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6B418ADB7C50028A979 /* ARMarkerNFT.m */; };
 		4A33B6E518ADBA2D0028A979 /* ARMarkerSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A33B6B618ADB7C50028A979 /* ARMarkerSquare.m */; };
@@ -1680,6 +1677,10 @@
 		2017F3CD1C73250800A66620 /* tempBoard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = tempBoard; path = MVViewer/tempBoard; sourceTree = "<group>"; };
 		2017F3CE1C73326C00A66620 /* VEObjectOBJMoive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VEObjectOBJMoive.m; sourceTree = "<group>"; };
 		2017F3D01C79D3DA00A66620 /* VEObjectOBJMovie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJMovie.h; sourceTree = "<group>"; };
+		206D76EB1CBA6F040003EADF /* ModelHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModelHandler.m; sourceTree = "<group>"; };
+		206D76ED1CBA6F130003EADF /* ModelHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ModelHandler.h; sourceTree = "<group>"; };
+		206D76EE1CBA71CC0003EADF /* PatientsArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PatientsArray.h; sourceTree = "<group>"; };
+		206D76EF1CBA71D70003EADF /* PatientsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatientsArray.m; sourceTree = "<group>"; };
 		207ACA8D1C9ABA6E00F5C1F8 /* VEObjectOBJBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJBase.h; sourceTree = "<group>"; };
 		207ACA8E1C9ABA7700F5C1F8 /* VEObjectOBJValve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJValve.h; sourceTree = "<group>"; };
 		207ACA911C9ABAD300F5C1F8 /* VEObjectOBJBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VEObjectOBJBase.m; sourceTree = "<group>"; };
@@ -1877,7 +1878,6 @@
 		4A33B6C218ADB7C50028A979 /* VEObjectOSG.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOSG.h; sourceTree = "<group>"; };
 		4A33B6C318ADB7C50028A979 /* VEObjectOSG.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = VEObjectOSG.mm; sourceTree = "<group>"; };
 		4A33B6C418ADB8280028A979 /* VirtualEnvironment.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VirtualEnvironment.h; sourceTree = "<group>"; };
-		4A33B6C518ADB8280028A979 /* VirtualEnvironment.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VirtualEnvironment.m; sourceTree = "<group>"; };
 		4A33B70518ADC4590028A979 /* ARMarkerMulti.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ARMarkerMulti.h; sourceTree = "<group>"; };
 		4A33B70618ADC4590028A979 /* ARMarkerMulti.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ARMarkerMulti.m; sourceTree = "<group>"; };
 		4A33B70718ADC8700028A979 /* ARView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARView.h; sourceTree = "<group>"; };
@@ -3928,6 +3928,10 @@
 				20A835DA1C3E6C7F000E4DA5 /* ARAppCore */,
 				20A8360F1C3E6C7F000E4DA5 /* ARViewController.h */,
 				20A836101C3E6C7F000E4DA5 /* ARViewController.m */,
+				206D76EB1CBA6F040003EADF /* ModelHandler.m */,
+				206D76EE1CBA71CC0003EADF /* PatientsArray.h */,
+				206D76EF1CBA71D70003EADF /* PatientsArray.m */,
+				206D76ED1CBA6F130003EADF /* ModelHandler.h */,
 				20A835C71C3E6BE8000E4DA5 /* AppDelegate.h */,
 				20A835C81C3E6BE8000E4DA5 /* AppDelegate.m */,
 				20BBE2521C4782E1006A64D0 /* MainWindow-iPad.xib */,
@@ -4270,7 +4274,6 @@
 				4A33B6BB18ADB7C50028A979 /* trackingSub.h */,
 				4A33B6BA18ADB7C50028A979 /* trackingSub.c */,
 				4A33B6C418ADB8280028A979 /* VirtualEnvironment.h */,
-				4A33B6C518ADB8280028A979 /* VirtualEnvironment.m */,
 				4A33B6BC18ADB7C50028A979 /* VEObject.h */,
 				4A33B6BD18ADB7C50028A979 /* VEObject.m */,
 				4A33B6BE18ADB7C50028A979 /* VEObjectMovie.h */,
@@ -7779,6 +7782,7 @@
 				20A836241C3E6C7F000E4DA5 /* VEObject.m in Sources */,
 				20A836281C3E6C7F000E4DA5 /* VirtualEnvironment.m in Sources */,
 				207ACA941C9ABADE00F5C1F8 /* VEObjectOBJValve.m in Sources */,
+				206D76F01CBA71D70003EADF /* PatientsArray.m in Sources */,
 				20A836261C3E6C7F000E4DA5 /* VEObjectOBJ.m in Sources */,
 				20A836151C3E6C7F000E4DA5 /* ARView.m in Sources */,
 				20A836481C3E6FFB000E4DA5 /* VEObjectSTL.m in Sources */,
@@ -7789,6 +7793,7 @@
 				207C36321CB38C8800B1A39F /* ARMarkerQRcode.m in Sources */,
 				20A836161C3E6C7F000E4DA5 /* EAGLView.m in Sources */,
 				20A835C61C3E6BE8000E4DA5 /* main.m in Sources */,
+				206D76EC1CBA6F040003EADF /* ModelHandler.m in Sources */,
 				20A836141C3E6C7F000E4DA5 /* ARMarkerSquare.m in Sources */,
 				2017F3CF1C73326C00A66620 /* VEObjectOBJMoive.m in Sources */,
 				207ACAAC1CA909A200F5C1F8 /* ResourceManager.m in Sources */,
@@ -7811,7 +7816,6 @@
 				4A33B6D018ADB90F0028A979 /* VEObjectOSG.mm in Sources */,
 				4A33B6CE18ADB8DB0028A979 /* trackingSub.c in Sources */,
 				4A13036F15BE0319003A441C /* main.m in Sources */,
-				4A33B6DD18ADB9A20028A979 /* VirtualEnvironment.m in Sources */,
 				4A33B70D18ADC8700028A979 /* ARView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -7821,7 +7825,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A13034715BE02E1003A441C /* ARAppNFTDelegate.m in Sources */,
-				4A33B6DE18ADB9A20028A979 /* VirtualEnvironment.m in Sources */,
 				4A33B6CD18ADB8DB0028A979 /* trackingSub.c in Sources */,
 				4A33B6D618ADB95F0028A979 /* VEObjectMovie.m in Sources */,
 				4A33B6DB18ADB97B0028A979 /* VEObject.m in Sources */,
@@ -7855,7 +7858,6 @@
 				4A33B6E518ADBA2D0028A979 /* ARMarkerSquare.m in Sources */,
 				4A33B6D818ADB9790028A979 /* VEObject.m in Sources */,
 				4A2F7317117841F000F35FA7 /* main.m in Sources */,
-				4A33B6E118ADB9A40028A979 /* VirtualEnvironment.m in Sources */,
 				4A33B6D118ADB93D0028A979 /* VEObjectOBJ.m in Sources */,
 				4A33B6C818ADB86E0028A979 /* EAGLView.m in Sources */,
 				4A33B70918ADC8700028A979 /* ARView.m in Sources */,
@@ -7877,7 +7879,6 @@
 				4A33B6C918ADB86E0028A979 /* EAGLView.m in Sources */,
 				4A33B6E618ADBA2E0028A979 /* ARMarkerSquare.m in Sources */,
 				4A33B6EB18ADBA510028A979 /* ARMarker.m in Sources */,
-				4A33B6E018ADB9A30028A979 /* VirtualEnvironment.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7914,7 +7915,6 @@
 				4A33B6E718ADBA2E0028A979 /* ARMarkerSquare.m in Sources */,
 				4A33B6DA18ADB97A0028A979 /* VEObject.m in Sources */,
 				4A33B6D518ADB95F0028A979 /* VEObjectMovie.m in Sources */,
-				4A33B6DF18ADB9A30028A979 /* VirtualEnvironment.m in Sources */,
 				4A33B6CA18ADB86F0028A979 /* EAGLView.m in Sources */,
 				4A5BAAA613D82FFA00C8D5E7 /* main.m in Sources */,
 				4A33B70B18ADC8700028A979 /* ARView.m in Sources */,
@@ -8750,7 +8750,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.kc.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8796,7 +8796,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.kc.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8843,7 +8843,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.MVViewer;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.kc.development;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -78,7 +78,6 @@
 		207ACA941C9ABADE00F5C1F8 /* VEObjectOBJValve.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA931C9ABADE00F5C1F8 /* VEObjectOBJValve.m */; };
 		207ACAAC1CA909A200F5C1F8 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACAAB1CA909A200F5C1F8 /* ResourceManager.m */; };
 		207C36321CB38C8800B1A39F /* ARMarkerQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 207C36311CB38C8800B1A39F /* ARMarkerQRcode.m */; };
-		208722D71C4F4C5F009B754A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */; };
 		20A835C61C3E6BE8000E4DA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C51C3E6BE8000E4DA5 /* main.m */; };
 		20A835C91C3E6BE8000E4DA5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 20A835C81C3E6BE8000E4DA5 /* AppDelegate.m */; };
 		20A835D11C3E6BE8000E4DA5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20A835D01C3E6BE8000E4DA5 /* Assets.xcassets */; };
@@ -956,6 +955,10 @@
 		4AF9712B1B5F5709001BFEB5 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9706A1B5F5708001BFEB5 /* timers.cpp */; };
 		4AF9712D1B5F5709001BFEB5 /* freak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF970771B5F5708001BFEB5 /* freak.cpp */; };
 		4AF9712E1B5F5709001BFEB5 /* hough_similarity_voting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9707A1B5F5708001BFEB5 /* hough_similarity_voting.cpp */; };
+		673287B41CB8CA5A0008464D /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 673287B21CB8CA5A0008464D /* MainViewController.m */; };
+		674504E41CBA949E00991D91 /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674504E11CBA949E00991D91 /* StartViewController.m */; };
+		674504E51CBA949E00991D91 /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674504E31CBA949E00991D91 /* ScanViewController.m */; };
+		674504E71CBA950900991D91 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 674504E61CBA950900991D91 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1688,7 +1691,6 @@
 		207ACAAD1CA909B100F5C1F8 /* ResourceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
 		207C36301CB38C8800B1A39F /* ARMarkerQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMarkerQRcode.h; sourceTree = "<group>"; };
 		207C36311CB38C8800B1A39F /* ARMarkerQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMarkerQRcode.m; sourceTree = "<group>"; };
-		208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = MainStoryboard.storyboard; sourceTree = "<group>"; };
 		20A835C21C3E6BE8000E4DA5 /* MVViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MVViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		20A835C51C3E6BE8000E4DA5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		20A835C71C3E6BE8000E4DA5 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -3398,6 +3400,13 @@
 		4AF9711E1B5F5709001BFEB5 /* point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = point.h; sourceTree = "<group>"; };
 		4AF9711F1B5F5709001BFEB5 /* kpmPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kpmPrivate.h; sourceTree = "<group>"; };
 		4AF9714D1B5F58A6001BFEB5 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		673287B11CB8CA5A0008464D /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ARAppCore/MainViewController.h; sourceTree = "<group>"; };
+		673287B21CB8CA5A0008464D /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ARAppCore/MainViewController.m; sourceTree = "<group>"; };
+		674504E01CBA949E00991D91 /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StartViewController.h; path = ARAppCore/StartViewController.h; sourceTree = "<group>"; };
+		674504E11CBA949E00991D91 /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StartViewController.m; path = ARAppCore/StartViewController.m; sourceTree = "<group>"; };
+		674504E21CBA949E00991D91 /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScanViewController.h; path = ARAppCore/ScanViewController.h; sourceTree = "<group>"; };
+		674504E31CBA949E00991D91 /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScanViewController.m; path = ARAppCore/ScanViewController.m; sourceTree = "<group>"; };
+		674504E61CBA950900991D91 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		78BB3E5E08E482F400D7CA2D /* arMultiFreeConfig.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiFreeConfig.c; sourceTree = "<group>"; };
 		78BB3E5F08E482F400D7CA2D /* arMultiGetTransMat.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMat.c; sourceTree = "<group>"; };
 		78BB3E6008E482F400D7CA2D /* arMultiGetTransMatStereo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMatStereo.c; sourceTree = "<group>"; };
@@ -3926,13 +3935,19 @@
 			children = (
 				20BBE2501C4775DD006A64D0 /* Data */,
 				20A835DA1C3E6C7F000E4DA5 /* ARAppCore */,
+				673287B11CB8CA5A0008464D /* MainViewController.h */,
+				673287B21CB8CA5A0008464D /* MainViewController.m */,
 				20A8360F1C3E6C7F000E4DA5 /* ARViewController.h */,
 				20A836101C3E6C7F000E4DA5 /* ARViewController.m */,
+				674504E01CBA949E00991D91 /* StartViewController.h */,
+				674504E11CBA949E00991D91 /* StartViewController.m */,
+				674504E21CBA949E00991D91 /* ScanViewController.h */,
+				674504E31CBA949E00991D91 /* ScanViewController.m */,
 				20A835C71C3E6BE8000E4DA5 /* AppDelegate.h */,
 				20A835C81C3E6BE8000E4DA5 /* AppDelegate.m */,
 				20BBE2521C4782E1006A64D0 /* MainWindow-iPad.xib */,
 				20BBE2531C4782E1006A64D0 /* MainWindow.xib */,
-				208722D61C4F4C5F009B754A /* MainStoryboard.storyboard */,
+				674504E61CBA950900991D91 /* Main.storyboard */,
 				20A835D01C3E6BE8000E4DA5 /* Assets.xcassets */,
 				20A835D51C3E6BE8000E4DA5 /* Info.plist */,
 				20A835C41C3E6BE8000E4DA5 /* Supporting Files */,
@@ -7378,8 +7393,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				20BBE2551C4782E1006A64D0 /* MainWindow.xib in Resources */,
-				208722D71C4F4C5F009B754A /* MainStoryboard.storyboard in Resources */,
 				20A835D11C3E6BE8000E4DA5 /* Assets.xcassets in Resources */,
+				674504E71CBA950900991D91 /* Main.storyboard in Resources */,
 				20BBE2541C4782E1006A64D0 /* MainWindow-iPad.xib in Resources */,
 				20BBE2511C4775DD006A64D0 /* Data in Resources */,
 			);
@@ -7786,9 +7801,12 @@
 				20A835C91C3E6BE8000E4DA5 /* AppDelegate.m in Sources */,
 				20A836111C3E6C7F000E4DA5 /* ARMarker.m in Sources */,
 				20A836291C3E6C7F000E4DA5 /* ARViewController.m in Sources */,
+				674504E51CBA949E00991D91 /* ScanViewController.m in Sources */,
 				207C36321CB38C8800B1A39F /* ARMarkerQRcode.m in Sources */,
 				20A836161C3E6C7F000E4DA5 /* EAGLView.m in Sources */,
+				673287B41CB8CA5A0008464D /* MainViewController.m in Sources */,
 				20A835C61C3E6BE8000E4DA5 /* main.m in Sources */,
+				674504E41CBA949E00991D91 /* StartViewController.m in Sources */,
 				20A836141C3E6C7F000E4DA5 /* ARMarkerSquare.m in Sources */,
 				2017F3CF1C73326C00A66620 /* VEObjectOBJMoive.m in Sources */,
 				207ACAAC1CA909A200F5C1F8 /* ResourceManager.m in Sources */,

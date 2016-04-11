@@ -7,6 +7,7 @@
 //
 
 #import "ScanViewController.h"
+#import "ARViewController.h"
 #import <AVFoundation/AVFoundation.h>
 @interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
@@ -121,7 +122,9 @@
 
     AVMetadataMachineReadableCodeObject *metadataObj = metadataObjects[0];
     if (metadataObj.stringValue != nil){
+        
         self.messageLabel.text = metadataObj.stringValue;
+        [self performSegueWithIdentifier:@"showModel" sender:self];
     }
 
     
@@ -145,5 +148,12 @@
 
 - (void)dealloc
 {
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier isEqualToString:@"showModel"]){
+        ARViewController *controller = (ARViewController *)segue.destinationViewController;
+        controller.modelName = self.messageLabel.text;
+    }
 }
 @end

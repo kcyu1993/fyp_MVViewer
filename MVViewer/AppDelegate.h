@@ -6,7 +6,7 @@
 //
 //
 
-@class ARViewController;
+/*@class ARViewController;
 
 @interface AppDelegate : NSObject <UIApplicationDelegate> {
     UIWindow *window;
@@ -16,5 +16,14 @@
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 // @property (nonatomic,retain) IBOutlet UIStoryboard *storyboard;
 @property (nonatomic, retain) IBOutlet ARViewController *viewController;
+
+@end*/
+
+#import <UIKit/UIKit.h>
+
+@interface AppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
 
 @end

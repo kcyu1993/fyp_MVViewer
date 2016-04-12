@@ -167,7 +167,7 @@ typedef struct RenderModel RenderModel;
     
     
     
-    _disappearLatency = 1.0f;
+    _disappearLatency = .0f;
     deferredVisibilityChangeTimer = nil;
     return self;
 }

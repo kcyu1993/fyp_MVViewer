@@ -200,7 +200,9 @@ static void startCallback(void* userData) {
     ARParam cparam;
     if(ar2VideoGetCParam(gVid, &cparam) < 0) {
         // Load camera parameters.
-        char cparam_name[] = "Data/camera_para.dat";
+        
+        NSString* cparameter = [self getFullPath:@"Data/camera_para.dat"];
+        char* cparam_name = [cparameter UTF8String];
         NSLog(@"Unable to automatically determine camera parameters. Using default.\n");
         if (arParamLoad(cparam_name, 1, &cparam) < 0) {
             NSLog(@"Error: Unable to load parameter file %s for camera.\n", cparam_name);
@@ -369,11 +371,11 @@ static void startCallback(void* userData) {
     _patientInfo = @"B939XXXX-1";
     
     modelHandler = [[ModelHandler alloc] init];
-    [modelHandler readPatientFoldersWithRootFolder:@"Data/mvmodels"];
+    [modelHandler readPatientFoldersWithRootFolder: [self getFullPath:@"Data/mvmodels"]];
     NSArray* baseFiles = [modelHandler getPatientBaseModelPaths:_patientInfo];
     NSArray* valveFiles = [modelHandler getPatientValveModelPaths:_patientInfo];
     
-    [self.virtualEnvironment addOBJMovieObjectsForPatient:_patientInfo baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:[markers firstObject] config:@"Data/param.dat"];
+    [self.virtualEnvironment addOBJMovieObjectsForPatient:_patientInfo baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:[markers firstObject] config: [self getFullPath: @"Data/param.dat"]];
     
     
     /*
@@ -457,6 +459,7 @@ static void startCallback(void* userData) {
         NSLog(@"screen height%f", screenHeight);
         
         
+        
         if (markerNum > 0)
         {
             
@@ -464,21 +467,108 @@ static void startCallback(void* userData) {
             NSLog(@"found %d marker(s).\n", markerNum);
 #endif
             int i=0;
+            ARdouble tempVector[4][2];
+            ARdouble temp0 =0;
+            ARdouble temp1 =0;
             NSArray *metacorners=[(AVMetadataMachineReadableCodeObject *) cObjects[0] corners];
             while (i < 4)
             {
                 
                 CGPointMakeWithDictionaryRepresentation((CFDictionaryRef) metacorners[i], &cgpoint);
-                markerInfo[0].vertex[i][0]=(ARdouble)cgpoint.x * screenHeight; //need to turn the iPad to test it
-                markerInfo[0].vertex[i][1]=(ARdouble)cgpoint.y * screenWidth;
-                
+                tempVector[i][0]=(ARdouble)cgpoint.x * screenWidth; //need to turn the iPad to test it
+                tempVector[i][1]=(ARdouble)cgpoint.y * screenHeight;
+                temp0 += tempVector[i][0];
+                temp1 += tempVector[i][1];
+                NSLog(@"tempVector: %f", tempVector[i][0]);
+                NSLog(@"tempVector: %f", tempVector[i][1]);
                 i++;
             }
-            markerInfo->id=1;
-            markerInfo->dir=0;
+            ARdouble angleX = tempVector[0][0]-tempVector[2][0];
+            ARdouble angleY = tempVector[0][1]-tempVector[2][1];
+            ARdouble sin = angleY / sqrtf(angleX * angleX + angleY * angleY);
+            ARdouble cos = angleX / sqrtf(angleX * angleX + angleY * angleY);
+            int dir= 0;
+            ARdouble sin45 = 0.707106781;
+            if (sin >= sin45){
+                dir = 0;
+            }
+            else if (sin > -sin45 && cos >= sin45){
+                dir = 1;
+            }
+            else if (sin > -sin45 && cos <= -sin45){
+                dir = 3;
+            }
+            else dir = 2;
+            markerInfo->dir = dir;
             
+            if (dir==0){
+                markerInfo[0].vertex[0][0]= tempVector[1][0];
+                markerInfo[0].vertex[0][1]= tempVector[1][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[0][0];
+                markerInfo[0].vertex[1][1]= tempVector[0][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[3][0];
+                markerInfo[0].vertex[2][1]= tempVector[3][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[2][0];
+                markerInfo[0].vertex[3][1]= tempVector[2][1];
+            }
+            else if (dir==1){
+                markerInfo[0].vertex[0][0]= tempVector[0][0];
+                markerInfo[0].vertex[0][1]= tempVector[0][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[3][0];
+                markerInfo[0].vertex[1][1]= tempVector[3][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[2][0];
+                markerInfo[0].vertex[2][1]= tempVector[2][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[1][0];
+                markerInfo[0].vertex[3][1]= tempVector[1][1];
+                
+            }
+            else if (dir==2){
+                markerInfo[0].vertex[0][0]= tempVector[3][0];
+                markerInfo[0].vertex[0][1]= tempVector[3][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[2][0];
+                markerInfo[0].vertex[1][1]= tempVector[2][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[1][0];
+                markerInfo[0].vertex[2][1]= tempVector[1][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[0][0];
+                markerInfo[0].vertex[3][1]= tempVector[0][1];
+                
+            }
+            else {
+                markerInfo[0].vertex[0][0]= tempVector[2][0];
+                markerInfo[0].vertex[0][1]= tempVector[2][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[1][0];
+                markerInfo[0].vertex[1][1]= tempVector[1][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[0][0];
+                markerInfo[0].vertex[2][1]= tempVector[0][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[3][0];
+                markerInfo[0].vertex[3][1]= tempVector[3][1];
+                
+            }
+            
+            
+            
+            markerInfo[0].pos[0]= temp0/4.0;
+            markerInfo[0].pos[1]= temp1/4.0;
+            for (int ii=0; ii<4; ii++){
+                NSLog(@"markerInfo: %f", markerInfo[0].vertex[ii][0]);
+                NSLog(@"markerInfo: %f", markerInfo[0].vertex[ii][1]);
+            }
+            markerInfo->id=1;
             markerInfo->cf=1.0;
         }
+
 
         /*
         // Update all marker objects with detected markers.
@@ -579,6 +669,11 @@ static void startCallback(void* userData) {
 - (void)setMarkersHaveWhiteBorders:(BOOL)markersHaveWhiteBorders
 {
     arSetLabelingMode(gARHandle, (markersHaveWhiteBorders ? AR_LABELING_WHITE_REGION : AR_LABELING_BLACK_REGION));
+}
+
+- (NSString*) getFullPath: (NSString*) path
+{
+    return [[[NSBundle mainBundle]resourcePath] stringByAppendingPathComponent:path];
 }
 
 

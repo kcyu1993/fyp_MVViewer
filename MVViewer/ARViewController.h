@@ -18,6 +18,7 @@
 #import <AR/sys/CameraVideo.h>
 #import "ARAppCore/ARView.h"
 #import "ARAppCore/VirtualEnvironment.h"
+#import "ScanViewController.h"
 
 //#import "MVView.h"
 //#import "MVVirtualEnvironment.h"
@@ -36,7 +37,8 @@
 - (void) loadPatient:(NSString*) patient;
 
 /* Helen */
-@property (nonatomic) NSArray *cObjects;
+// @property (nonatomic) NSArray *cObjects;
+@property (nonatomic) NSString *modelName;
 
 /** KC defined attributes */
 @property (nonatomic, setter=loadPatient: ) NSString* patientInfo;

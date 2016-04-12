@@ -170,7 +170,7 @@ static void startCallback(void* userData) {
     ARViewController *vc = (__bridge ARViewController *) userData;
     [vc start2];
 }
- // Helen : I need to change here !!!
+
 - (void) start2 {
 
     int xsize, ysize;
@@ -312,20 +312,17 @@ static void startCallback(void* userData) {
     /**
      // -- Notice for Helen!
      //
-    */
-    
-    
-    //NSString *markerConfigDataFilename = @"Data/markers.dat";
+     */
+    // NSString *markerConfigDataFilename = @"Data/markers.dat";
     int mode = AR_MATRIX_CODE_DETECTION;
-    
     markers = [ARMarker newQRcodeMarker];
-    //Helen
     /*
     if ((markers = [ARMarker newMarkersFromConfigDataFile:markerConfigDataFilename arPattHandle:gARPattHandle arPatternDetectionMode:&mode]) == nil) {
         NSLog(@"Error loading markers.\n");
         [self stop];
         return;
-    }*/
+    }
+     */
     
 #ifdef DEBUG
     NSLog(@"Marker count = %lu\n", (unsigned long)[markers count]);
@@ -350,8 +347,21 @@ static void startCallback(void* userData) {
      *
      */
     self.virtualEnvironment = [[VirtualEnvironment alloc] initWithARViewController:self] ;
-    [self.virtualEnvironment addObjectsFromObjectListFile:@"Data/models.dat" connectToARMarkers:markers];
     
+    /**
+     Function:
+        1. Implement a FileHandler that can
+            Get folder names from /Documents/ (The file directory that can be access from iTunes
+            Pass the list to GUI, let user to choose
+            Pass the choice (file directory path or simply folder name
+     
+        2. Look up the table and retrieve the file path from Handler
+     
+        3. Call Virtual Environment method, to load all time series objects to virtual env
+     
+     */
+    
+    [self.virtualEnvironment addObjectsFromObjectListFile:@"Data/models.dat" connectToARMarkers:markers];
     // Because in this example we're not currently assigning a world coordinate system
     // (we're just using local marker coordinate systems), set the camera pose now, to
     // the default (i.e. the identity matrix).
@@ -362,7 +372,7 @@ static void startCallback(void* userData) {
     arUtilTimerReset();
     gCallCountMarkerDetect = 0;
     
-    //Create our runloop timer
+    // Create our runloop timer
     [self setRunLoopInterval:2]; // Target 30 fps on a 60 fps device.
     [self startRunLoop];
 
@@ -373,6 +383,8 @@ static void startCallback(void* userData) {
     AR2VideoBufferT *buffer = ar2VideoGetImage(gVid);
     if (buffer) [self processFrame:buffer];
 }
+
+
 
 - (void) processFrame:(AR2VideoBufferT *)buffer
 {
@@ -398,83 +410,155 @@ static void startCallback(void* userData) {
         
         int markerNum = (int)[cObjects count];
         NSLog(@"MetaObject count = %lu", (unsigned long)[cObjects count]);
-
         
         gARHandle->marker_num = markerNum;
+        
+        // Detect the markers in the video frame.
+        /** Comment !
+         -- Kaicheng Yu
+         */
+        // input buffer->buff --> gARHandle)
+        // <AVCaputureMetadataOuputObject> --> get paramters.
+        // Calibration by ourself.
+        // update the gARHandle.
+        
+        // if (arDetectMarker(gARHandle, buffer->buff) < 0) return;
+        // int markerNum = arGetMarkerNum(gARHandle);
         ARMarkerInfo *markerInfo = arGetMarker(gARHandle);
+//        if(markerInfo != NULL){
+//            NSLog(@"==================================\n");
+//            NSLog(@"MarkerInfo direction %d\n",markerInfo->dir);
+//            NSLog(@"==================================\n");
+//        }
         
         CGPoint cgpoint;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        //CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = gARHandle->xsize;
         CGFloat screenHeight = gARHandle->ysize;
         NSLog(@"screen width%f", screenWidth);
         NSLog(@"screen height%f", screenHeight);
-
+        
+        
         if (markerNum > 0)
         {
+            
+#ifdef DEBUG
+            NSLog(@"found %d marker(s).\n", markerNum);
+#endif
             int i=0;
+            ARdouble tempVector[4][2];
+            ARdouble temp0 =0;
+            ARdouble temp1 =0;
             NSArray *metacorners=[(AVMetadataMachineReadableCodeObject *) cObjects[0] corners];
             while (i < 4)
             {
-
-                CGPointMakeWithDictionaryRepresentation((CFDictionaryRef) metacorners[i], &cgpoint);
-                markerInfo[0].vertex[i][0]=(ARdouble)cgpoint.x * screenHeight; //need to turn the iPad to test it
-                markerInfo[0].vertex[i][1]=(ARdouble)cgpoint.y * screenWidth;
                 
+                CGPointMakeWithDictionaryRepresentation((CFDictionaryRef) metacorners[i], &cgpoint);
+                tempVector[i][0]=(ARdouble)cgpoint.x * screenWidth; //need to turn the iPad to test it
+                tempVector[i][1]=(ARdouble)cgpoint.y * screenHeight;
+                temp0 += tempVector[i][0];
+                temp1 += tempVector[i][1];
+                NSLog(@"tempVector: %f", tempVector[i][0]);
+                NSLog(@"tempVector: %f", tempVector[i][1]);
                 i++;
             }
+            ARdouble angleX = tempVector[0][0]-tempVector[2][0];
+            ARdouble angleY = tempVector[0][1]-tempVector[2][1];
+            ARdouble sin = angleY / sqrtf(angleX * angleX + angleY * angleY);
+            ARdouble cos = angleX / sqrtf(angleX * angleX + angleY * angleY);
+            int dir= 0;
+            ARdouble sin45 = 0.707106781;
+            if (sin >= sin45){
+                dir = 0;
+            }
+            else if (sin > -sin45 && cos >= sin45){
+                dir = 1;
+            }
+            else if (sin > -sin45 && cos <= -sin45){
+                dir = 3;
+            }
+            else dir = 2;
+            markerInfo->dir = dir;
+            
+            if (dir==0){
+                markerInfo[0].vertex[0][0]= tempVector[1][0];
+                markerInfo[0].vertex[0][1]= tempVector[1][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[0][0];
+                markerInfo[0].vertex[1][1]= tempVector[0][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[3][0];
+                markerInfo[0].vertex[2][1]= tempVector[3][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[2][0];
+                markerInfo[0].vertex[3][1]= tempVector[2][1];
+            }
+            else if (dir==1){
+                markerInfo[0].vertex[0][0]= tempVector[0][0];
+                markerInfo[0].vertex[0][1]= tempVector[0][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[3][0];
+                markerInfo[0].vertex[1][1]= tempVector[3][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[2][0];
+                markerInfo[0].vertex[2][1]= tempVector[2][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[1][0];
+                markerInfo[0].vertex[3][1]= tempVector[1][1];
+
+            }
+            else if (dir==2){
+                markerInfo[0].vertex[0][0]= tempVector[3][0];
+                markerInfo[0].vertex[0][1]= tempVector[3][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[2][0];
+                markerInfo[0].vertex[1][1]= tempVector[2][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[1][0];
+                markerInfo[0].vertex[2][1]= tempVector[1][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[0][0];
+                markerInfo[0].vertex[3][1]= tempVector[0][1];
+
+            }
+            else {
+                markerInfo[0].vertex[0][0]= tempVector[2][0];
+                markerInfo[0].vertex[0][1]= tempVector[2][1];
+                
+                markerInfo[0].vertex[1][0]= tempVector[1][0];
+                markerInfo[0].vertex[1][1]= tempVector[1][1];
+                
+                markerInfo[0].vertex[2][0]= tempVector[0][0];
+                markerInfo[0].vertex[2][1]= tempVector[0][1];
+                
+                markerInfo[0].vertex[3][0]= tempVector[3][0];
+                markerInfo[0].vertex[3][1]= tempVector[3][1];
+
+            }
+            
+            
+            
+            markerInfo[0].pos[0]= temp0/4.0;
+            markerInfo[0].pos[1]= temp1/4.0;
+            for (int ii=0; ii<4; ii++){
+                NSLog(@"markerInfo: %f", markerInfo[0].vertex[ii][0]);
+                NSLog(@"markerInfo: %f", markerInfo[0].vertex[ii][1]);
+            }
             markerInfo->id=1;
-            markerInfo->dir=0;
-                        
             markerInfo->cf=1.0;
         }
 
-        /*for (AVMetadataObject *metadataObject in cObjects)
-        {
-            int i=0;
-            for (NSValue *point in [(AVMetadataMachineReadableCodeObject *) metadataObject corners]){
-                NSLog(@"point %@\n", point);
-                
-            }
-        }*/
         
-        
-        
-        
-        
-        // Detect the markers in the video frame.
-        //Helen
-        /*
-        if (arDetectMarker(gARHandle, buffer->buff) < 0) return;
-        int markerNum = arGetMarkerNum(gARHandle);
-        ARMarkerInfo *markerInfo = arGetMarker(gARHandle);
-         */
-        
-#ifdef DEBUG
-        //NSLog(@"found %d marker(s).\n", markerNum);
-#endif
         NSLog(@"markers has: %lu", (unsigned long)[markers count]);
         for (ARMarker *marker in markers) {
             if ([marker isKindOfClass:[ARMarkerQRcode class]]) {
                 NSLog(@"Found");
                 [(ARMarkerQRcode *)marker updateWithDetectedMarkers:markerInfo count:markerNum ar3DHandle:gAR3DHandle];
             } else {
+                // Cancel the current ARMarkerQRCode
                 [marker update];
             }
         }
-
-        
-        // Update all marker objects with detected markers.
-        /*Helen
-         for (ARMarker *marker in markers) {
-            if ([marker isKindOfClass:[ARMarkerSquare class]]) {
-                [(ARMarkerSquare *)marker updateWithDetectedMarkers:markerInfo count:markerNum ar3DHandle:gAR3DHandle];
-            } else if ([marker isKindOfClass:[ARMarkerMulti class]]) {
-                [(ARMarkerMulti *)marker updateWithDetectedMarkers:markerInfo count:markerNum ar3DHandle:gAR3DHandle];
-            } else {
-                [marker update];
-            }
-        }*/
         
         // Get current time (units = seconds).
         /**
@@ -539,7 +623,7 @@ static void startCallback(void* userData) {
 }
 
 
-/*// ARToolKit-specific methods.
+// ARToolKit-specific methods.
 - (BOOL)markersHaveWhiteBorders
 {
     int mode;
@@ -552,7 +636,6 @@ static void startCallback(void* userData) {
     arSetLabelingMode(gARHandle, (markersHaveWhiteBorders ? AR_LABELING_WHITE_REGION : AR_LABELING_BLACK_REGION));
 }
 
-*/
 
 
 @end

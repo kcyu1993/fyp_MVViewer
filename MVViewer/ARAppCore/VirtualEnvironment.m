@@ -46,6 +46,19 @@
 //  Author(s): Philip Lamb
 //
 
+/**
+    Final Year Project:
+    Author: Yu Kaicheng
+    Update:
+        Add the method 
+            addObjectsFromFolderPath: 
+                Read all objects under a given folder, create a new VEObjectOBJMovie
+                and add into the environment.
+                Also, it is connected to the ARMarker(QRCode) specified.
+ 
+ */
+
+
 #import "VirtualEnvironment.h"
 #import "../ARViewController.h"
 
@@ -185,6 +198,67 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 {
     [object willBeRemovedFromEnvironment:self];
     [objects removeObject:object];
+}
+
+- (int) addObjectsFromFolderPath: (NSString *)objectFolderPath connectToARMarkers: (ARMarker *)marker
+{
+    return ([self addObjectsFromFolderPath:objectFolderPath connectToARMarkers:marker autoParentTo:nil]);
+}
+
+
+/**
+    Read the obj file, with identification of
+    Markers shall have size 1， directly passed the marker.
+ 
+    @param objectFolderPath Path to the folder which patient's model is stored.
+    @return (int) the number of patient's model added.
+ */
+- (int) addObjectsFromFolderPath: (NSString *)objectFolderPath connectToARMarkers: (ARMarker *) marker autoParentTo:(VEObject *)autoParent
+{
+    
+    int timeFrameCount = 0;
+    
+    // Get the file directory (Access to documents folder)
+    // NSString* resourcePath = [[NSBundle mainBundle] resourcePath];
+    // NSString* documentsPath = [resourcePath stringByAppendingString:@"Documents"];
+    NSError* error;
+    // Get all directory
+    NSArray* directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:objectFolderPath error:&error];
+    NSLog(@"The folder path is (%@). \n", objectFolderPath);
+    NSMutableArray* objContents = [[NSMutableArray alloc] init];
+    
+    
+    // Loop through all the files among the given directory.
+    for (NSString *objectPath in directoryContent) {
+        // Check the file ended with obj.
+        NSString* objectPathExtension = [[objectPath pathExtension] lowercaseString];
+        if ([objectPathExtension isEqualToString:@"obj"]) {
+            NSLog(@"Read obj file (%@). \n", objectPath);
+            NSString* objectFullPath;
+            if ([objectPath hasPrefix:@"/"]) {
+                objectFullPath = objectPath;
+            }
+            else {
+                objectFullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:objectPath];
+            }
+            // Add the file to it.
+            [objContents addObject:objectFullPath];
+        }
+        
+    }
+    
+    // Prepare for loading datas
+    FILE *fp;
+    char buf[MAXPATHLEN];
+    int i;
+    Class type;
+    
+    VEObject* tmpObject;
+    //tmpObject = [(VEObject *) ]
+    
+    timeFrameCount = (int) objContents.count;
+    return timeFrameCount;
+
 }
 
 - (int) addObjectsFromObjectListFile:(NSString *)objectDataFilePath connectToARMarkers:(NSArray *)markers

@@ -49,14 +49,12 @@
 #import "ARMarker.h"
 #import "ARMarkerSquare.h"
 #import "ARMarkerMulti.h"
-
-//Helen
-#import "ARMarkerQRcode.h"
-
-
 #ifdef WITH_NFT
 #  import "ARMarkerNFT.h"
 #endif
+
+//Helen
+#import "ARMarkerQRcode.h"
 
 #import <AR/gsub_es.h>
 #import <Eden/EdenMath.h> // EdenMathInvertMatrix().
@@ -337,7 +335,6 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
         arglCameraViewRHf(trans, pose.T, positionScalefactor);
         needToCalculatePoseInverse = TRUE;
         // Tell any dependent objects about the update.
-        
         [[NSNotificationCenter defaultCenter] postNotificationName:ARMarkerUpdatedPoseNotification object:self];
         
     } else {

@@ -102,6 +102,7 @@ typedef struct {
     AVCaptureDevicePosition captureDevicePosition;
     AVCaptureVideoDataOutput *captureVideoDataOutput;
     AVCaptureStillImageOutput *captureStillImageOutput;
+    
     /* Helen */
     AVCaptureMetadataOutput *captureMetadataOutput;
     
@@ -324,7 +325,7 @@ typedef struct {
         [captureVideoDataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
     }
 	[captureVideoDataOutput setAlwaysDiscardsLateVideoFrames:YES]; // Discard if the data output queue is blocked (including during processing of any still image).
-    
+
     /* Helen*/
     
     //
@@ -347,7 +348,7 @@ typedef struct {
     }
     
     
-/////////////////////////
+    /////////////////////////
     
     if ([captureSession canAddOutput:captureVideoDataOutput]) [captureSession addOutput:captureVideoDataOutput];
     
@@ -460,6 +461,71 @@ bail0:
 
     if (!planes) {
         pixelFormat = CVPixelBufferGetPixelFormatType(imageBuffer);
+        //CFDictionaryRef pfDesc = CVPixelFormatDescriptionCreateWithPixelFormatType(CFAllocatorGetDefault(), pixelFormat);
+        /* pfDesc for 'BGRA'
+        {
+            BitsPerBlock = 32;
+            BlackBlock = <000000ff>;
+            CGBitmapContextCompatibility = 1;
+            CGBitmapInfo = 8196;
+            CGImageCompatibility = 1;
+            ContainsAlpha = 1;
+            FillExtendedPixelsCallback = <00000000 5539de31 00000000>;
+            IOSurfaceCoreAnimationCompatibility = 1;
+            IOSurfaceOpenGLESFBOCompatibility = 1;
+            IOSurfaceOpenGLESTextureCompatibility = 1;
+            OpenGLESCompatibility = 1;
+            PixelFormat = 1111970369;
+        }
+        */
+        /* pfDesc for '420f'
+        {
+            ContainsAlpha = 0;
+            IOSurfaceCoreAnimationCompatibility = 1;
+            IOSurfaceOpenGLESFBOCompatibility = 1;
+            IOSurfaceOpenGLESTextureCompatibility = 1;
+            OpenGLESCompatibility = 1;
+            PixelFormat = 875704422;
+            Planes =     (
+                        {
+                    BitsPerBlock = 8;
+                    BlackBlock = <00>;
+                    FillExtendedPixelsCallback = <00000000 a93cde31 00000000>;
+                },
+                        {
+                    BitsPerBlock = 16;
+                    BlackBlock = <8080>;
+                    FillExtendedPixelsCallback = <00000000 993bde31 00000000>;
+                    HorizontalSubsampling = 2;
+                    VerticalSubsampling = 2;
+                }
+            );
+        }
+        */
+        /* pfDesc for '420v'
+        {
+            ContainsAlpha = 0;
+            IOSurfaceCoreAnimationCompatibility = 1;
+            IOSurfaceOpenGLESFBOCompatibility = 1;
+            IOSurfaceOpenGLESTextureCompatibility = 1;
+            OpenGLESCompatibility = 1;
+            PixelFormat = 875704438;
+            Planes =     (
+                        {
+                    BitsPerBlock = 8;
+                    BlackBlock = <10>;
+                    FillExtendedPixelsCallback = <00000000 a93cde31 00000000>;
+                },
+                        {
+                    BitsPerBlock = 16;
+                    BlackBlock = <8080>;
+                    FillExtendedPixelsCallback = <00000000 993bde31 00000000>;
+                    HorizontalSubsampling = 2;
+                    VerticalSubsampling = 2;
+                }
+            );
+        }
+        */
         size_t pixelSize;
         switch (pixelFormat) {
             case kCVPixelFormatType_420YpCbCr8BiPlanarVideoRange: // All devices except iPhone 3G recommended.
@@ -626,13 +692,13 @@ bail0:
     
     
     /*for (AVMetadataObject *metadataObject in metadataObjects)
-    {
-        
-        for (NSValue *point in [(AVMetadataMachineReadableCodeObject *) metadataObject corners]){
-           
-            //NSLog(@"point %@\n", point);
-        }
-    }*/
+     {
+     
+     for (NSValue *point in [(AVMetadataMachineReadableCodeObject *) metadataObject corners]){
+     
+     //NSLog(@"point %@\n", point);
+     }
+     }*/
     
     
     
@@ -647,7 +713,6 @@ bail0:
     return _codeObjects;
 }
 
-////////////////////////////////
 - (size_t)width
 {
     if (planes) {

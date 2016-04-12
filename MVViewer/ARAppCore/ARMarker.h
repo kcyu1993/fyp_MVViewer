@@ -134,9 +134,9 @@ extern NSString *const ARMarkerDestroyedNotification;   // Sent before marker is
 //                  value is AR_FILTER_TRANS_MAT_CUTOFF_FREQ_DEFAULT, which
 //                  at time of writing, equals 5.0.
 
-
 //Helen
 + (NSMutableArray *)newQRcodeMarker;
+
 // Variant if using both square and NFT detection.
 + (NSMutableArray *)newMarkersFromConfigDataFile:(NSString *)markersConfigDataFilePath arPattHandle:(ARPattHandle *)arPattHandle_in arPatternDetectionMode:(int *)patternDetectionMode_out;
 

@@ -36,8 +36,8 @@
 - (void) loadPatient:(NSString*) patient;
 
 /* Helen */
-@property (nonatomic) NSArray *cObjects;
-
+//@property (nonatomic) NSArray *cObjects;
+@property (nonatomic) NSString *modelName;
 
 /** KC defined attributes */
 @property (nonatomic, setter=loadPatient: ) NSString* patientInfo;
@@ -60,7 +60,7 @@
 // behavior.
 @property (nonatomic) NSInteger runLoopInterval;
 
-//@property (nonatomic) BOOL markersHaveWhiteBorders;
+@property (nonatomic) BOOL markersHaveWhiteBorders;
 
 @end
 

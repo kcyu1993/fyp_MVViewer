@@ -42,7 +42,7 @@
 #import <AVFoundation/AVFoundation.h>
 /* Helen */
 #import <CoreGraphics/CoreGraphics.h>
-/////////////
+
 @protocol CameraVideoTookPictureDelegate<NSObject>
 @required
 /*
@@ -109,14 +109,40 @@ extern NSString *const CameraVideoiOSDeviceAppleTVX; // "Apple TV (Unknown model
 
 @class CameraVideo;
 
-@interface CameraVideo : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureMetadataOutputObjectsDelegate>
+@interface CameraVideo : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate,
+    AVCaptureMetadataOutputObjectsDelegate>
 
 - (id) init;
 
-
 @property(readonly) NSString *iOSDevice;
 
+/*
+ Set or get the video image quality/size.
+ 
+ Attempts to change this property while (running == TRUE) will be ignored.
+ 
+ Acceptable values:
+     AVCaptureSessionPresetHigh         // iPhone 3G: 400x304.
+                                        // iPhone 3GS: 640x480.
+                                        // iPhone 4/iPod touch 4G/iPad 2: rear 1280x720, front 640x480.
+                                        // iPhone 4S and later, iPad (3rd generation): rear 1920x1080, front 640x480.
+                                        // iPhone (4th generation), iPad Air, iPad Mini, iPad Mini (2nd generation): rear 1920x1080, front 1280x720
+                                        // iPhone 5, 5c, 5s: rear 1920x1080, front 1280x720.
+     AVCaptureSessionPresetMedium       // iPhone 3G: 400x304
+                                        // iPhone 3GS/iPhone 4/iPod touch 4G/iPad 2: 480x360
+     AVCaptureSessionPresetLow          // iPhone 3G/iPhone 3GS/iPhone 4/iPod touch 4G/iPad 2: 192x144.
+     AVCaptureSessionPreset640x480      // iPhone 3G: not supported. iPhone 3GS/iPhone 4/iPod touch 4G/iPad 2:640x480.
+     AVCaptureSessionPreset1280x720     // iPhone 3G/3GS: not supported. iPhone 4/iPod touch 4G/iPad 2:1280x720.
+     AVCaptureSessionPreset352x288      // iOS 5.0-only, iPhone 3GS and later.
+     AVCaptureSessionPreset1920x1080    // iOS 5.0-only, iPhone 4S and later, iPad (3rd generation) and later.
+ Default value is AVCaptureSessionPresetMedium.
+ 
+ N.B. 1920x1080 and 1280x720 are 16:9 aspect ratio.
+      640x480, 480x360, 192x144 are 4:3 aspect ratio.
+ 
+ */
 @property(nonatomic, assign) NSString *captureSessionPreset;
+
 
 /* Helen */
 @property (nonatomic, strong) NSMutableArray *codeObjects;

@@ -48,8 +48,10 @@
 
 //#import <Foundation/Foundation.h> // Using precompiled header.
 #import "VEObject.h"
+#import <Eden/glm.h>
 
 @interface VEObjectOBJ : VEObject {
+    GLMmodel *glmModel; // change it to public domain, for VEObjectOBJMovie
 }
-
+-(void) drawCoordinates;
 @end

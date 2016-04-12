@@ -51,6 +51,12 @@
 // as position and drawing, and a very simple object hierachy.
 //
 
+/**
+ Author: Yu Kaicheng
+ Final Year Project
+ 
+*/
+
 //#import <UIKit/UIKit.h> // Using precompiled header.
 #import "VEObject.h"
 
@@ -124,6 +130,11 @@
 // an error.
 - (int) addObjectsFromObjectListFile:(NSString *)objectDataFilePath connectToARMarkers:(NSArray *)markers;
 - (int) addObjectsFromObjectListFile:(NSString *)objectDataFilePath connectToARMarkers:(NSArray *)markers  autoParentTo:(VEObject *)autoParent;
+
+
+- (int) addObjectsFromFolderPath:(NSString *)objectFolderPath connectToARMarkers:(ARMarker *) marker;
+- (int) addObjectsFromFolderPath:(NSString *)objectFolderPath connectToARMarkers:(ARMarker *) marker
+    autoParentTo:(VEObject *)autoParent;
 
 - (void) updateWithSimulationTime:(NSTimeInterval)timeDelta;
 

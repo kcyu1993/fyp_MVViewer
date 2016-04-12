@@ -72,6 +72,13 @@ typedef struct RenderModel RenderModel;
     NSUInteger valveSize;
     BOOL hasValve;
     int current;
+    
+    // From VEObjiectMovie
+    NSTimer *deferredVisibilityChangeTimer;
+    NSTimer *movieLoopingTimer;
+    NSInvocation *movieLoopInvocation;
+    float _fps;
+    float _disappearLatency;
 }
 
 
@@ -152,8 +159,20 @@ typedef struct RenderModel RenderModel;
     NSLog(@"VEObjectOBJMovie: in total %li base and %li valve", [renderedObjects count], valveSize);
     current = [(NSNumber*)[timeStamp firstObject] intValue];
     _drawable = TRUE;
+    
+    _fps = 0.1f;
+    movieLoopInvocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(nextTimeStamp)]];
+    [movieLoopInvocation setTarget:self];
+    [movieLoopInvocation setSelector:@selector(nextTimeStamp)];
+    
+    
+    
+    _disappearLatency = 1.0f;
+    deferredVisibilityChangeTimer = nil;
     return self;
 }
+
+
 
 +(GLMmodel*)generateArraysWithTransformation:(GLMmodel*) glmModel translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale config:(char *)config
 {
@@ -244,6 +263,77 @@ typedef struct RenderModel RenderModel;
         }
         glPopMatrix();
     }
+}
+
+// Override marker appearing/disappearing default behaviour.
+- (void) markerNotification:(NSNotification *)notification
+{
+    ARMarker *marker = [notification object];
+    
+    if (marker) {
+        if ([notification.name isEqualToString:ARMarkerDisappearedNotification]) {
+            if (_disappearLatency) {
+                // Don't change visibility immediately, but instead schedule it to occur in 2 seconds time.
+                // If, during that time, the marker reappears, we can cancel the timer.
+                // We will have the timer directly call setVisible:FALSE, so create an invocation which the
+                // timer will use.
+                NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(setVisible:)]];
+                [invocation setTarget:self];
+                [invocation setSelector:@selector(setVisible:)];
+                BOOL arg = FALSE;
+                [invocation setArgument:&arg atIndex:2]; // Index 0 is self, index 1 is _cmd.
+                
+                deferredVisibilityChangeTimer = [NSTimer scheduledTimerWithTimeInterval:(double)_disappearLatency invocation:invocation repeats:NO];
+            } else {
+                [self setVisible:FALSE];
+            }
+        } else if ([notification.name isEqualToString:ARMarkerAppearedNotification]) {
+            if (deferredVisibilityChangeTimer) { // If the movie is scheduled to be hidden, cancel that.
+                [deferredVisibilityChangeTimer invalidate];
+                deferredVisibilityChangeTimer = nil;
+            }
+            [self setVisible:TRUE];
+        } else {
+            [super markerNotification:notification];
+        }
+    }
+}
+
+
+- (void) setVisible:(BOOL)visibleIn
+{
+    if (deferredVisibilityChangeTimer) { // Clean up our reference to timer that has fired.
+        [deferredVisibilityChangeTimer invalidate]; // This message will be redundant if the timer has already fired, but setVisible can also be called by user, in which case we should cancel the timer.
+        deferredVisibilityChangeTimer = nil;
+    }
+    if (visibleIn != self.isVisible) {
+        if (visibleIn) [self setMoviePaused:FALSE];
+        else [self setMoviePaused:TRUE];
+    }
+    
+    if (visibleIn) {
+        movieLoopingTimer = [NSTimer scheduledTimerWithTimeInterval:(double) _fps invocation:movieLoopInvocation repeats:YES];
+    }
+    else{
+        [movieLoopingTimer invalidate];
+        movieLoopingTimer = nil;
+    }
+    [super setVisible:visibleIn];
+}
+
+
+- (void) setMoviePaused:(BOOL)isPaused
+{
+    self.paused = isPaused;
+    if (isPaused && movieLoopingTimer) {
+        [movieLoopingTimer invalidate];
+        movieLoopingTimer = nil;
+    }
+}
+
+- (BOOL) isPaused
+{
+    return self.paused;
 }
 
 

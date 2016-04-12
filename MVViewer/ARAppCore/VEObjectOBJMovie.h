@@ -18,6 +18,9 @@
 
     
 }
+
+
+@property(nonatomic, getter=isPaused) BOOL paused;
 @property(readonly) NSComparator renderedObjectComparator;
 @property(getter=currentTimeStamp, readonly) int currentTimeStamp;
 -(void) nextTimeStamp;

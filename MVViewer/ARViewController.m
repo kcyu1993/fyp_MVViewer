@@ -450,7 +450,7 @@ static void startCallback(void* userData) {
 //        }
         
         CGPoint cgpoint;
-        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        //CGRect screenRect = [[UIScreen mainScreen] bounds];
         CGFloat screenWidth = gARHandle->xsize;
         CGFloat screenHeight = gARHandle->ysize;
         NSLog(@"screen width%f", screenWidth);

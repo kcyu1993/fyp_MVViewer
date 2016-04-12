@@ -71,7 +71,7 @@
         
         tempDirectory = [[rootFolderPath stringByAppendingString:@"/"] stringByAppendingString:patientName];
         BOOL isDirectory = NO;
-        BOOL isFile = [[NSFileManager defaultManager] fileExistsAtPath:tempDirectory];
+        // BOOL isFile = [[NSFileManager defaultManager] fileExistsAtPath:tempDirectory];
         if ([[NSFileManager defaultManager] fileExistsAtPath:tempDirectory isDirectory:&isDirectory] && isDirectory) {
             //Is directory and could further break down.
             [patientNameLocation setObject:[[tempDirectory stringByAppendingString:@"/" ] stringByAppendingString:factorStr] forKey:patientName];
@@ -93,7 +93,7 @@
 
 -(NSUInteger) loadPatientModelsWithFolderPath:(NSString *)patientName  directory: (NSString*) directory index: (NSUInteger) index
 {
-    NSLog(@"Loading patient %@ at index %li", patientName,index);
+    NSLog(@"Loading patient %@ at index %li", patientName,(unsigned long)index);
     
     NSError* error;
     NSArray* directoryContents = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:directory error:&error];

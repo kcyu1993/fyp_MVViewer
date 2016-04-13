@@ -315,21 +315,19 @@ static void startCallback(void* userData) {
     arPattAttach(gARHandle, gARPattHandle);
     
     // Load marker(s).
-    
     /**
      // -- Notice for Helen!
      //
      */
-    // NSString *markerConfigDataFilename = @"Data/markers.dat";
+    NSString *markerConfigDataFilename = [self getFullPath:@"Data/markers.dat"];
     int mode = AR_MATRIX_CODE_DETECTION;
-    markers = [ARMarker newQRcodeMarker];
-    /*
+    //    markers = [ARMarker newQRcodeMarker];
+    
     if ((markers = [ARMarker newMarkersFromConfigDataFile:markerConfigDataFilename arPattHandle:gARPattHandle arPatternDetectionMode:&mode]) == nil) {
         NSLog(@"Error loading markers.\n");
         [self stop];
         return;
     }
-     */
     
 #ifdef DEBUG
     NSLog(@"Marker count = %lu\n", (unsigned long)[markers count]);
@@ -408,6 +406,10 @@ static void startCallback(void* userData) {
 
 - (void) processFrame:(AR2VideoBufferT *)buffer
 {
+    
+    /// testing
+    [self performSegueWithIdentifier:@"backToScanViewSegue" sender:self];
+    
     if (buffer) {
         
         // Upload the frame to OpenGL.
@@ -425,152 +427,16 @@ static void startCallback(void* userData) {
             arUtilTimerReset();
         }
 #endif
-        //Helen
-        cObjects = [cameraVideo codeObjects];
-        
-        int markerNum = (int)[cObjects count];
-        NSLog(@"MetaObject count = %lu", (unsigned long)[cObjects count]);
-        
-        gARHandle->marker_num = markerNum;
         
         // Detect the markers in the video frame.
-        /** Comment !
-         -- Kaicheng Yu
-         */
-        // input buffer->buff --> gARHandle)
-        // <AVCaputureMetadataOuputObject> --> get paramters.
-        // Calibration by ourself.
-        // update the gARHandle.
-        
-        // if (arDetectMarker(gARHandle, buffer->buff) < 0) return;
-        // int markerNum = arGetMarkerNum(gARHandle);
+        if (arDetectMarker(gARHandle, buffer->buff) < 0) return;
+        int markerNum = arGetMarkerNum(gARHandle);
         ARMarkerInfo *markerInfo = arGetMarker(gARHandle);
-//        if(markerInfo != NULL){
-//            NSLog(@"==================================\n");
-//            NSLog(@"MarkerInfo direction %d\n",markerInfo->dir);
-//            NSLog(@"==================================\n");
-//        }
         
-        CGPoint cgpoint;
-        //CGRect screenRect = [[UIScreen mainScreen] bounds];
-        CGFloat screenWidth = gARHandle->xsize;
-        CGFloat screenHeight = gARHandle->ysize;
-        NSLog(@"screen width%f", screenWidth);
-        NSLog(@"screen height%f", screenHeight);
-        
-        
-        
-        if (markerNum > 0)
-        {
-            
 #ifdef DEBUG
-            NSLog(@"found %d marker(s).\n", markerNum);
+        NSLog(@"found %d marker(s).\n", markerNum);
 #endif
-            int i=0;
-            ARdouble tempVector[4][2];
-            ARdouble temp0 =0;
-            ARdouble temp1 =0;
-            NSArray *metacorners=[(AVMetadataMachineReadableCodeObject *) cObjects[0] corners];
-            while (i < 4)
-            {
-                
-                CGPointMakeWithDictionaryRepresentation((CFDictionaryRef) metacorners[i], &cgpoint);
-                tempVector[i][0]=(ARdouble)cgpoint.x * screenWidth; //need to turn the iPad to test it
-                tempVector[i][1]=(ARdouble)cgpoint.y * screenHeight;
-                temp0 += tempVector[i][0];
-                temp1 += tempVector[i][1];
-                NSLog(@"tempVector: %f", tempVector[i][0]);
-                NSLog(@"tempVector: %f", tempVector[i][1]);
-                i++;
-            }
-            ARdouble angleX = tempVector[0][0]-tempVector[2][0];
-            ARdouble angleY = tempVector[0][1]-tempVector[2][1];
-            ARdouble sin = angleY / sqrtf(angleX * angleX + angleY * angleY);
-            ARdouble cos = angleX / sqrtf(angleX * angleX + angleY * angleY);
-            int dir= 0;
-            ARdouble sin45 = 0.707106781;
-            if (sin >= sin45){
-                dir = 0;
-            }
-            else if (sin > -sin45 && cos >= sin45){
-                dir = 1;
-            }
-            else if (sin > -sin45 && cos <= -sin45){
-                dir = 3;
-            }
-            else dir = 2;
-            markerInfo->dir = dir;
-            
-            if (dir==0){
-                markerInfo[0].vertex[0][0]= tempVector[1][0];
-                markerInfo[0].vertex[0][1]= tempVector[1][1];
-                
-                markerInfo[0].vertex[1][0]= tempVector[0][0];
-                markerInfo[0].vertex[1][1]= tempVector[0][1];
-                
-                markerInfo[0].vertex[2][0]= tempVector[3][0];
-                markerInfo[0].vertex[2][1]= tempVector[3][1];
-                
-                markerInfo[0].vertex[3][0]= tempVector[2][0];
-                markerInfo[0].vertex[3][1]= tempVector[2][1];
-            }
-            else if (dir==1){
-                markerInfo[0].vertex[0][0]= tempVector[0][0];
-                markerInfo[0].vertex[0][1]= tempVector[0][1];
-                
-                markerInfo[0].vertex[1][0]= tempVector[3][0];
-                markerInfo[0].vertex[1][1]= tempVector[3][1];
-                
-                markerInfo[0].vertex[2][0]= tempVector[2][0];
-                markerInfo[0].vertex[2][1]= tempVector[2][1];
-                
-                markerInfo[0].vertex[3][0]= tempVector[1][0];
-                markerInfo[0].vertex[3][1]= tempVector[1][1];
-                
-            }
-            else if (dir==2){
-                markerInfo[0].vertex[0][0]= tempVector[3][0];
-                markerInfo[0].vertex[0][1]= tempVector[3][1];
-                
-                markerInfo[0].vertex[1][0]= tempVector[2][0];
-                markerInfo[0].vertex[1][1]= tempVector[2][1];
-                
-                markerInfo[0].vertex[2][0]= tempVector[1][0];
-                markerInfo[0].vertex[2][1]= tempVector[1][1];
-                
-                markerInfo[0].vertex[3][0]= tempVector[0][0];
-                markerInfo[0].vertex[3][1]= tempVector[0][1];
-                
-            }
-            else {
-                markerInfo[0].vertex[0][0]= tempVector[2][0];
-                markerInfo[0].vertex[0][1]= tempVector[2][1];
-                
-                markerInfo[0].vertex[1][0]= tempVector[1][0];
-                markerInfo[0].vertex[1][1]= tempVector[1][1];
-                
-                markerInfo[0].vertex[2][0]= tempVector[0][0];
-                markerInfo[0].vertex[2][1]= tempVector[0][1];
-                
-                markerInfo[0].vertex[3][0]= tempVector[3][0];
-                markerInfo[0].vertex[3][1]= tempVector[3][1];
-                
-            }
-            
-            
-            
-            markerInfo[0].pos[0]= temp0/4.0;
-            markerInfo[0].pos[1]= temp1/4.0;
-            for (int ii=0; ii<4; ii++){
-                NSLog(@"markerInfo: %f", markerInfo[0].vertex[ii][0]);
-                NSLog(@"markerInfo: %f", markerInfo[0].vertex[ii][1]);
-            }
-            markerInfo->id=1;
-            markerInfo->cf=1.0;
-        }
-
-
-        /*
+        
         // Update all marker objects with detected markers.
         for (ARMarker *marker in markers) {
             if ([marker isKindOfClass:[ARMarkerSquare class]]) {
@@ -580,20 +446,9 @@ static void startCallback(void* userData) {
             } else {
                 [marker update];
             }
-            
         }
-         */
         
-        NSLog(@"markers has: %lu", (unsigned long)[markers count]);
-        for (ARMarker *marker in markers) {
-            if ([marker isKindOfClass:[ARMarkerQRcode class]]) {
-                NSLog(@"Found");
-                [(ARMarkerQRcode *)marker updateWithDetectedMarkers:markerInfo count:markerNum ar3DHandle:gAR3DHandle];
-            } else {
-                // Cancel the current ARMarkerQRCode
-                [marker update];
-            }
-        }
+        
         
         // Get current time (units = seconds).
         /**
@@ -617,6 +472,7 @@ static void startCallback(void* userData) {
 {
     [self stopRunLoop];
     
+//    [self.virtualEnvironment destroyAllObjects];
     self.virtualEnvironment = nil;
 
     markers = nil;
@@ -675,6 +531,18 @@ static void startCallback(void* userData) {
 {
     return [[[NSBundle mainBundle]resourcePath] stringByAppendingPathComponent:path];
 }
+
+
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"backToScanViewSegue"]) {
+        //[self stop];
+ //   ScanViewController* controller = (ScanViewController* )segue.destinationViewController;
+//        [segue perform];
+        
+    }
+}
+
 
 
 

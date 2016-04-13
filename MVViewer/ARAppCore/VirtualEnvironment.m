@@ -173,6 +173,32 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     return (self);
 }
 
+- (VirtualEnvironment *) initWithScanViewController:(ScanViewController *)svc
+{
+    if((self = [super init])){
+        VEObjectRegistryEntry_t *entry = registry;
+        while (entry) {
+            if ([entry->type conformsToProtocol:@protocol(VEObjectRegistryEntryIsInterestedInVirtualEnvironmentLifespan)]) {
+                [entry->type virtualEnvironmentIsBeingCreated:self];
+            }
+            entry = entry->next;
+        }
+        
+        objects = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (void) setARViewController:(ARViewController *) vc;
+{
+    self.arViewController = vc;
+}
+
+- (void)destroyAllObjects
+{
+    [objects makeObjectsPerformSelector:@selector(willBeRemovedFromEnvironment:) withObject:self];
+}
+
 - (void)dealloc
 {
     [objects makeObjectsPerformSelector:@selector(willBeRemovedFromEnvironment:) withObject:self];

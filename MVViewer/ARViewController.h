@@ -28,6 +28,8 @@
 {
     
 }
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
+@property (strong, nonatomic) IBOutlet ARView *glView;
 
 - (IBAction)start;
 - (IBAction)stop;
@@ -43,7 +45,6 @@
 /** KC defined attributes */
 @property (nonatomic, setter=loadPatient: ) NSString* patientInfo;
 
-@property (readonly) ARView *glView;
 //@property (readonly) MVView *glView;    /** tobe swtiched */
 @property (readonly) NSMutableArray *markers;
 //@property (nonatomic, retain) MVVirtualEnvironment *virtualEnvironment;

@@ -165,7 +165,7 @@ typedef struct RenderModel RenderModel;
     [movieLoopInvocation setTarget:self];
     [movieLoopInvocation setSelector:@selector(nextTimeStamp)];
     
-    
+    _lit = TRUE;
     
     _disappearLatency = .0f;
     deferredVisibilityChangeTimer = nil;
@@ -210,7 +210,6 @@ typedef struct RenderModel RenderModel;
 - (void) willBeRemovedFromEnvironment:(VirtualEnvironment *)environment
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:ARViewDrawPreCameraNotification object:environment.arViewController.glView];
-    
     [super willBeRemovedFromEnvironment:environment];
 }
 
@@ -218,6 +217,8 @@ typedef struct RenderModel RenderModel;
 {
     /// Main function to override.
     
+    const GLfloat green[] = {0, 1, 0, 0.3};
+    const GLfloat red[] = {1 , 0, 0, 0.7};
     
     RenderModel* renderCurrentModel = (RenderModel*) [(NSValue*)[renderedObjects objectForKey:[NSNumber numberWithInt:current]] pointerValue];
     if (renderCurrentModel == nil) {
@@ -239,28 +240,69 @@ typedef struct RenderModel RenderModel;
         glMultMatrixf(_poseInEyeSpace.T);
         glMultMatrixf(_localPose.T);
         if (_lit) {
-            glLightfv(GL_LIGHT0, GL_DIFFUSE, lightWhite100);
-            glLightfv(GL_LIGHT0, GL_SPECULAR, lightWhite100);
-            glLightfv(GL_LIGHT0, GL_AMBIENT, lightWhite75);            // Default ambient = {0,0,0,0}.
-            glLightfv(GL_LIGHT0, GL_POSITION, lightPosition0);
-            glEnable(GL_LIGHT0);
+            
             /** Specilaized GL settings getting from Audrey. */
-            glEnable(GL_BLEND); // Add this to generate blend effect, for transparency.
-            glDisable(GL_LIGHT1);
-            glDisable(GL_LIGHT2);
-            glDisable(GL_LIGHT3);
-            glDisable(GL_LIGHT4);
-            glDisable(GL_LIGHT5);
-            glDisable(GL_LIGHT6);
-            glDisable(GL_LIGHT7);
+            
+            glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            glClearDepthf(1.0f);
+            glEnable(GL_DEPTH_TEST);
+            glDepthFunc(GL_LEQUAL);
+            glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
             glShadeModel(GL_SMOOTH);                // Do not flat shade polygons.
+            
+            /* Light information */
+            GLfloat pos[] = {1.0, 3.0, 2.0, 0.0 };
+            GLfloat light_ambient[] =  { 0.0f, 0.0f, -2.0f, 0.0f };
+            GLfloat light_diffuse[] = { 1.0f, 1.0f, 1.0f, 0.0f };
+            glLightfv(GL_LIGHT1, GL_POSITION,pos);
+            glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
+            glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
+            
+            
+            
+            /* Material */
+            GLfloat no_mat[] = { 0.0f, 0.0f, 0.0f, 1.0f };
+            GLfloat mat_diffuse[] = { 0.1f, 0.5f, 0.8f, 1.0f };
+            GLfloat no_shininess[] = { 0.0f };
+            
+            /*----- Set material features -----*/
+            glMaterialfv(GL_FRONT, GL_AMBIENT, no_mat);
+            glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+            glMaterialfv(GL_FRONT, GL_SPECULAR, no_mat);
+            glMaterialfv(GL_FRONT, GL_SHININESS, no_shininess);
+            glMaterialfv(GL_FRONT, GL_EMISSION, no_mat);
+
+            glEnable(GL_LIGHTING);
+            glEnable(GL_LIGHT1);
+            
+            /* Set light model */
+            GLfloat lmodel_ambient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
+            //            GLfloat local_view[] = { 0, 0 };
+            glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
+            //            glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, local_view);
+            
             glStateCacheEnableLighting();
         } else glStateCacheDisableLighting();
-        if  (baseModel != NULL)
-            glmDrawArrays(baseModel, 0);
+       
+        // glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+        
+        
         if (valveModel != NULL) {
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, red);
             glmDrawArrays(valveModel, 0);
         }
+
+        
+        glEnable(GL_BLEND); // Add this to generate blend effect, for transparency.
+//        glDepthMask(false);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE);
+        if (baseModel != NULL){
+            glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green);
+            glmDrawArrays(baseModel, 0);
+        }
+        glDepthMask(true);
+        glDisable(GL_BLEND);
+        
         glPopMatrix();
     }
 }
@@ -346,6 +388,21 @@ typedef struct RenderModel RenderModel;
     }
     
     current = [[timeStampArray objectAtIndex:index] intValue];
+}
+
+- (void)dealloc{
+    for (NSString* key in [renderedObjects allKeys]){
+        RenderModel* rdModel = (RenderModel*) [(NSValue*) [renderedObjects valueForKey:key] pointerValue];
+        if (rdModel->base) {
+            glmDelete(rdModel->base,0);
+        }
+        if (rdModel->valve) {
+            glmDelete(rdModel->valve, 0);
+        }
+    }
+//    
+//    renderedObjects = nil;
+//    timeStampArray = nil;
 }
 
 @end

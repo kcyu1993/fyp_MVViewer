@@ -112,15 +112,21 @@
                         <viewControllerLayoutGuide type="top" id="kJI-r7-8Be"/>
                         <viewControllerLayoutGuide type="bottom" id="JRN-wI-28z"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="jyr-op-TYR">
+                    <view key="view" contentMode="scaleToFill" id="jyr-op-TYR" customClass="ARView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="nnG-7s-icg" kind="presentation" identifier="backToScanViewSegue" id="cUX-iH-fV6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gam-tU-83i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2497" y="463"/>
+            <point key="canvasLocation" x="2578" y="463"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="cUX-iH-fV6"/>
+    </inferredMetricsTieBreakers>
 </document>

@@ -65,11 +65,18 @@
 
 
 @class ARViewController;
+@class ScanViewController;
 
 @interface VirtualEnvironment : NSObject {
 }
 
 - (VirtualEnvironment *) initWithARViewController:(ARViewController *)vc;
+
+- (VirtualEnvironment *) initWithScanViewController:(ScanViewController *)svc;
+
+- (void) setARViewController:(ARViewController *) vc;
+
+- (void) destroyAllObjects;
 
 - (void) addObject:(VEObject *)object;
 

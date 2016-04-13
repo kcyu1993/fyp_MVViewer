@@ -109,8 +109,7 @@ extern NSString *const CameraVideoiOSDeviceAppleTVX; // "Apple TV (Unknown model
 
 @class CameraVideo;
 
-@interface CameraVideo : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate,
-    AVCaptureMetadataOutputObjectsDelegate>
+@interface CameraVideo : NSObject <AVCaptureVideoDataOutputSampleBufferDelegate>
 
 - (id) init;
 

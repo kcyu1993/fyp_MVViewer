@@ -17,8 +17,7 @@
 @property (nonatomic, strong) CALayer *targetLayer;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) NSMutableArray *codeObjects;
-@property (nonatomic, strong) JFMinimalNotification* miniNotification;
-
+@property (nonatomic, strong) JFMinimalNotification* minimalNotification;
 
 @end
 
@@ -37,7 +36,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    [self.view bringSubviewToFront:_messageLabel];
+//    [self.view bringSubviewToFront:_messageLabel];
     [self.captureSession startRunning];
     
     noPatientFoundMessageTitle = @"Warning";
@@ -53,44 +52,54 @@
     self.subTitleLabelTextField.text = scanQRCodeMessageSubTitle;
     
     
-    self.miniNotification = [JFMinimalNotification notificationWithStyle:JFMinimalNotificationStyleCustom title:self.titleLabelTextField.text subTitle:self.subTitleLabelTextField.text dismissalDelay:0.0 touchHandler:^{
-        [self.miniNotification dismiss];
+    self.titleLabelTextField.text = @"Testing";
+    self.subTitleLabelTextField.text = @"This is my awesome sub-title";
+    
+    /**
+     * Create the notification
+     */
+    self.minimalNotification = [JFMinimalNotification notificationWithStyle:JFMinimalNotificationStyleCustom title:self.titleLabelTextField.text subTitle:self.subTitleLabelTextField.text dismissalDelay:0.0 touchHandler:^{
+        [self.minimalNotification dismiss];
     }];
-    self.miniNotification.edgePadding = UIEdgeInsetsMake(0, 0, 10, 0);
     
-    [self.view addSubview:self.miniNotification];
+    self.minimalNotification.edgePadding = UIEdgeInsetsMake(0, 0, 10, 0);
     
-    self.miniNotification.backgroundColor = [UIColor purpleColor];
+    [self.view addSubview:self.minimalNotification];
     
-    self.miniNotification.titleLabel.textColor = [UIColor whiteColor];
-    self.miniNotification.subTitleLabel.textColor = [UIColor whiteColor];
+    self.minimalNotification.backgroundColor = [UIColor purpleColor];
+    
+    self.minimalNotification.titleLabel.textColor = [UIColor whiteColor];
+    self.minimalNotification.subTitleLabel.textColor = [UIColor whiteColor];
     
     /**
      * Set the delegate
      */
-    self.miniNotification.delegate = self;
+    self.minimalNotification.delegate = self;
     
     /**
      * Set the desired font for the title and sub-title labels
      * Default is System Normal
      */
+    UIFont* titleFont = [UIFont systemFontOfSize:22.0];
+    [self.minimalNotification setTitleFont:titleFont];
+    UIFont* subTitleFont = [UIFont systemFontOfSize:16.0];
+    [self.minimalNotification setSubTitleFont:subTitleFont];
     
-    
-    UIFont* titleFont = [UIFont fontWithName:@"Helvetica" size:22];
-    [self.miniNotification setTitleFont:titleFont];
-    UIFont* subTitleFont = [UIFont fontWithName:@"Helvetica" size:16];
-    [self.miniNotification setSubTitleFont:subTitleFont];
+    /**
+     * Uncomment the following line to present notifications from the top of the screen.
+     */
+     self.minimalNotification.presentFromTop = YES;
+
     
 }
-
 - (void)showToastWithMessage:(NSString *)message {
-    if (self.miniNotification) {
-        [self.miniNotification dismiss];
-        [self.miniNotification removeFromSuperview];
-        self.miniNotification = nil;
+    if (self.minimalNotification) {
+        [self.minimalNotification dismiss];
+        [self.minimalNotification removeFromSuperview];
+        self.minimalNotification = nil;
     }
     
-    self.miniNotification = [JFMinimalNotification notificationWithStyle:JFMinimalNotificationStyleError
+    self.minimalNotification = [JFMinimalNotification notificationWithStyle:JFMinimalNotificationStyleError
                                                                       title:NSLocalizedString(@"Refresh Error", @"Refresh Error")
                                                                    subTitle:message
                                                              dismissalDelay:10.0];
@@ -100,25 +109,25 @@
      * Default is System Normal
      */
     UIFont* titleFont = [UIFont systemFontOfSize:22.0];
-    [self.miniNotification setTitleFont:titleFont];
+    [self.minimalNotification setTitleFont:titleFont];
     UIFont* subTitleFont = [UIFont systemFontOfSize:16.0];
-    [self.miniNotification setSubTitleFont:subTitleFont];
+    [self.minimalNotification setSubTitleFont:subTitleFont];
     
     /**
      * Add the notification to a view
      */
-    [self.view addSubview:self.miniNotification];
+    [self.view addSubview:self.minimalNotification];
     
     // show
     [self performSelector:@selector(showNotification) withObject:nil afterDelay:0.1];
 }
 
 - (void)showNotification {
-    [self.miniNotification show];
+    [self.minimalNotification show];
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-
+    [self showNotification];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -225,7 +234,7 @@
     if (metadataObj.stringValue != nil){
         
         self.messageLabel.text = metadataObj.stringValue;
-        [self patientFoundMessage:metadataObj.stringValue patientFound:YES];
+//        [self patientFoundMessage:metadataObj.stringValue patientFound:YES];
         [self showNotification];
         // [self performSegueWithIdentifier:@"showModel" sender:self];
     }
@@ -267,9 +276,9 @@
     if (flag) {
         patientFoundMessangeSubTitle = [@"ID: " stringByAppendingString:patientID];
         
-        [self titleLabelTextField].text = patientFoundMessageTitle;
-        [self subTitleLabelTextField].text = patientFoundMessangeSubTitle;
-        [self.miniNotification setStyle:JFMinimalNotificationStyleSuccess animated:YES];
+        self.titleLabelTextField.text = patientFoundMessageTitle;
+        self.subTitleLabelTextField.text = patientFoundMessangeSubTitle;
+        [self.minimalNotification setStyle:JFMinimalNotificationStyleSuccess animated:YES];
         
         // [_miniNotification setTitle: patientFoundMessageTitle];
         
@@ -283,30 +292,28 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    JFMinimalNotificationStyle style = self.miniNotification.currentStyle;
-    [self.miniNotification removeFromSuperview];
-    self.miniNotification = nil;
-    self.miniNotification = [JFMinimalNotification notificationWithStyle:style title:self.titleLabelTextField.text subTitle:self.subTitleLabelTextField.text dismissalDelay:0.0f touchHandler:^{
-        [self.miniNotification dismiss];
+    JFMinimalNotificationStyle style = self.minimalNotification.currentStyle;
+    [self.minimalNotification removeFromSuperview];
+    self.minimalNotification = nil;
+    self.minimalNotification = [JFMinimalNotification notificationWithStyle:style title:self.titleLabelTextField.text subTitle:self.subTitleLabelTextField.text dismissalDelay:0.0f touchHandler:^{
+        [self.minimalNotification dismiss];
     }];
-    self.miniNotification.delegate = self;
+    self.minimalNotification.delegate = self;
     UIFont* titleFont = [UIFont fontWithName:@"STHeitiK-Light" size:22];
-    [self.miniNotification setTitleFont:titleFont];
+    [self.minimalNotification setTitleFont:titleFont];
     UIFont* subTitleFont = [UIFont fontWithName:@"STHeitiK-Light" size:16];
-    [self.miniNotification setSubTitleFont:subTitleFont];
-    [self.view addSubview:self.miniNotification];
+    [self.minimalNotification setSubTitleFont:subTitleFont];
+    [self.view addSubview:self.minimalNotification];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self.miniNotification show];
+        [self.minimalNotification show];
     });
     
     return YES;
 }
 
-
 #pragma mark ----------------------
-#pragma mark JFminiNotificationDelegate
+#pragma mark JFMinimalNotificationDelegate
 #pragma mark ----------------------
-
 
 - (void)minimalNotificationWillShowNotification:(JFMinimalNotification*)notification {
     NSLog(@"willShowNotification");
@@ -323,6 +330,5 @@
 - (void)minimalNotificationDidDismissNotification:(JFMinimalNotification*)notification {
     NSLog(@"didDismissNotification");
 }
-
 
 @end

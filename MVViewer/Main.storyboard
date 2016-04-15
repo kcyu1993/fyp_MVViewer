@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -27,15 +26,46 @@
                                     <segue destination="nnG-7s-icg" kind="presentation" identifier="startSwitch" id="pOK-9S-ZP3"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ll-XX-BnD">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" title="Show"/>
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="277" y="456" width="38" height="30"/>
+                                </variation>
+                                <connections>
+                                    <action selector="showMessageButtonAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BFi-bZ-dg5"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="7ll-XX-BnD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cdZ-Ew-iQs"/>
                             <constraint firstItem="DdB-AA-rEQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mss-sQ-3AS"/>
+                            <constraint firstItem="7ll-XX-BnD" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="pJD-bq-Q8P"/>
                             <constraint firstItem="DdB-AA-rEQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="q2L-n0-cHB"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="7ll-XX-BnD"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="cdZ-Ew-iQs"/>
+                                <exclude reference="pJD-bq-Q8P"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular">
+                            <mask key="subviews">
+                                <include reference="7ll-XX-BnD"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="cdZ-Ew-iQs"/>
+                                <include reference="pJD-bq-Q8P"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
-                        <outlet property="startButton" destination="DdB-AA-rEQ" id="LOU-gI-Bzp"/>
+                        <outlet property="showMessage" destination="7ll-XX-BnD" id="zod-wQ-5Zb"/>
+                        <outlet property="startButton" destination="DdB-AA-rEQ" id="TR4-fC-ffy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -71,13 +101,13 @@
                                     <constraint firstAttribute="width" constant="214" id="hww-aj-VVv"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xu4-sS-y4g">
                                 <rect key="frame" x="20" y="20" width="0.0" height="65"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="98m-ue-Rsa">

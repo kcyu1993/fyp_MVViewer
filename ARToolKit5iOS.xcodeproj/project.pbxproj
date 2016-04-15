@@ -81,11 +81,7 @@
 		206D76FC1CBD23180003EADF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FA1CBD23180003EADF /* MainViewController.m */; };
 		206D77001CBD23210003EADF /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FD1CBD23210003EADF /* ScanViewController.m */; };
 		206D77011CBD23210003EADF /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FF1CBD23210003EADF /* StartViewController.m */; };
-		206D77261CC0E80F0003EADF /* JFMinimalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D771D1CC0E80F0003EADF /* JFMinimalNotification.m */; };
-		206D77271CC0E80F0003EADF /* JFMinimalNotificationArt.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D771F1CC0E80F0003EADF /* JFMinimalNotificationArt.m */; };
-		206D77281CC0E80F0003EADF /* NSInvocation+Constructors.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D77211CC0E80F0003EADF /* NSInvocation+Constructors.m */; };
-		206D77291CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D77231CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m */; };
-		206D772A1CC0E80F0003EADF /* UIView+Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D77251CC0E80F0003EADF /* UIView+Round.m */; };
+		206D77331CC0FFC50003EADF /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 206D77321CC0FFC50003EADF /* Podfile */; };
 		207ACA921C9ABAD300F5C1F8 /* VEObjectOBJBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA911C9ABAD300F5C1F8 /* VEObjectOBJBase.m */; };
 		207ACA941C9ABADE00F5C1F8 /* VEObjectOBJValve.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA931C9ABADE00F5C1F8 /* VEObjectOBJValve.m */; };
 		207ACAAC1CA909A200F5C1F8 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACAAB1CA909A200F5C1F8 /* ResourceManager.m */; };
@@ -779,6 +775,7 @@
 		4AF9712B1B5F5709001BFEB5 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9706A1B5F5708001BFEB5 /* timers.cpp */; };
 		4AF9712D1B5F5709001BFEB5 /* freak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF970771B5F5708001BFEB5 /* freak.cpp */; };
 		4AF9712E1B5F5709001BFEB5 /* hough_similarity_voting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9707A1B5F5708001BFEB5 /* hough_similarity_voting.cpp */; };
+		6B2E79684FE29C4EB1CD1ACB /* libPods-MVViewer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 45FB92602CB40C85D4F17DE7 /* libPods-MVViewer.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1516,16 +1513,7 @@
 		206D76FD1CBD23210003EADF /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		206D76FE1CBD23210003EADF /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		206D76FF1CBD23210003EADF /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
-		206D771C1CC0E80F0003EADF /* JFMinimalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFMinimalNotification.h; path = JFMinimalNotification/JFMinimalNotification.h; sourceTree = "<group>"; };
-		206D771D1CC0E80F0003EADF /* JFMinimalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFMinimalNotification.m; path = JFMinimalNotification/JFMinimalNotification.m; sourceTree = "<group>"; };
-		206D771E1CC0E80F0003EADF /* JFMinimalNotificationArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFMinimalNotificationArt.h; path = JFMinimalNotification/JFMinimalNotificationArt.h; sourceTree = "<group>"; };
-		206D771F1CC0E80F0003EADF /* JFMinimalNotificationArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFMinimalNotificationArt.m; path = JFMinimalNotification/JFMinimalNotificationArt.m; sourceTree = "<group>"; };
-		206D77201CC0E80F0003EADF /* NSInvocation+Constructors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSInvocation+Constructors.h"; path = "JFMinimalNotification/NSInvocation+Constructors.h"; sourceTree = "<group>"; };
-		206D77211CC0E80F0003EADF /* NSInvocation+Constructors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSInvocation+Constructors.m"; path = "JFMinimalNotification/NSInvocation+Constructors.m"; sourceTree = "<group>"; };
-		206D77221CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+JFMinimalNotificationColors.h"; path = "JFMinimalNotification/UIColor+JFMinimalNotificationColors.h"; sourceTree = "<group>"; };
-		206D77231CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+JFMinimalNotificationColors.m"; path = "JFMinimalNotification/UIColor+JFMinimalNotificationColors.m"; sourceTree = "<group>"; };
-		206D77241CC0E80F0003EADF /* UIView+Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Round.h"; path = "JFMinimalNotification/UIView+Round.h"; sourceTree = "<group>"; };
-		206D77251CC0E80F0003EADF /* UIView+Round.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Round.m"; path = "JFMinimalNotification/UIView+Round.m"; sourceTree = "<group>"; };
+		206D77321CC0FFC50003EADF /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		207ACA8D1C9ABA6E00F5C1F8 /* VEObjectOBJBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJBase.h; sourceTree = "<group>"; };
 		207ACA8E1C9ABA7700F5C1F8 /* VEObjectOBJValve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJValve.h; sourceTree = "<group>"; };
 		207ACA911C9ABAD300F5C1F8 /* VEObjectOBJBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VEObjectOBJBase.m; sourceTree = "<group>"; };
@@ -1570,6 +1558,7 @@
 		20BBE2501C4775DD006A64D0 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Data; sourceTree = "<group>"; };
 		20BBE2521C4782E1006A64D0 /* MainWindow-iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindow-iPad.xib"; sourceTree = "<group>"; };
 		20BBE2531C4782E1006A64D0 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		45FB92602CB40C85D4F17DE7 /* libPods-MVViewer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MVViewer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A0F33950E8009F200065B70 /* glStateCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = glStateCache.h; sourceTree = "<group>"; };
 		4A0F33960E8009F200065B70 /* glStateCache.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = glStateCache.c; sourceTree = "<group>"; };
 		4A13029C15BDF958003A441C /* profile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = profile.h; sourceTree = "<group>"; };
@@ -3052,6 +3041,9 @@
 		78BB3F2008E4837000D7CA2D /* video.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = video.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		78BB3F2108E4837000D7CA2D /* videoConfig.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = videoConfig.h; sourceTree = "<group>"; };
 		78BB3F5208E483CB00D7CA2D /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Data; sourceTree = "<group>"; };
+		A01C141539E821C3FF02E5A7 /* Pods-MVViewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVViewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MVViewer/Pods-MVViewer.debug.xcconfig"; sourceTree = "<group>"; };
+		A849D29A8F607E2083B6B30C /* Pods-MVViewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVViewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-MVViewer/Pods-MVViewer.release.xcconfig"; sourceTree = "<group>"; };
+		F271C85F721ECFA5D60C017A /* Pods-MVViewer.distribution.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MVViewer.distribution.xcconfig"; path = "Pods/Target Support Files/Pods-MVViewer/Pods-MVViewer.distribution.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3076,6 +3068,7 @@
 				20A836361C3E6E0C000E4DA5 /* libEden.a in Frameworks */,
 				20A836351C3E6E06000E4DA5 /* libARMulti.a in Frameworks */,
 				20A836341C3E6E00000E4DA5 /* libARgsub_es.a in Frameworks */,
+				6B2E79684FE29C4EB1CD1ACB /* libPods-MVViewer.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3549,23 +3542,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		206D772B1CC0E8140003EADF /* JFMinimalNotification */ = {
-			isa = PBXGroup;
-			children = (
-				206D771C1CC0E80F0003EADF /* JFMinimalNotification.h */,
-				206D771D1CC0E80F0003EADF /* JFMinimalNotification.m */,
-				206D771E1CC0E80F0003EADF /* JFMinimalNotificationArt.h */,
-				206D771F1CC0E80F0003EADF /* JFMinimalNotificationArt.m */,
-				206D77201CC0E80F0003EADF /* NSInvocation+Constructors.h */,
-				206D77211CC0E80F0003EADF /* NSInvocation+Constructors.m */,
-				206D77221CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.h */,
-				206D77231CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m */,
-				206D77241CC0E80F0003EADF /* UIView+Round.h */,
-				206D77251CC0E80F0003EADF /* UIView+Round.m */,
-			);
-			name = JFMinimalNotification;
-			sourceTree = "<group>";
-		};
 		207ACAAE1CA909B800F5C1F8 /* ARAppResource */ = {
 			isa = PBXGroup;
 			children = (
@@ -3578,7 +3554,6 @@
 		20A835C31C3E6BE8000E4DA5 /* MVViewer */ = {
 			isa = PBXGroup;
 			children = (
-				206D772B1CC0E8140003EADF /* JFMinimalNotification */,
 				206D76F71CBD22EB0003EADF /* Main.storyboard */,
 				20BBE2501C4775DD006A64D0 /* Data */,
 				20A835DA1C3E6C7F000E4DA5 /* ARAppCore */,
@@ -5825,6 +5800,7 @@
 		78BB3DD208E482DA00D7CA2D = {
 			isa = PBXGroup;
 			children = (
+				206D77321CC0FFC50003EADF /* Podfile */,
 				2017F3CD1C73250800A66620 /* tempBoard */,
 				4A752F68116238DD009877B3 /* README (ARToolKit for iOS).txt */,
 				4AE6FE7F0BC24FFC0084390C /* ChangeLog.txt */,
@@ -5839,6 +5815,8 @@
 				78BBCC8908E4A79900AEE575 /* System Frameworks & Libraries */,
 				20A835C31C3E6BE8000E4DA5 /* MVViewer */,
 				78BB3F8708E486DB00D7CA2D /* Products */,
+				976213412E2AF992E27B02F0 /* Pods */,
+				CB575536948CB65017DC3EBA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -6035,6 +6013,24 @@
 			name = "System Frameworks & Libraries";
 			sourceTree = "<group>";
 		};
+		976213412E2AF992E27B02F0 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A01C141539E821C3FF02E5A7 /* Pods-MVViewer.debug.xcconfig */,
+				A849D29A8F607E2083B6B30C /* Pods-MVViewer.release.xcconfig */,
+				F271C85F721ECFA5D60C017A /* Pods-MVViewer.distribution.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		CB575536948CB65017DC3EBA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				45FB92602CB40C85D4F17DE7 /* libPods-MVViewer.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -6074,10 +6070,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 20A835D61C3E6BE8000E4DA5 /* Build configuration list for PBXNativeTarget "MVViewer" */;
 			buildPhases = (
+				F8F41D4121053EC3CD646642 /* Check Pods Manifest.lock */,
 				20A835BE1C3E6BE8000E4DA5 /* Sources */,
 				20A835BF1C3E6BE8000E4DA5 /* Frameworks */,
 				20A835C01C3E6BE8000E4DA5 /* Resources */,
 				20A836451C3E6EC6000E4DA5 /* ShellScript */,
+				E855E18A82DBF83FC9115DD1 /* Embed Pods Frameworks */,
+				B2ECBDE84907A395990B2BD0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -6571,6 +6570,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				206D77331CC0FFC50003EADF /* Podfile in Resources */,
 				20BBE2551C4782E1006A64D0 /* MainWindow.xib in Resources */,
 				20A835D11C3E6BE8000E4DA5 /* Assets.xcassets in Resources */,
 				206D76F81CBD22EB0003EADF /* Main.storyboard in Resources */,
@@ -6847,6 +6847,51 @@
 			shellPath = /bin/sh;
 			shellScript = "if [[ \"$CONFIGURATION\" = \"Distribution\" ]]\nthen\n\tif [ ! -d \"dist\" ] ; then mkdir dist; fi\n\tcd dist\n\tmkdir Payload\n\tcp -rp \"$TARGET_BUILD_DIR/$WRAPPER_NAME\" Payload\n\tcp $SRCROOT/examples/$PRODUCT_NAME/iTunesArtwork .\n\tzip -r \"$PRODUCT_NAME.zip\" iTunesArtwork Payload\n\tmv \"$PRODUCT_NAME.zip\" \"$PRODUCT_NAME.ipa\"\n\trm -rf iTunesArtwork Payload\nfi\n";
 		};
+		B2ECBDE84907A395990B2BD0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MVViewer/Pods-MVViewer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E855E18A82DBF83FC9115DD1 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MVViewer/Pods-MVViewer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F8F41D4121053EC3CD646642 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -6854,9 +6899,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				206D772A1CC0E80F0003EADF /* UIView+Round.m in Sources */,
 				20A836461C3E6F69000E4DA5 /* ARMarkerMulti.m in Sources */,
-				206D77281CC0E80F0003EADF /* NSInvocation+Constructors.m in Sources */,
 				20A836241C3E6C7F000E4DA5 /* VEObject.m in Sources */,
 				206D76F61CBD19980003EADF /* ARMarkerQRcode.m in Sources */,
 				206D76FC1CBD23180003EADF /* MainViewController.m in Sources */,
@@ -6872,10 +6915,7 @@
 				20A836111C3E6C7F000E4DA5 /* ARMarker.m in Sources */,
 				20A836291C3E6C7F000E4DA5 /* ARViewController.m in Sources */,
 				206D77011CBD23210003EADF /* StartViewController.m in Sources */,
-				206D77261CC0E80F0003EADF /* JFMinimalNotification.m in Sources */,
-				206D77291CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m in Sources */,
 				20A836161C3E6C7F000E4DA5 /* EAGLView.m in Sources */,
-				206D77271CC0E80F0003EADF /* JFMinimalNotificationArt.m in Sources */,
 				20A835C61C3E6BE8000E4DA5 /* main.m in Sources */,
 				206D76EC1CBA6F040003EADF /* ModelHandler.m in Sources */,
 				20A836141C3E6C7F000E4DA5 /* ARMarkerSquare.m in Sources */,
@@ -7729,6 +7769,7 @@
 /* Begin XCBuildConfiguration section */
 		20A835D71C3E6BE8000E4DA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A01C141539E821C3FF02E5A7 /* Pods-MVViewer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -7759,7 +7800,7 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				INFOPLIST_FILE = MVViewer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7776,6 +7817,7 @@
 		};
 		20A835D81C3E6BE8000E4DA5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A849D29A8F607E2083B6B30C /* Pods-MVViewer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -7806,7 +7848,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = MVViewer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -7823,6 +7865,7 @@
 		};
 		20A835D91C3E6BE8000E4DA5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F271C85F721ECFA5D60C017A /* Pods-MVViewer.distribution.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -7853,7 +7896,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = MVViewer/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

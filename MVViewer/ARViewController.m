@@ -408,7 +408,7 @@ static void startCallback(void* userData) {
 {
     
     /// testing
-    [self performSegueWithIdentifier:@"backToScanViewSegue" sender:self];
+//    [self performSegueWithIdentifier:@"backToScanViewSegue" sender:self];
     
     if (buffer) {
         

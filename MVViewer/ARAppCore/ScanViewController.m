@@ -94,12 +94,21 @@
             self.previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_captureSession];
             self.previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
             
-            self.targetLayer = [[self view] layer];
+            self.targetLayer = [_scanFrame layer];
             [self.targetLayer setMasksToBounds:YES];
             
-            CGRect frame = self.scanFrame.frame;
+            CGRect frame = [self.scanFrame bounds];
+            frame.size = CGSizeMake(300, 300);
+            NSLog(@"Frame for Scan frame \n origin (%f,%f) size (%f, %f)",frame.origin.x, frame.origin.y, frame.size.height,frame.size
+                  .width);
+            
+            
             [_previewLayer setFrame:frame];
+            
             [self.targetLayer insertSublayer:_previewLayer atIndex:0];
+            [self.targetLayer setContentsCenter: [[self.scanFrame superview] bounds]];
+            [self.targetLayer layoutSublayers];
+            
         }
         else
         {

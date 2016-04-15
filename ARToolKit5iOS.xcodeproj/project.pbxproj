@@ -775,6 +775,8 @@
 		4AF9712E1B5F5709001BFEB5 /* hough_similarity_voting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9707A1B5F5708001BFEB5 /* hough_similarity_voting.cpp */; };
 		67238C671CC1253D0065FF60 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67238C661CC1253D0065FF60 /* Images.xcassets */; };
 		67238C691CC14B470065FF60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67238C681CC14B470065FF60 /* Main.storyboard */; };
+		67238C6B1CC152FA0065FF60 /* sky.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 67238C6A1CC152FA0065FF60 /* sky.jpg */; };
+		67238C6D1CC153060065FF60 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = 67238C6C1CC153060065FF60 /* title.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3022,6 +3024,8 @@
 		4AF9714D1B5F58A6001BFEB5 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		67238C661CC1253D0065FF60 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		67238C681CC14B470065FF60 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		67238C6A1CC152FA0065FF60 /* sky.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sky.jpg; sourceTree = "<group>"; };
+		67238C6C1CC153060065FF60 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		78BB3E5E08E482F400D7CA2D /* arMultiFreeConfig.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiFreeConfig.c; sourceTree = "<group>"; };
 		78BB3E5F08E482F400D7CA2D /* arMultiGetTransMat.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMat.c; sourceTree = "<group>"; };
 		78BB3E6008E482F400D7CA2D /* arMultiGetTransMatStereo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMatStereo.c; sourceTree = "<group>"; };
@@ -3548,7 +3552,9 @@
 		20A835C31C3E6BE8000E4DA5 /* MVViewer */ = {
 			isa = PBXGroup;
 			children = (
+				67238C6C1CC153060065FF60 /* title.png */,
 				67238C681CC14B470065FF60 /* Main.storyboard */,
+				67238C6A1CC152FA0065FF60 /* sky.jpg */,
 				20BBE2501C4775DD006A64D0 /* Data */,
 				20A835DA1C3E6C7F000E4DA5 /* ARAppCore */,
 				20A8360F1C3E6C7F000E4DA5 /* ARViewController.h */,
@@ -3581,11 +3587,11 @@
 		20A835DA1C3E6C7F000E4DA5 /* ARAppCore */ = {
 			isa = PBXGroup;
 			children = (
-				206D76FD1CBD23210003EADF /* ScanViewController.m */,
 				206D76FE1CBD23210003EADF /* StartViewController.h */,
 				206D76FF1CBD23210003EADF /* StartViewController.m */,
 				206D76F91CBD23180003EADF /* MainViewController.h */,
 				206D76FA1CBD23180003EADF /* MainViewController.m */,
+				206D76FD1CBD23210003EADF /* ScanViewController.m */,
 				206D76FB1CBD23180003EADF /* ScanViewController.h */,
 				206D76F41CBD19980003EADF /* ARMarkerQRcode.h */,
 				206D76F51CBD19980003EADF /* ARMarkerQRcode.m */,
@@ -6546,6 +6552,8 @@
 				67238C671CC1253D0065FF60 /* Images.xcassets in Resources */,
 				67238C691CC14B470065FF60 /* Main.storyboard in Resources */,
 				20BBE2541C4782E1006A64D0 /* MainWindow-iPad.xib in Resources */,
+				67238C6B1CC152FA0065FF60 /* sky.jpg in Resources */,
+				67238C6D1CC153060065FF60 /* title.png in Resources */,
 				20BBE2511C4775DD006A64D0 /* Data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

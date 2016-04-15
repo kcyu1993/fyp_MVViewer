@@ -66,6 +66,7 @@ typedef struct RenderModel RenderModel;
     // NSMutableArray *baseOBJArray;
     // NSMutableArray *valveOBJArray;
     // NSMutableIndexSet *timeStampArray;
+    
     NSMutableDictionary* renderedObjects;
     NSArray* timeStampArray;
     NSUInteger size;
@@ -86,10 +87,10 @@ typedef struct RenderModel RenderModel;
     VEObjectRegistryRegister(self, @"objs");
 }
 
--(id)initFromListOfFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
+-(id)initFromListOfFiles:(NSString*) patinetID  baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
 {
     self = [super initFromFile:nil translation:translation rotation:rotation scale:scale];
-    
+    _patientName = patinetID;
     valveSize = 0;
     // Create a new empty array.
     renderedObjects = [[NSMutableDictionary alloc] initWithCapacity:[baseFiles count]];

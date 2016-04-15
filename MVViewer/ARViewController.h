@@ -34,6 +34,7 @@
 - (IBAction)start;
 - (IBAction)stop;
 - (void) processFrame:(AR2VideoBufferT *)buffer;
+- (void) setVirtualEnvironment: (VirtualEnvironment*) vr;
 
 /** KC defined method */
 - (void) loadPatient:(NSString*) patient;

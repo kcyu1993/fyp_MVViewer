@@ -50,6 +50,7 @@
 @end*/
 
 #import "AppDelegate.h"
+#import <CRToast/CRToast.h>
 
 @interface AppDelegate ()
 
@@ -60,6 +61,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [CRToastManager setDefaultOptions:@{kCRToastNotificationTypeKey : @(CRToastTypeNavigationBar),
+                                        kCRToastFontKey             : [UIFont fontWithName:@"HelveticaNeue-Light" size:16],
+                                        kCRToastTextColorKey        : [UIColor whiteColor],
+                                        kCRToastBackgroundColorKey  : [UIColor blueColor],
+                                        kCRToastAutorotateKey       : @(YES)}];
     return YES;
 }
 

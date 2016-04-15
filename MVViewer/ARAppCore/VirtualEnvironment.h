@@ -147,6 +147,12 @@
 
 - (void) updateWithSimulationTime:(NSTimeInterval)timeDelta;
 
+
+- (void) connectPatientWithMarker: (ARMarker* )marker :(NSString *) patientName;
+- (NSArray*) getAllPatients;
+- (BOOL) findPatient:(NSString*) patientName;
+
+
 // Weak reference to the parent view controller.
 // This can be used to obtain references to other AR-related things
 // relevant to a VirtualEnvironment, e.g. an ARView into which VEObjects

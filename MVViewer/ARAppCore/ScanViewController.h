@@ -12,6 +12,8 @@
 @property (weak, nonatomic) IBOutlet UIView *scanFrame;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
+@property (strong, nonatomic) IBOutlet UINavigationItem *navigationBar;
+
 @property (weak, nonatomic) IBOutlet UITextField *titleLabelTextField;
 @property (weak, nonatomic) IBOutlet UITextField *subTitleLabelTextField;
 @end

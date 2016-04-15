@@ -168,12 +168,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMovie.h"
-            timestampString = "482079158.870864"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "currentTimeStamp"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "patientName"
             landmarkType = "19">
          </BreakpointContent>
       </BreakpointProxy>
@@ -216,12 +216,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482079158.870864"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
-            landmarkName = "-initFromListOfFiles:valveFiles:index:translation:rotation:scale:"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "-initFromListOfFiles:baseFiles:valveFiles:index:translation:rotation:scale:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -264,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482223264.816498"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "227"
-            endingLineNumber = "227"
+            startingLineNumber = "228"
+            endingLineNumber = "228"
             landmarkName = "-draw:"
             landmarkType = "5">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482223264.816498"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
             landmarkName = "-draw:"
             landmarkType = "5">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482223264.816498"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "314"
-            endingLineNumber = "314"
+            startingLineNumber = "315"
+            endingLineNumber = "315"
             landmarkName = "-markerNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -328,7 +328,23 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482223264.816498"
+            timestampString = "482423398.168382"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "349"
+            endingLineNumber = "349"
+            landmarkName = "-setVisible:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "348"
@@ -344,27 +360,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482223264.816498"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "347"
-            endingLineNumber = "347"
-            landmarkName = "-setVisible:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482223264.816498"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "352"
-            endingLineNumber = "352"
+            startingLineNumber = "353"
+            endingLineNumber = "353"
             landmarkName = "-setVisible:"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482223264.816498"
+            timestampString = "482423398.168382"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "315"
-            endingLineNumber = "315"
+            startingLineNumber = "316"
+            endingLineNumber = "316"
             landmarkName = "-markerNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -420,15 +420,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482408033.22697"
+            timestampString = "482426218.239624"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "221"
-            endingLineNumber = "221"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "-captureOutput:didOutputMetadataObjects:fromConnection:"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482408033.22697"
+            timestampString = "482426218.239624"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "-captureSession"
             landmarkType = "5">
          </BreakpointContent>
@@ -452,15 +452,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482408033.22697"
+            timestampString = "482426218.239624"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "218"
-            endingLineNumber = "218"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
             landmarkName = "-captureSession"
             landmarkType = "5">
          </BreakpointContent>
@@ -468,15 +468,15 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482408033.22697"
+            timestampString = "482426218.239624"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
+            startingLineNumber = "183"
+            endingLineNumber = "183"
             landmarkName = "-captureOutput:didOutputMetadataObjects:fromConnection:"
             landmarkType = "5">
          </BreakpointContent>

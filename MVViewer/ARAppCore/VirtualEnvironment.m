@@ -295,7 +295,7 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     }
     
     VEObject* tempObject;
-    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale];
+    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles: patientName baseFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale];
     
     if (marker) {
         tempObject.visible = FALSE;
@@ -538,6 +538,47 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 }
 
 - (void) updateWithSimulationTime:(NSTimeInterval)timeDelta {
+}
+
+- (NSArray*) getAllPatients
+{
+    NSMutableArray* list = [NSMutableArray array];
+    for (VEObjectOBJMovie* object in objects) {
+        [list addObject: [object getPatientName]];
+    }
+    return list;
+}
+
+- (VEObjectOBJMovie*) findPatientObject: (NSString*)patientName
+{
+    for (VEObjectOBJMovie* object in objects) {
+        if ([[object getPatientName] isEqualToString:patientName]) {
+            return object;
+        }
+    }
+    return nil;
+}
+
+- (BOOL) findPatient:(NSString*) patientName
+{
+    if ([self findPatientObject:patientName]) {
+        return YES;
+    }
+    else
+    {
+        return NO;
+    }
+}
+
+
+- (void) connectPatientWithMarker: (ARMarker* )marker :(NSString *) patientName
+{
+    VEObjectOBJMovie* tempObject = [self findPatientObject:patientName];
+    
+    if (tempObject && marker){
+        tempObject.visible = FALSE;
+        [tempObject startObservingARMarker:marker];
+    }
 }
 
 @end

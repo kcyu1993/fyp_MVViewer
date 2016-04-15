@@ -351,7 +351,7 @@ static void startCallback(void* userData) {
      * Add the heart models to this virtual environment
      *
      */
-    self.virtualEnvironment = [[VirtualEnvironment alloc] initWithARViewController:self] ;
+    // self.virtualEnvironment = [[VirtualEnvironment alloc] initWithARViewController:self] ;
     
     /**
      Function:

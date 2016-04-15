@@ -35,7 +35,6 @@
             second = [second substringToIndex:dot.location];
             int sed = [second intValue];
             
-            NSLog(@"Test first %d and second %d ,",fir,sed);
             if (fir < sed) {
                 return (NSComparisonResult) NSOrderedAscending;
             }
@@ -88,7 +87,7 @@
     }
     // [[NSBundle mainBundle] resourcePath]
     
-    return 0;
+    return count;
 }
 
 -(NSUInteger) loadPatientModelsWithFolderPath:(NSString *)patientName  directory: (NSString*) directory index: (NSUInteger) index
@@ -131,17 +130,17 @@
     if (baseFiles) {
         NSLog(@"Base ObjFiles count %li", [baseFiles count]);
         
-        for (NSString* tmpStr in baseFiles){
-            NSLog(@"Path: %@", tmpStr);
-            
-        }
+//        for (NSString* tmpStr in baseFiles){
+//            NSLog(@"Path: %@", tmpStr);
+//            
+//        }
     }
     
     if (valveFiles) {
         NSLog(@"Base ObjFiles count %li", [valveFiles count]);
-        for (NSString* tmpStr in valveFiles){
-            NSLog(@"Path: %@", tmpStr);
-        }
+//        for (NSString* tmpStr in valveFiles){
+//            NSLog(@"Path: %@", tmpStr);
+//        }
     }
     
     
@@ -168,6 +167,15 @@
 {
     return [patientNameValve objectForKey: patientName];
 }
+
+- (NSArray*) getPatientFullList
+{
+    return [patientNameLocation allKeys];
+    
+}
+
+
+
 
 
 

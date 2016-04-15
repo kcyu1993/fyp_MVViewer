@@ -3586,12 +3586,12 @@
 		20A835DA1C3E6C7F000E4DA5 /* ARAppCore */ = {
 			isa = PBXGroup;
 			children = (
-				206D76FD1CBD23210003EADF /* ScanViewController.m */,
 				206D76FE1CBD23210003EADF /* StartViewController.h */,
 				206D76FF1CBD23210003EADF /* StartViewController.m */,
 				206D76F91CBD23180003EADF /* MainViewController.h */,
 				206D76FA1CBD23180003EADF /* MainViewController.m */,
 				206D76FB1CBD23180003EADF /* ScanViewController.h */,
+				206D76FD1CBD23210003EADF /* ScanViewController.m */,
 				206D76F41CBD19980003EADF /* ARMarkerQRcode.h */,
 				206D76F51CBD19980003EADF /* ARMarkerQRcode.m */,
 				20A835DB1C3E6C7F000E4DA5 /* ARMarker.h */,
@@ -7772,6 +7772,7 @@
 			baseConfigurationReference = A01C141539E821C3FF02E5A7 /* Pods-MVViewer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7820,6 +7821,7 @@
 			baseConfigurationReference = A849D29A8F607E2083B6B30C /* Pods-MVViewer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7868,6 +7870,7 @@
 			baseConfigurationReference = F271C85F721ECFA5D60C017A /* Pods-MVViewer.distribution.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;

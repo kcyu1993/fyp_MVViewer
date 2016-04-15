@@ -30,6 +30,8 @@
 
 -(NSUInteger) getPatientSize;
 
+- (NSArray*) getPatientFullList;
+
 -(NSArray*) getPatientBaseModelPaths:(NSString*) patientName;
 
 -(NSArray*) getPatientValveModelPaths:(NSString*) patientName;

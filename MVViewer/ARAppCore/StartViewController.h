@@ -9,15 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface StartViewController : UIViewController
-
-- (void)showToastWithMessage:(NSString *)message;
-- (void)showNotification;
-
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 
-@property (strong, nonatomic) IBOutlet UIButton *showMessage;
 
-@property (weak, nonatomic) IBOutlet UITextField *titleLabelTextField;
-@property (weak, nonatomic) IBOutlet UITextField *subTitleLabelTextField;
 @end
 

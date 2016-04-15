@@ -77,7 +77,6 @@
 		206D76EC1CBA6F040003EADF /* ModelHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76EB1CBA6F040003EADF /* ModelHandler.m */; };
 		206D76F01CBA71D70003EADF /* PatientsArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76EF1CBA71D70003EADF /* PatientsArray.m */; };
 		206D76F61CBD19980003EADF /* ARMarkerQRcode.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76F51CBD19980003EADF /* ARMarkerQRcode.m */; };
-		206D76F81CBD22EB0003EADF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 206D76F71CBD22EB0003EADF /* Main.storyboard */; };
 		206D76FC1CBD23180003EADF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FA1CBD23180003EADF /* MainViewController.m */; };
 		206D77001CBD23210003EADF /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FD1CBD23210003EADF /* ScanViewController.m */; };
 		206D77011CBD23210003EADF /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FF1CBD23210003EADF /* StartViewController.m */; };
@@ -774,6 +773,8 @@
 		4AF9712B1B5F5709001BFEB5 /* timers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9706A1B5F5708001BFEB5 /* timers.cpp */; };
 		4AF9712D1B5F5709001BFEB5 /* freak.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF970771B5F5708001BFEB5 /* freak.cpp */; };
 		4AF9712E1B5F5709001BFEB5 /* hough_similarity_voting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4AF9707A1B5F5708001BFEB5 /* hough_similarity_voting.cpp */; };
+		67238C671CC1253D0065FF60 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67238C661CC1253D0065FF60 /* Images.xcassets */; };
+		67238C691CC14B470065FF60 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67238C681CC14B470065FF60 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1504,7 +1505,6 @@
 		206D76EF1CBA71D70003EADF /* PatientsArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PatientsArray.m; sourceTree = "<group>"; };
 		206D76F41CBD19980003EADF /* ARMarkerQRcode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMarkerQRcode.h; sourceTree = "<group>"; };
 		206D76F51CBD19980003EADF /* ARMarkerQRcode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMarkerQRcode.m; sourceTree = "<group>"; };
-		206D76F71CBD22EB0003EADF /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		206D76F91CBD23180003EADF /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		206D76FA1CBD23180003EADF /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		206D76FB1CBD23180003EADF /* ScanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScanViewController.h; sourceTree = "<group>"; };
@@ -3020,6 +3020,8 @@
 		4AF9711E1B5F5709001BFEB5 /* point.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = point.h; sourceTree = "<group>"; };
 		4AF9711F1B5F5709001BFEB5 /* kpmPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kpmPrivate.h; sourceTree = "<group>"; };
 		4AF9714D1B5F58A6001BFEB5 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		67238C661CC1253D0065FF60 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		67238C681CC14B470065FF60 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		78BB3E5E08E482F400D7CA2D /* arMultiFreeConfig.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiFreeConfig.c; sourceTree = "<group>"; };
 		78BB3E5F08E482F400D7CA2D /* arMultiGetTransMat.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMat.c; sourceTree = "<group>"; };
 		78BB3E6008E482F400D7CA2D /* arMultiGetTransMatStereo.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = arMultiGetTransMatStereo.c; sourceTree = "<group>"; };
@@ -3546,7 +3548,7 @@
 		20A835C31C3E6BE8000E4DA5 /* MVViewer */ = {
 			isa = PBXGroup;
 			children = (
-				206D76F71CBD22EB0003EADF /* Main.storyboard */,
+				67238C681CC14B470065FF60 /* Main.storyboard */,
 				20BBE2501C4775DD006A64D0 /* Data */,
 				20A835DA1C3E6C7F000E4DA5 /* ARAppCore */,
 				20A8360F1C3E6C7F000E4DA5 /* ARViewController.h */,
@@ -3563,6 +3565,7 @@
 				20A835D51C3E6BE8000E4DA5 /* Info.plist */,
 				20A835C41C3E6BE8000E4DA5 /* Supporting Files */,
 				207ACAAE1CA909B800F5C1F8 /* ARAppResource */,
+				67238C661CC1253D0065FF60 /* Images.xcassets */,
 			);
 			path = MVViewer;
 			sourceTree = "<group>";
@@ -6476,11 +6479,11 @@
 		78BB3DD408E482DA00D7CA2D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0730;
 				TargetAttributes = {
 					20A835C11C3E6BE8000E4DA5 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 6QF55R36XF;
+						DevelopmentTeam = A78GTFG3M6;
 					};
 					4A2F72D7117840A600F35FA7 = {
 						DevelopmentTeam = 6QF55R36XF;
@@ -6540,7 +6543,8 @@
 			files = (
 				20BBE2551C4782E1006A64D0 /* MainWindow.xib in Resources */,
 				20A835D11C3E6BE8000E4DA5 /* Assets.xcassets in Resources */,
-				206D76F81CBD22EB0003EADF /* Main.storyboard in Resources */,
+				67238C671CC1253D0065FF60 /* Images.xcassets in Resources */,
+				67238C691CC14B470065FF60 /* Main.storyboard in Resources */,
 				20BBE2541C4782E1006A64D0 /* MainWindow-iPad.xib in Resources */,
 				20BBE2511C4775DD006A64D0 /* Data in Resources */,
 			);
@@ -7692,7 +7696,7 @@
 		20A835D71C3E6BE8000E4DA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = GiftIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7729,7 +7733,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.kc.development;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.zzm.mvviewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7739,7 +7743,7 @@
 		20A835D81C3E6BE8000E4DA5 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = GiftIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7775,7 +7779,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.kc.development;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.zzm.mvviewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -7786,7 +7790,7 @@
 		20A835D91C3E6BE8000E4DA5 /* Distribution */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = GiftIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
@@ -7822,7 +7826,7 @@
 					"$(PROJECT_DIR)/lib/ios511",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.kc.development;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hkucs.zzm.mvviewer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -8562,11 +8566,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					armv7,
-					armv7s,
-					arm64,
-				);
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				ENABLE_BITCODE = NO;
@@ -8949,11 +8948,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					armv7,
-					armv7s,
-					arm64,
-				);
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = NO;
@@ -8986,6 +8980,7 @@
 					lib/ios511,
 					lib,
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				WARNING_CFLAGS = "-Wall";
 			};
@@ -8995,11 +8990,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = (
-					armv7,
-					armv7s,
-					arm64,
-				);
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				ENABLE_BITCODE = NO;

@@ -9,15 +9,29 @@
 #import "ScanViewController.h"
 #import "ARViewController.h"
 #import <AVFoundation/AVFoundation.h>
-@interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
+
+#import "../JFMinimalNotification/JFMinimalNotification.h"
+
+@interface ScanViewController () <JFMinimalNotificationDelegate,UITextFieldDelegate,  AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 @property (nonatomic, strong) CALayer *targetLayer;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
 @property (nonatomic, strong) NSMutableArray *codeObjects;
+@property (nonatomic, strong) JFMinimalNotification* miniNotification;
+
 
 @end
 
-@implementation ScanViewController
+@implementation ScanViewController {
+    
+    
+    NSString* noPatientFoundMessageTitle;
+    NSString* noPatientFoundMessangeSubTitle;
+    NSString* patientFoundMessageTitle;
+    NSString* patientFoundMessangeSubTitle;
+    NSString* scanQRCodeMessageTitle;
+    NSString* scanQRCodeMessageSubTitle;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -25,7 +39,84 @@
     
     [self.view bringSubviewToFront:_messageLabel];
     [self.captureSession startRunning];
+    
+    noPatientFoundMessageTitle = @"Warning";
+    patientFoundMessageTitle =@"Patient Found";
+    scanQRCodeMessageTitle = @"QRCode Scanning";
+    scanQRCodeMessageSubTitle = @"Please locate the patient's QRCode in visible region";
+    
+    // Need to be updated.
+    noPatientFoundMessangeSubTitle = @"The patient is not found";
+    patientFoundMessangeSubTitle = @"ID:";
+    // Setup the fancy on notification center.
+    self.titleLabelTextField.text = scanQRCodeMessageTitle;
+    self.subTitleLabelTextField.text = scanQRCodeMessageSubTitle;
+    
+    
+    self.miniNotification = [JFMinimalNotification notificationWithStyle:JFMinimalNotificationStyleCustom title:self.titleLabelTextField.text subTitle:self.subTitleLabelTextField.text dismissalDelay:0.0 touchHandler:^{
+        [self.miniNotification dismiss];
+    }];
+    self.miniNotification.edgePadding = UIEdgeInsetsMake(0, 0, 10, 0);
+    
+    [self.view addSubview:self.miniNotification];
+    
+    self.miniNotification.backgroundColor = [UIColor purpleColor];
+    
+    self.miniNotification.titleLabel.textColor = [UIColor whiteColor];
+    self.miniNotification.subTitleLabel.textColor = [UIColor whiteColor];
+    
+    /**
+     * Set the delegate
+     */
+    self.miniNotification.delegate = self;
+    
+    /**
+     * Set the desired font for the title and sub-title labels
+     * Default is System Normal
+     */
+    
+    
+    UIFont* titleFont = [UIFont fontWithName:@"Helvetica" size:22];
+    [self.miniNotification setTitleFont:titleFont];
+    UIFont* subTitleFont = [UIFont fontWithName:@"Helvetica" size:16];
+    [self.miniNotification setSubTitleFont:subTitleFont];
+    
 }
+
+- (void)showToastWithMessage:(NSString *)message {
+    if (self.miniNotification) {
+        [self.miniNotification dismiss];
+        [self.miniNotification removeFromSuperview];
+        self.miniNotification = nil;
+    }
+    
+    self.miniNotification = [JFMinimalNotification notificationWithStyle:JFMinimalNotificationStyleError
+                                                                      title:NSLocalizedString(@"Refresh Error", @"Refresh Error")
+                                                                   subTitle:message
+                                                             dismissalDelay:10.0];
+    
+    /**
+     * Set the desired font for the title and sub-title labels
+     * Default is System Normal
+     */
+    UIFont* titleFont = [UIFont systemFontOfSize:22.0];
+    [self.miniNotification setTitleFont:titleFont];
+    UIFont* subTitleFont = [UIFont systemFontOfSize:16.0];
+    [self.miniNotification setSubTitleFont:subTitleFont];
+    
+    /**
+     * Add the notification to a view
+     */
+    [self.view addSubview:self.miniNotification];
+    
+    // show
+    [self performSelector:@selector(showNotification) withObject:nil afterDelay:0.1];
+}
+
+- (void)showNotification {
+    [self.miniNotification show];
+}
+
 -(void)viewWillAppear:(BOOL)animated{
 
 }
@@ -126,6 +217,7 @@
          qrCodeFrameView?.frame = CGRectZero
          */
         self.messageLabel.text = @"No QR code is detected";
+        [self showNotification];
         return;
     }
 
@@ -133,7 +225,9 @@
     if (metadataObj.stringValue != nil){
         
         self.messageLabel.text = metadataObj.stringValue;
-        [self performSegueWithIdentifier:@"showModel" sender:self];
+        [self patientFoundMessage:metadataObj.stringValue patientFound:YES];
+        [self showNotification];
+        // [self performSegueWithIdentifier:@"showModel" sender:self];
     }
 
     
@@ -167,4 +261,68 @@
         controller.modelName = self.messageLabel.text;
     }
 }
+
+
+- (void)patientFoundMessage: (NSString*) patientID patientFound: (BOOL) flag {
+    if (flag) {
+        patientFoundMessangeSubTitle = [@"ID: " stringByAppendingString:patientID];
+        
+        [self titleLabelTextField].text = patientFoundMessageTitle;
+        [self subTitleLabelTextField].text = patientFoundMessangeSubTitle;
+        [self.miniNotification setStyle:JFMinimalNotificationStyleSuccess animated:YES];
+        
+        // [_miniNotification setTitle: patientFoundMessageTitle];
+        
+    }
+}
+
+#pragma mark ----------------------
+#pragma mark UITextFieldDelegate
+#pragma mark ----------------------
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    JFMinimalNotificationStyle style = self.miniNotification.currentStyle;
+    [self.miniNotification removeFromSuperview];
+    self.miniNotification = nil;
+    self.miniNotification = [JFMinimalNotification notificationWithStyle:style title:self.titleLabelTextField.text subTitle:self.subTitleLabelTextField.text dismissalDelay:0.0f touchHandler:^{
+        [self.miniNotification dismiss];
+    }];
+    self.miniNotification.delegate = self;
+    UIFont* titleFont = [UIFont fontWithName:@"STHeitiK-Light" size:22];
+    [self.miniNotification setTitleFont:titleFont];
+    UIFont* subTitleFont = [UIFont fontWithName:@"STHeitiK-Light" size:16];
+    [self.miniNotification setSubTitleFont:subTitleFont];
+    [self.view addSubview:self.miniNotification];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.miniNotification show];
+    });
+    
+    return YES;
+}
+
+
+#pragma mark ----------------------
+#pragma mark JFminiNotificationDelegate
+#pragma mark ----------------------
+
+
+- (void)minimalNotificationWillShowNotification:(JFMinimalNotification*)notification {
+    NSLog(@"willShowNotification");
+}
+
+- (void)minimalNotificationDidShowNotification:(JFMinimalNotification*)notification {
+    NSLog(@"didShowNotification");
+}
+
+- (void)minimalNotificationWillDisimissNotification:(JFMinimalNotification*)notification {
+    NSLog(@"willDisimissNotification");
+}
+
+- (void)minimalNotificationDidDismissNotification:(JFMinimalNotification*)notification {
+    NSLog(@"didDismissNotification");
+}
+
+
 @end

@@ -81,6 +81,11 @@
 		206D76FC1CBD23180003EADF /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FA1CBD23180003EADF /* MainViewController.m */; };
 		206D77001CBD23210003EADF /* ScanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FD1CBD23210003EADF /* ScanViewController.m */; };
 		206D77011CBD23210003EADF /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D76FF1CBD23210003EADF /* StartViewController.m */; };
+		206D77261CC0E80F0003EADF /* JFMinimalNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D771D1CC0E80F0003EADF /* JFMinimalNotification.m */; };
+		206D77271CC0E80F0003EADF /* JFMinimalNotificationArt.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D771F1CC0E80F0003EADF /* JFMinimalNotificationArt.m */; };
+		206D77281CC0E80F0003EADF /* NSInvocation+Constructors.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D77211CC0E80F0003EADF /* NSInvocation+Constructors.m */; };
+		206D77291CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D77231CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m */; };
+		206D772A1CC0E80F0003EADF /* UIView+Round.m in Sources */ = {isa = PBXBuildFile; fileRef = 206D77251CC0E80F0003EADF /* UIView+Round.m */; };
 		207ACA921C9ABAD300F5C1F8 /* VEObjectOBJBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA911C9ABAD300F5C1F8 /* VEObjectOBJBase.m */; };
 		207ACA941C9ABADE00F5C1F8 /* VEObjectOBJValve.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACA931C9ABADE00F5C1F8 /* VEObjectOBJValve.m */; };
 		207ACAAC1CA909A200F5C1F8 /* ResourceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 207ACAAB1CA909A200F5C1F8 /* ResourceManager.m */; };
@@ -1511,6 +1516,16 @@
 		206D76FD1CBD23210003EADF /* ScanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScanViewController.m; sourceTree = "<group>"; };
 		206D76FE1CBD23210003EADF /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		206D76FF1CBD23210003EADF /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		206D771C1CC0E80F0003EADF /* JFMinimalNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFMinimalNotification.h; path = JFMinimalNotification/JFMinimalNotification.h; sourceTree = "<group>"; };
+		206D771D1CC0E80F0003EADF /* JFMinimalNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFMinimalNotification.m; path = JFMinimalNotification/JFMinimalNotification.m; sourceTree = "<group>"; };
+		206D771E1CC0E80F0003EADF /* JFMinimalNotificationArt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JFMinimalNotificationArt.h; path = JFMinimalNotification/JFMinimalNotificationArt.h; sourceTree = "<group>"; };
+		206D771F1CC0E80F0003EADF /* JFMinimalNotificationArt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JFMinimalNotificationArt.m; path = JFMinimalNotification/JFMinimalNotificationArt.m; sourceTree = "<group>"; };
+		206D77201CC0E80F0003EADF /* NSInvocation+Constructors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSInvocation+Constructors.h"; path = "JFMinimalNotification/NSInvocation+Constructors.h"; sourceTree = "<group>"; };
+		206D77211CC0E80F0003EADF /* NSInvocation+Constructors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSInvocation+Constructors.m"; path = "JFMinimalNotification/NSInvocation+Constructors.m"; sourceTree = "<group>"; };
+		206D77221CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIColor+JFMinimalNotificationColors.h"; path = "JFMinimalNotification/UIColor+JFMinimalNotificationColors.h"; sourceTree = "<group>"; };
+		206D77231CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIColor+JFMinimalNotificationColors.m"; path = "JFMinimalNotification/UIColor+JFMinimalNotificationColors.m"; sourceTree = "<group>"; };
+		206D77241CC0E80F0003EADF /* UIView+Round.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIView+Round.h"; path = "JFMinimalNotification/UIView+Round.h"; sourceTree = "<group>"; };
+		206D77251CC0E80F0003EADF /* UIView+Round.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "UIView+Round.m"; path = "JFMinimalNotification/UIView+Round.m"; sourceTree = "<group>"; };
 		207ACA8D1C9ABA6E00F5C1F8 /* VEObjectOBJBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJBase.h; sourceTree = "<group>"; };
 		207ACA8E1C9ABA7700F5C1F8 /* VEObjectOBJValve.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VEObjectOBJValve.h; sourceTree = "<group>"; };
 		207ACA911C9ABAD300F5C1F8 /* VEObjectOBJBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VEObjectOBJBase.m; sourceTree = "<group>"; };
@@ -3534,6 +3549,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		206D772B1CC0E8140003EADF /* JFMinimalNotification */ = {
+			isa = PBXGroup;
+			children = (
+				206D771C1CC0E80F0003EADF /* JFMinimalNotification.h */,
+				206D771D1CC0E80F0003EADF /* JFMinimalNotification.m */,
+				206D771E1CC0E80F0003EADF /* JFMinimalNotificationArt.h */,
+				206D771F1CC0E80F0003EADF /* JFMinimalNotificationArt.m */,
+				206D77201CC0E80F0003EADF /* NSInvocation+Constructors.h */,
+				206D77211CC0E80F0003EADF /* NSInvocation+Constructors.m */,
+				206D77221CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.h */,
+				206D77231CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m */,
+				206D77241CC0E80F0003EADF /* UIView+Round.h */,
+				206D77251CC0E80F0003EADF /* UIView+Round.m */,
+			);
+			name = JFMinimalNotification;
+			sourceTree = "<group>";
+		};
 		207ACAAE1CA909B800F5C1F8 /* ARAppResource */ = {
 			isa = PBXGroup;
 			children = (
@@ -3546,6 +3578,7 @@
 		20A835C31C3E6BE8000E4DA5 /* MVViewer */ = {
 			isa = PBXGroup;
 			children = (
+				206D772B1CC0E8140003EADF /* JFMinimalNotification */,
 				206D76F71CBD22EB0003EADF /* Main.storyboard */,
 				20BBE2501C4775DD006A64D0 /* Data */,
 				20A835DA1C3E6C7F000E4DA5 /* ARAppCore */,
@@ -6821,7 +6854,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				206D772A1CC0E80F0003EADF /* UIView+Round.m in Sources */,
 				20A836461C3E6F69000E4DA5 /* ARMarkerMulti.m in Sources */,
+				206D77281CC0E80F0003EADF /* NSInvocation+Constructors.m in Sources */,
 				20A836241C3E6C7F000E4DA5 /* VEObject.m in Sources */,
 				206D76F61CBD19980003EADF /* ARMarkerQRcode.m in Sources */,
 				206D76FC1CBD23180003EADF /* MainViewController.m in Sources */,
@@ -6837,7 +6872,10 @@
 				20A836111C3E6C7F000E4DA5 /* ARMarker.m in Sources */,
 				20A836291C3E6C7F000E4DA5 /* ARViewController.m in Sources */,
 				206D77011CBD23210003EADF /* StartViewController.m in Sources */,
+				206D77261CC0E80F0003EADF /* JFMinimalNotification.m in Sources */,
+				206D77291CC0E80F0003EADF /* UIColor+JFMinimalNotificationColors.m in Sources */,
 				20A836161C3E6C7F000E4DA5 /* EAGLView.m in Sources */,
+				206D77271CC0E80F0003EADF /* JFMinimalNotificationArt.m in Sources */,
 				20A835C61C3E6BE8000E4DA5 /* main.m in Sources */,
 				206D76EC1CBA6F040003EADF /* ModelHandler.m in Sources */,
 				20A836141C3E6C7F000E4DA5 /* ARMarkerSquare.m in Sources */,

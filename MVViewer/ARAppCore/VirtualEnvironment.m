@@ -230,6 +230,11 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
 
 - (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile
 {
+    return [self addOBJMovieObjectsForPatient:patientName baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:marker config:configFile progress:nil];
+}
+
+- (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile progress: (NSProgress*) progress
+{
     
     
     NSString* configFileFullPath;
@@ -295,7 +300,7 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     }
     
     VEObject* tempObject;
-    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles: patientName baseFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale];
+    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles: patientName baseFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale progress:progress];
     
     if (marker) {
         tempObject.visible = FALSE;

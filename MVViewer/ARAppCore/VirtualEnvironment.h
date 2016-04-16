@@ -84,6 +84,9 @@
 
 - (int)  addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile;
 
+- (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile progress:(NSProgress*) progress;
+
+
 // Add objects to a VirtualEnvironment by reading object definitions
 // from an objects list file.
 //

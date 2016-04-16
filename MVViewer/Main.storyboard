@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -63,16 +63,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No QR code is detected" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dWl-cg-uHS">
-                                <rect key="frame" x="0.0" y="542" width="600" height="58"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="WNH-ma-0Sb"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xu4-sS-y4g">
                                 <rect key="frame" x="20" y="20" width="0.0" height="65"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -97,64 +87,94 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y7r-Cn-xZT">
-                                <rect key="frame" x="281" y="418" width="38" height="33"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="returnStart" id="a1g-lo-SmD"/>
-                                </connections>
-                            </button>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="B5h-W7-fLc">
-                                <rect key="frame" x="182" y="483" width="236" height="2"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="236" id="bb3-Wm-TjI"/>
-                                </constraints>
-                            </progressView>
-                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qq3-0u-JCF">
-                                <rect key="frame" x="-63" y="0.0" width="663" height="44"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qq3-0u-JCF">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
-                                    <navigationItem title="Title" id="t2h-qf-kzJ"/>
+                                    <navigationItem title="Scan patient's QR Code" id="t2h-qf-kzJ">
+                                        <barButtonItem key="leftBarButtonItem" style="plain" id="RX0-4a-dTi">
+                                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="y7r-Cn-xZT">
+                                                <rect key="frame" x="20" y="5" width="38" height="33"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <state key="normal" title="Back"/>
+                                                <connections>
+                                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="returnStart" id="a1g-lo-SmD"/>
+                                                </connections>
+                                            </button>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
                             </navigationBar>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scan your profile QR code" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WG2-be-AFd">
-                                <rect key="frame" x="199.5" y="20" width="201" height="20"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Epf-qG-Pd6" userLabel="ProgressView">
+                                <rect key="frame" x="180" y="409" width="240" height="128"/>
+                                <subviews>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="B5h-W7-fLc">
+                                        <rect key="frame" x="2" y="63" width="236" height="2"/>
+                                    </progressView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWU-Ny-faY" userLabel="ProgressBar Label">
+                                        <rect key="frame" x="99" y="87" width="42" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="B5h-W7-fLc" firstAttribute="centerY" secondItem="Epf-qG-Pd6" secondAttribute="centerY" id="LB6-Nh-PRh"/>
+                                    <constraint firstItem="yWU-Ny-faY" firstAttribute="centerX" secondItem="Epf-qG-Pd6" secondAttribute="centerX" id="YxJ-om-pBZ"/>
+                                    <constraint firstItem="yWU-Ny-faY" firstAttribute="baseline" secondItem="B5h-W7-fLc" secondAttribute="baseline" id="aYv-dd-uEd"/>
+                                    <constraint firstItem="B5h-W7-fLc" firstAttribute="centerX" secondItem="Epf-qG-Pd6" secondAttribute="centerX" id="gUq-lE-EsY"/>
+                                    <constraint firstItem="B5h-W7-fLc" firstAttribute="leading" secondItem="Epf-qG-Pd6" secondAttribute="leading" constant="2" id="rMY-95-uXS"/>
+                                    <constraint firstAttribute="width" constant="240" id="sCk-6b-lWV"/>
+                                    <constraint firstAttribute="height" constant="128" id="tSC-qW-vJD"/>
+                                </constraints>
+                            </view>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fn2-2S-gAv">
+                                <rect key="frame" x="1" y="557" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="fixedSpace" id="OEb-EH-I3A"/>
+                                    <barButtonItem systemItem="cancel" id="1TB-Lp-1JX"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="Pi1-Iv-Eb2"/>
+                                    <barButtonItem title="Load this patient?" style="plain" id="ed3-aK-TnK"/>
+                                    <barButtonItem systemItem="flexibleSpace" id="Shf-4H-nSK"/>
+                                    <barButtonItem title="Confirm" id="Maw-0N-wZm">
+                                        <connections>
+                                            <action selector="confirmAction:" destination="nnG-7s-icg" id="vly-EM-osL"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem systemItem="fixedSpace" id="GWP-b3-vCq"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="y7r-Cn-xZT" firstAttribute="centerX" secondItem="98m-ue-Rsa" secondAttribute="centerX" id="7pe-dx-ASK"/>
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="972-rH-fKe"/>
-                            <constraint firstItem="B5h-W7-fLc" firstAttribute="centerX" secondItem="y7r-Cn-xZT" secondAttribute="centerX" id="DdK-EJ-7rV"/>
-                            <constraint firstItem="dWl-cg-uHS" firstAttribute="bottom" secondItem="5oq-sc-JKT" secondAttribute="top" id="MeN-Lr-hNl"/>
+                            <constraint firstItem="Epf-qG-Pd6" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="F99-d3-INK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Qq3-0u-JCF" secondAttribute="trailing" constant="-20" id="Jqp-wp-566"/>
                             <constraint firstItem="xu4-sS-y4g" firstAttribute="top" secondItem="qUI-My-eKP" secondAttribute="bottom" id="Nrh-VW-fvx"/>
-                            <constraint firstItem="y7r-Cn-xZT" firstAttribute="top" secondItem="98m-ue-Rsa" secondAttribute="bottom" constant="25" id="OAE-GL-98G"/>
-                            <constraint firstItem="B5h-W7-fLc" firstAttribute="top" secondItem="y7r-Cn-xZT" secondAttribute="bottom" constant="32" id="Qe3-jO-Snz"/>
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="RR0-SW-Lvd"/>
-                            <constraint firstAttribute="trailing" secondItem="dWl-cg-uHS" secondAttribute="trailing" id="Rnf-kB-jhO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fn2-2S-gAv" secondAttribute="trailing" constant="-20" id="V8Y-s0-TgN"/>
+                            <constraint firstItem="Epf-qG-Pd6" firstAttribute="top" secondItem="98m-ue-Rsa" secondAttribute="bottom" constant="16" id="VG2-96-dWb"/>
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="top" secondItem="qUI-My-eKP" secondAttribute="bottom" constant="73" id="Vzm-uD-Vrn"/>
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="top" secondItem="xu4-sS-y4g" secondAttribute="bottom" constant="8" id="XbP-y4-cBn"/>
-                            <constraint firstItem="dWl-cg-uHS" firstAttribute="leading" secondItem="mvS-zM-FyJ" secondAttribute="leading" id="dlg-gn-C24"/>
-                            <constraint firstItem="B5h-W7-fLc" firstAttribute="baseline" secondItem="y7r-Cn-xZT" secondAttribute="baseline" id="eLP-i3-t9T"/>
                             <constraint firstAttribute="leadingMargin" secondItem="xu4-sS-y4g" secondAttribute="leading" id="f4r-ty-Aoc"/>
-                            <constraint firstItem="B5h-W7-fLc" firstAttribute="centerY" secondItem="mvS-zM-FyJ" secondAttribute="centerY" id="gxW-Xc-Yam"/>
-                            <constraint firstItem="WG2-be-AFd" firstAttribute="top" secondItem="qUI-My-eKP" secondAttribute="bottom" id="i9Z-zo-WlR"/>
-                            <constraint firstItem="B5h-W7-fLc" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="u1a-3A-iks"/>
-                            <constraint firstItem="WG2-be-AFd" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="uBg-go-tg0"/>
+                            <constraint firstItem="Qq3-0u-JCF" firstAttribute="leading" secondItem="mvS-zM-FyJ" secondAttribute="leadingMargin" constant="-20" id="fCw-lr-65g"/>
+                            <constraint firstItem="Qq3-0u-JCF" firstAttribute="top" secondItem="qUI-My-eKP" secondAttribute="bottom" id="hrx-un-53H"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="fn2-2S-gAv" secondAttribute="leading" constant="20" id="nMG-Ru-BWN"/>
+                            <constraint firstItem="5oq-sc-JKT" firstAttribute="top" secondItem="fn2-2S-gAv" secondAttribute="bottom" id="oxh-Vz-Vhf"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="gxW-Xc-Yam"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="g9l-jI-ZrE"/>
                     <connections>
-                        <outlet property="messageLabel" destination="dWl-cg-uHS" id="czn-Ze-iiH"/>
+                        <outlet property="bottomBar" destination="fn2-2S-gAv" id="JgS-7R-gqn"/>
+                        <outlet property="cancelButton" destination="1TB-Lp-1JX" id="HZl-hz-ldT"/>
+                        <outlet property="confirmButton" destination="Maw-0N-wZm" id="2fV-pQ-jAX"/>
+                        <outlet property="navigationBar" destination="t2h-qf-kzJ" id="41Q-hH-6a9"/>
+                        <outlet property="progressBar" destination="B5h-W7-fLc" id="5cA-EB-G7c"/>
+                        <outlet property="progressBarLabel" destination="yWU-Ny-faY" id="pPl-iP-bjW"/>
+                        <outlet property="progressView" destination="Epf-qG-Pd6" id="AXW-c9-Bfx"/>
                         <outlet property="scanFrame" destination="98m-ue-Rsa" id="i3c-FZ-72W"/>
+                        <outlet property="selectPatientFromList" destination="ed3-aK-TnK" id="eVo-ys-ijv"/>
                         <segue destination="IaP-Ut-hAI" kind="presentation" identifier="showModel" id="q0s-A6-450"/>
                     </connections>
                 </viewController>

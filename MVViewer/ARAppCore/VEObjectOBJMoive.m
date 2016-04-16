@@ -87,7 +87,14 @@ typedef struct RenderModel RenderModel;
     VEObjectRegistryRegister(self, @"objs");
 }
 
--(id)initFromListOfFiles:(NSString*) patinetID  baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
+-(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
+{
+    return [self initFromListOfFiles:patientID baseFiles:baseFiles valveFiles:valveFiles index:timeStamp translation:translation rotation:rotation scale:scale progress:nil];
+}
+
+
+
+-(id)initFromListOfFiles:(NSString*) patinetID  baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale progress:(NSProgress *)progress
 {
     self = [super initFromFile:nil translation:translation rotation:rotation scale:scale];
     _patientName = patinetID;
@@ -111,6 +118,10 @@ typedef struct RenderModel RenderModel;
     }
     
     timeStampArray = timeStamp;
+    
+    // Initilaize progress bar
+    
+    int progressFinishCount = 0;
     
     for (int i = 0; i < [baseFiles count]; i++) {
         
@@ -142,12 +153,20 @@ typedef struct RenderModel RenderModel;
             [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->valve translation:translation rotation:rotation scale:scale config:nil];
             valveSize++;
             NSLog(@"MovieOBJ: Loading the valve model %@.\n", file);
+            
+            // Update progress
+            progressFinishCount++;
+            [progress setCompletedUnitCount:progressFinishCount];
         }
         
         // NSNumber
         tmpModel->timeStamp = [(NSNumber*) [timeStamp objectAtIndex:i] intValue];
         /// Need to check which pointer is good for release.
         [renderedObjects setObject: [NSValue valueWithPointer:(tmpModel)] forKey:[timeStamp  objectAtIndex:i]];
+        
+        // Update progress
+        progressFinishCount++;
+        [progress setCompletedUnitCount:progressFinishCount];
     }
     
     /// Add sort later. according to the time stamps.

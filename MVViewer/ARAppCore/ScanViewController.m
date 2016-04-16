@@ -39,7 +39,38 @@
     NSString* patientFoundMessangeSubTitle;
     NSString* scanQRCodeMessageTitle;
     NSString* scanQRCodeMessageSubTitle;
+    
+    NSString* lastCheckQRCodeString;
+    
+    
+    NSString* correctPatientID;
+    
+    NSProgress* loadingProgress;
+    
+    //NSTimer* notificationToolBarTimer;
     BOOL patientFound;
+}
+- (IBAction)confirmAction:(UIBarButtonItem *)sender {
+    
+    
+    
+    NSArray* baseFiles = [_modelHandler getPatientBaseModelPaths: correctPatientID];
+    NSArray* valveFiles = [_modelHandler getPatientValveModelPaths:correctPatientID];
+    
+    loadingProgress = [NSProgress progressWithTotalUnitCount:baseFiles.count + valveFiles.count];
+    
+    [_progressView setHidden:FALSE];
+    [_progressBar setObservedProgress:loadingProgress];
+    [[NSNotificationCenter defaultCenter] addObserver:loadingProgress selector:@selector(updateProgressBarLabel) name:@"progressBarLabel" object:nil];
+    
+    [self.virtualEnvironment addOBJMovieObjectsForPatient:correctPatientID baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:nil config: [self getFullPath: @"Data/param.dat"] progress: nil];
+    
+}
+
+- (void) updateProgressBarLabel
+{
+    _progressBarLabel.text = [NSString stringWithFormat:@"Loading %lld / %lld", [loadingProgress completedUnitCount],[loadingProgress totalUnitCount]];
+    
 }
 
 - (void)viewDidLoad {
@@ -81,8 +112,16 @@
     // Initialize virtual environment
     self.virtualEnvironment = [[VirtualEnvironment alloc] initWithScanViewController:self];
     
+    
+    // Refresh button
     UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(loadPatientList)];
     _navigationBar.rightBarButtonItem = refreshButton;
+    
+    
+    // Progress view
+    [_progressView setHidden:YES];
+    [_bottomBar setHidden:TRUE];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -190,12 +229,24 @@
     }
 
     AVMetadataMachineReadableCodeObject *metadataObj = metadataObjects[0];
-    if (metadataObj.stringValue != nil){
-        
-        self.messageLabel.text = metadataObj.stringValue;
-        
-        [self patientFoundMessage:metadataObj.stringValue patientFound:YES];
-    }
+    if (!patientFound)
+        if (metadataObj.stringValue != nil){
+            
+            NSString* patientName = self.messageLabel.text = metadataObj.stringValue;
+            if ([_modelHandler checkPatientExistence:patientName]) {
+                [self patientFoundMessage:metadataObj.stringValue patientFound:YES];
+                [_bottomBar setHidden:NO];
+                patientFound = TRUE;
+                correctPatientID = patientName;
+            }
+            else{
+                [self patientFoundMessage:metadataObj.stringValue patientFound:NO];
+                
+                
+            }
+            
+            
+        }
 
     
 }
@@ -234,10 +285,12 @@
     if (flag) {
         NSLog(@"Found message %@ ",patientID);
         patientFoundMessangeSubTitle = [@"ID: " stringByAppendingString:patientID];
+        [CRToastManager cancelPreviousPerformRequestsWithTarget:self];
         [self makeAndShowMessageWithOptionsSpecs:patientFoundMessageTitle subtitle:patientFoundMessangeSubTitle color:green activityBar:NO showImage:_success];
         
     }
     else{
+        [CRToastManager cancelPreviousPerformRequestsWithTarget:self];
         noPatientFoundMessangeSubTitle = [NSString stringWithFormat:@"Patinet with ID %@ is not found!",patientID];
         [self makeAndShowMessageWithOptionsSpecs:noPatientFoundMessageTitle subtitle:noPatientFoundMessangeSubTitle color:red activityBar:NO showImage:_failure];
     }

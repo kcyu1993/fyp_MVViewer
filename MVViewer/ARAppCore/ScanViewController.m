@@ -5,6 +5,13 @@
 //  Created by Helen zheng on 16/4/10.
 //  Copyright © 2016年 Helen Zheng. All rights reserved.
 //
+//  Author:
+//      Helen Zheng for QRCode reading
+//      Jack Yu     for
+//          Notification bar, auto-layout and UI settings,
+//          model creation and handling, progress view (bar and label)
+//          and all other misc issue.
+
 
 #import "../ModelHandler.h"
 #import "VEObjectOBJMovie.h"
@@ -26,74 +33,49 @@
 @property (nonatomic, strong) ModelHandler* modelHandler;
 
 
+@property (strong, nonatomic) IBOutlet UIImageView *hkuLogo;
+
 
 @end
 
 @implementation ScanViewController {
     
+    // Constant tags
+    NSString*   modelLoadingStartString;
+    
     UIColor*    green;
     UIColor*    red;
     UIColor*    blue;
-    NSString* noPatientFoundMessageTitle;
-    NSString* noPatientFoundMessangeSubTitle;
-    NSString* patientFoundMessageTitle;
-    NSString* patientFoundMessangeSubTitle;
-    NSString* scanQRCodeMessageTitle;
-    NSString* scanQRCodeMessageSubTitle;
+    NSString*   noPatientFoundMessageTitle;
+    NSString*   noPatientFoundMessangeSubTitle;
+    NSString*   patientFoundMessageTitle;
+    NSString*   patientFoundMessangeSubTitle;
+    NSString*   scanQRCodeMessageTitle;
+    NSString*   scanQRCodeMessageSubTitle;
     
-    NSString* lastCheckQRCodeString;
+    // For notification purpose
+    NSString*   lastCheckQRCodeString;
     
     
-    NSString* correctPatientID;
+    
+    
+    NSString*   correctPatientID;
     
     NSProgress* loadingProgress;
     
     //NSTimer* notificationToolBarTimer;
-    BOOL patientFound;
-}
-- (IBAction)confirmAction:(UIBarButtonItem *)sender {
-    
-    NSArray* baseFiles = [_modelHandler getPatientBaseModelPaths: correctPatientID];
-    NSArray* valveFiles = [_modelHandler getPatientValveModelPaths:correctPatientID];
-    
-    [_progressView setHidden:FALSE];
-    loadingProgress = [NSProgress progressWithTotalUnitCount:baseFiles.count + valveFiles.count];
-    
-    [self performSelectorInBackground:@selector(loadCurrentPatientModel) withObject:nil];
-    
+    NSArray*    patientList;
+    BOOL        patientFound;
 }
 
-- (void) loadCurrentPatientModel
-{
-    NSArray* baseFiles = [_modelHandler getPatientBaseModelPaths: correctPatientID];
-    NSArray* valveFiles = [_modelHandler getPatientValveModelPaths:correctPatientID];
-    
-    //loadingProgress = [NSProgress progressWithTotalUnitCount:baseFiles.count + valveFiles.count];
-    
-    //[_progressBar setObservedProgress:loadingProgress];
-     // [[NSNotificationCenter defaultCenter] addObserver:loadingProgress selector:@selector(updateProgressBarLabel) name:@"progressBarLabel" object:nil];
-    
-    [self.virtualEnvironment addOBJMovieObjectsForPatient:correctPatientID baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:nil config: [self getFullPath: @"Data/param.dat"]];
-    
-}
-
-- (void) workDone
-{
-    
-}
-
-- (void) updateProgressBarLabel
-{
-    _progressBarLabel.text = [NSString stringWithFormat:@"Loading %lld / %lld", [loadingProgress completedUnitCount],[loadingProgress totalUnitCount]];
-    
-}
+#pragma mark UI Life cycle related
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
     // [self.view bringSubviewToFront:_messageLabel];
-    [self.captureSession startRunning];
+    [self startCaptureSession];
     
     patientFound = false;
     
@@ -113,14 +95,16 @@
     self.titleLabelTextField.text = @"Testing";
     self.subTitleLabelTextField.text = @"This is my awesome sub-title";
     
-    self.success = [UIImage imageNamed:@"white_checkmark.png"];
-    self.failure = [UIImage imageNamed:@"alert_icon.png"];
+    modelLoadingStartString = @"Model loading started";
+    
+    self.success = [UIImage imageNamed:@"white_checkmark"];
+    self.failure = [UIImage imageNamed:@"alert_icon"];
     
     // Make color
     green = hsb(145, 77, 80);
     red = hsb(6, 74, 91);
     blue = hsb(224,50,63);
-
+    
     // Initialize model handler
     _modelHandler = [[ModelHandler alloc] init];
     [self loadPatientList];
@@ -136,6 +120,8 @@
     // Progress view
     [_progressView setHidden:YES];
     [_bottomBar setHidden:TRUE];
+    [_startAnimation setHidden:TRUE];
+    [_hkuLogo setHidden:TRUE];
     
 }
 
@@ -147,6 +133,30 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.captureSession stopRunning];
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)notification
+{
+    [self stopCaptureSession];
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification
+{
+    [self startCaptureSession];
+}
+
+- (void)dealloc
+{
+}
+
+
+
 
 /*
 #pragma mark - Navigation
@@ -253,63 +263,156 @@
                 [_bottomBar setHidden:NO];
                 patientFound = TRUE;
                 correctPatientID = patientName;
+                [self stopCaptureSession];
+                
             }
             else{
                 [self patientFoundMessage:metadataObj.stringValue patientFound:NO];
-                
-                
             }
-            
             
         }
 
     
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.captureSession stopRunning];
-}
-
-- (void)applicationDidEnterBackground:(NSNotification *)notification
+- (void) stopCaptureSession
 {
     [self.captureSession stopRunning];
+    [_previewLayer setHidden:TRUE];
+    [_previewLayer setHidden:FALSE];
+    
 }
 
-- (void)applicationWillEnterForeground:(NSNotification *)notification
+- (void) startCaptureSession
 {
-    [self.captureSession startRunning];
+    [self.captureSession stopRunning];
+    [_previewLayer setHidden:TRUE];
+    [_previewLayer setHidden:FALSE];
+    [_bottomBar setHidden:TRUE];
 }
 
-- (void)dealloc
+#pragma mark IBAction
+
+- (IBAction)confirmAction:(UIBarButtonItem *)sender {
+    
+    NSArray* baseFiles = [_modelHandler getPatientBaseModelPaths: correctPatientID];
+    NSArray* valveFiles = [_modelHandler getPatientValveModelPaths:correctPatientID];
+    NSUInteger count = baseFiles.count + valveFiles.count;
+    
+    [_progressView setHidden:FALSE];
+    
+    loadingProgress = [NSProgress progressWithTotalUnitCount:baseFiles.count + valveFiles.count];
+    [_progressBar setProgress:0.0f animated:NO];
+    
+    [self performSelectorInBackground:@selector(loadCurrentPatientModel) withObject:nil];
+    [self makeAndShowMessageWithOptionsSpecs:modelLoadingStartString subtitle:[NSString stringWithFormat: @"Total count of model: %lu", count] color:blue activityBar:YES showImage:nil];
+    [_bottomBar setHidden:TRUE];
+    [_bottomBar setNeedsDisplay];
+}
+
+- (IBAction)cancelButtonAction:(UIBarButtonItem *)sender {
+    
+    [self startCaptureSession];
+    patientFound = FALSE;
+    [self makeAndShowMessageWithOptionsSpecs:@"Please scan patient's QR Code" subtitle:@"" color:blue activityBar:NO showImage:nil];
+}
+
+// Refresh button action list
+- (void) loadPatientList
 {
+    NSUInteger size1 = [_modelHandler readPatientFoldersWithRootFolder:[self getFullPath:@"Data/mvmodels"]];
+    NSString* publicDocumentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
+    NSUInteger size2 = [_modelHandler readPatientFoldersWithRootFolder:publicDocumentsDir];
+    
+    // Calling the first time.
+    if (!patientList) {
+        [self makeAndShowMessageWithOptionsSpecs:@"Patient list loaded successfully"
+                                        subtitle: [ NSString stringWithFormat:@"%lu from internal and %lu from iTunes", size1, size2]
+                                           color:green activityBar:NO showImage:_success];
+        patientList = [_modelHandler getPatientFullList];
+        return;
+    }
+    
+    if (patientList && ![patientList isEqualToArray:[_modelHandler getPatientFullList]]) {
+        patientList = [_modelHandler getPatientFullList];
+        [self makeAndShowMessageWithOptionsSpecs:@"Patient list has changes, updated successfully"
+                                        subtitle: [ NSString stringWithFormat:@"%lu from internal and %lu from iTunes", size1, size2]
+                                           color:blue activityBar:NO showImage:_failure];
+    }
+    else {
+        [self makeAndShowMessageWithOptionsSpecs:@"Patient list up to date"
+                                        subtitle: [ NSString stringWithFormat:@"%lu from internal and %lu from iTunes", size1, size2]
+                                           color:blue activityBar:NO showImage:_success];
+    }
+    
+    NSLog(@"Load model from location 1 %d and location 2 %d", (int) size1, (int) size2);
+    
+}
+
+- (IBAction)startAnimationAction:(UIButton *)sender {
+    [self performSegueWithIdentifier:@"showModel" sender:sender];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"showModel"]){
         ARViewController *controller = (ARViewController *)segue.destinationViewController;
         [controller loadPatient:self.messageLabel.text];
-        
         controller.modelName = self.messageLabel.text;
+        controller.virtualEnvironment = _virtualEnvironment;
     }
 }
 
 
-- (void)patientFoundMessage: (NSString*) patientID patientFound: (BOOL) flag {
-    if (flag) {
-        NSLog(@"Found message %@ ",patientID);
-        patientFoundMessangeSubTitle = [@"ID: " stringByAppendingString:patientID];
-        [CRToastManager cancelPreviousPerformRequestsWithTarget:self];
-        [self makeAndShowMessageWithOptionsSpecs:patientFoundMessageTitle subtitle:patientFoundMessangeSubTitle color:green activityBar:NO showImage:_success];
-        
-    }
-    else{
-        [CRToastManager cancelPreviousPerformRequestsWithTarget:self];
-        noPatientFoundMessangeSubTitle = [NSString stringWithFormat:@"Patinet with ID %@ is not found!",patientID];
-        [self makeAndShowMessageWithOptionsSpecs:noPatientFoundMessageTitle subtitle:noPatientFoundMessangeSubTitle color:red activityBar:NO showImage:_failure];
-    }
+#pragma mark Progress Updating
+
+- (void) updateProgressBarWithProgress: (NSProgress *) progress
+{
+    [_progressBar setProgress: [loadingProgress fractionCompleted] animated:YES];
+    [_progressBar setNeedsDisplay];
+    [self updateProgressBarLabel];
+    [_progressBarLabel setNeedsDisplay];
 }
+
+
+- (void) workDone
+{
+    NSLog(@"Loading done");
+    _progressBarLabel.text = @"Loading done!";
+    
+    [CRToastManager dismissAllNotifications:TRUE];
+    [self makeAndShowMessageWithOptionsSpecs:@"Model load finished" subtitle:@"" color:blue activityBar:NO showImage:_success];
+
+    [_startAnimation setHidden:FALSE];
+    
+}
+
+- (void) updateProgressBarLabel
+{
+    _progressBarLabel.text = [NSString stringWithFormat:@"Loading %lld / %lld", [loadingProgress completedUnitCount],[loadingProgress totalUnitCount]];
+    
+}
+
+#pragma mark Model Loading
+
+- (void) loadCurrentPatientModel
+{
+    NSArray* baseFiles = [_modelHandler getPatientBaseModelPaths: correctPatientID];
+    NSArray* valveFiles = [_modelHandler getPatientValveModelPaths:correctPatientID];
+    
+    //loadingProgress = [NSProgress progressWithTotalUnitCount:baseFiles.count + valveFiles.count];
+    
+    //[_progressBar setObservedProgress:loadingProgress];
+    // [[NSNotificationCenter defaultCenter] addObserver:loadingProgress selector:@selector(updateProgressBarLabel) name:@"progressBarLabel" object:nil];
+    
+    //    [self.virtualEnvironment addOBJMovieObjectsForPatient:correctPatientID baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:nil config: [self getFullPath: @"Data/param.dat"]];
+    VEObjectOBJMovie* tempObject = [[VEObjectOBJMovie alloc] initFromSettings:nil rotation:nil scale:nil];
+    tempObject.delegate = self;
+    [self.virtualEnvironment loadObjectMovieObjectForPatient:tempObject patientName:correctPatientID baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:nil config: [self getFullPath: @"Data/param.dat"]];
+    [self performSelectorOnMainThread:@selector(workDone) withObject:nil waitUntilDone:NO];
+}
+
+
+#pragma mark Notification
 
 - (void) makeAndShowMessageWithOptionsSpecs: (NSString*) title subtitle:(NSString*) subtitle color: (UIColor*) color
                            activityBar: (BOOL) activityBar showImage: (UIImage*) image
@@ -332,8 +435,25 @@
                       kCRToastNotificationPreferredPaddingKey   : @(padding),
                       kCRToastShowActivityIndicatorKey          : @(activityBar),
                       kCRToastActivityIndicatorAlignmentKey     :@(NSTextAlignmentLeft),
-                      kCRToastBackgroundColorKey: color}
+                      kCRToastBackgroundColorKey                : color,
+                      kCRToastForceUserInteractionKey : @YES}
                     mutableCopy];
+    
+    if (image) {
+        options[kCRToastImageKey] = image;
+        options[kCRToastImageAlignmentKey] = @((NSTextAlignmentLeft));
+    }
+    options[kCRToastInteractionRespondersKey] = @[[CRToastInteractionResponder interactionResponderWithInteractionType:CRToastInteractionTypeTap
+                                                                                                  automaticallyDismiss:YES
+                                                                                                                 block:^(CRToastInteractionType interactionType){
+                                                                                                                     NSLog(@"Dismissed with %@ interaction", NSStringFromCRToastInteractionType(interactionType));
+                                                                                                                 }]];
+    if ([title isEqualToString:modelLoadingStartString]) {
+        options[kCRToastTimeIntervalKey] = @100.0f;
+        
+    }
+    
+    
     [CRToastManager showNotificationWithOptions:options
                                  apperanceBlock:^(void) {
                                      NSLog(@"Appeared");
@@ -344,27 +464,41 @@
 }
 
 
+- (void)patientFoundMessage: (NSString*) patientID patientFound: (BOOL) flag {
+    if (flag) {
+        NSLog(@"Found message %@ ",patientID);
+        patientFoundMessangeSubTitle = [@"ID: " stringByAppendingString:patientID];
+        
+        [CRToastManager dismissAllNotifications:TRUE];
+        [self makeAndShowMessageWithOptionsSpecs:patientFoundMessageTitle subtitle:patientFoundMessangeSubTitle color:green activityBar:NO showImage:_success];
+        
+        
+        
+    }
+    else{
+        [CRToastManager dismissAllNotifications:TRUE];
+        noPatientFoundMessangeSubTitle = [NSString stringWithFormat:@"Patinet with ID %@ is not found!",patientID];
+        [self makeAndShowMessageWithOptionsSpecs:noPatientFoundMessageTitle subtitle:noPatientFoundMessangeSubTitle color:red activityBar:NO showImage:_failure];
+    }
+}
+
+#pragma mark Utilities
+
 - (NSString*) getFullPath: (NSString*) path
 {
     return [[[NSBundle mainBundle]resourcePath] stringByAppendingPathComponent:path];
 }
 
 
-- (void) loadPatientList
-{
-    NSUInteger size1 = [_modelHandler readPatientFoldersWithRootFolder:[self getFullPath:@"Data/mvmodels"]];
-    NSString* publicDocumentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    NSUInteger size2 = [_modelHandler readPatientFoldersWithRootFolder:publicDocumentsDir];
-    NSLog(@"Load model from location 1 %d and location 2 %d", (int) size1, (int) size2);
-}
 
 #pragma mark VEOBjectMovieDelegate
 
 -(void) incrementProgressBar
 {
     NSLog(@"Increment the progress bar");
-    [loadingProgress setCompletedUnitCount:[loadingProgress completedUnitCount] +1];
-    [_progressBar setProgress: [loadingProgress fractionCompleted]];
+    [loadingProgress setCompletedUnitCount:[loadingProgress completedUnitCount] + 1];
+    [self performSelectorOnMainThread:@selector(updateProgressBarWithProgress:) withObject:loadingProgress waitUntilDone:NO];
 }
+
 
 @end

@@ -13,6 +13,7 @@
 #endif /* VEObjectOBJMovie_h */
 
 #import "VEObject.h"
+#import "ScanViewController.h"
 
 @protocol VEObjectOBJMovieLoadingIncrementProgressBarDelegate;
 
@@ -34,9 +35,9 @@
  *  Initialize list of files.
  */
 -(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale;
--(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale progress: (NSProgress*) progress;
-
-
+-(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale delegate: (ScanViewController*) scanVC;
+-(id) initFromSettings:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale;
+-(void)loadPatientWithInfo: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale;
 @end
 
 @protocol VEObjectOBJMovieLoadingIncrementProgressBarDelegate <NSObject>

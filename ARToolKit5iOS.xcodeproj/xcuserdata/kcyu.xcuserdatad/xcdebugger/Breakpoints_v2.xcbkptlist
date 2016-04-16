@@ -136,11 +136,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VirtualEnvironment.h"
-            timestampString = "482225386.203398"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "140"
-            endingLineNumber = "140"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
             landmarkName = "@interface VirtualEnvironment"
             landmarkType = "2">
          </BreakpointContent>
@@ -168,11 +168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMovie.h"
-            timestampString = "482494735.557252"
+            timestampString = "482496013.154435"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "28"
-            endingLineNumber = "28"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
             landmarkName = "patientName"
             landmarkType = "19">
          </BreakpointContent>
@@ -216,12 +216,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "-initFromListOfFiles:baseFiles:valveFiles:index:translation:rotation:scale:progress:"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "-initFromListOfFiles:baseFiles:valveFiles:index:translation:rotation:scale:delegate:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -232,12 +232,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VirtualEnvironment.m"
-            timestampString = "482225386.203398"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "298"
-            endingLineNumber = "298"
-            landmarkName = "-addOBJMovieObjectsForPatient:baseFiles:valveFiles:connectToARMarker:config:progress:"
+            startingLineNumber = "375"
+            endingLineNumber = "375"
+            landmarkName = "-addOBJMovieObjectsForPatient:baseFiles:valveFiles:connectToARMarker:config:scanViewController:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -264,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
             landmarkName = "-wasAddedToEnvironment:"
             landmarkType = "5">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "309"
-            endingLineNumber = "309"
+            startingLineNumber = "418"
+            endingLineNumber = "418"
             landmarkName = "-draw:"
             landmarkType = "5">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "323"
-            endingLineNumber = "323"
+            startingLineNumber = "432"
+            endingLineNumber = "432"
             landmarkName = "-draw:"
             landmarkType = "5">
          </BreakpointContent>
@@ -328,11 +328,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "357"
-            endingLineNumber = "357"
+            startingLineNumber = "466"
+            endingLineNumber = "466"
             landmarkName = "-markerNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -344,11 +344,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "356"
-            endingLineNumber = "356"
+            startingLineNumber = "465"
+            endingLineNumber = "465"
             landmarkName = "-markerNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -360,11 +360,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "361"
-            endingLineNumber = "361"
+            startingLineNumber = "470"
+            endingLineNumber = "470"
             landmarkName = "-markerNotification:"
             landmarkType = "5">
          </BreakpointContent>
@@ -392,11 +392,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"
-            timestampString = "482494735.557252"
+            timestampString = "482497290.709897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "324"
-            endingLineNumber = "324"
+            startingLineNumber = "433"
+            endingLineNumber = "433"
             landmarkName = "-draw:"
             landmarkType = "5">
          </BreakpointContent>
@@ -424,11 +424,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482494735.557252"
+            timestampString = "482505365.54064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
             landmarkName = "-captureSession"
             landmarkType = "5">
          </BreakpointContent>
@@ -440,11 +440,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482494735.557252"
+            timestampString = "482505365.54064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "144"
-            endingLineNumber = "144"
+            startingLineNumber = "128"
+            endingLineNumber = "128"
             landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>
@@ -456,11 +456,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482494735.557252"
+            timestampString = "482505365.54064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "204"
-            endingLineNumber = "204"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "-captureSession"
             landmarkType = "5">
          </BreakpointContent>
@@ -472,11 +472,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/ScanViewController.m"
-            timestampString = "482494735.557252"
+            timestampString = "482505365.54064"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "210"
-            endingLineNumber = "210"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "-captureSession"
             landmarkType = "5">
          </BreakpointContent>

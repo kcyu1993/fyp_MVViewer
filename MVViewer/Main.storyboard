@@ -14,7 +14,7 @@
                         <viewControllerLayoutGuide type="top" id="qUI-My-eKP"/>
                         <viewControllerLayoutGuide type="bottom" id="5oq-sc-JKT"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="mvS-zM-FyJ">
+                    <view key="view" contentMode="scaleToFill" id="mvS-zM-FyJ" userLabel="Scan View">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -26,11 +26,20 @@
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="98m-ue-Rsa">
                                 <rect key="frame" x="150" y="93" width="300" height="300"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hku_logo" translatesAutoresizingMaskIntoConstraints="NO" id="EQG-Wd-5sJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                    </imageView>
+                                </subviews>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.50196081400000003" alpha="0.16694504310344827" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="EQG-Wd-5sJ" secondAttribute="trailing" id="BkT-Xc-QJr"/>
                                     <constraint firstAttribute="height" constant="300" id="H6f-XX-Q7V"/>
+                                    <constraint firstAttribute="bottom" secondItem="EQG-Wd-5sJ" secondAttribute="bottom" id="JgA-UG-bX4"/>
                                     <constraint firstAttribute="width" secondItem="98m-ue-Rsa" secondAttribute="height" multiplier="1:1" id="LUt-N6-xbt"/>
                                     <constraint firstAttribute="width" constant="300" id="Rea-UH-UTv"/>
+                                    <constraint firstItem="EQG-Wd-5sJ" firstAttribute="top" secondItem="98m-ue-Rsa" secondAttribute="top" id="mTY-Lf-6Zg"/>
+                                    <constraint firstItem="EQG-Wd-5sJ" firstAttribute="leading" secondItem="98m-ue-Rsa" secondAttribute="leading" id="tih-cB-KLP"/>
                                     <constraint firstAttribute="height" constant="300" id="xJ5-Q2-zyb"/>
                                     <constraint firstAttribute="width" constant="300" id="z7G-gY-KYM"/>
                                 </constraints>
@@ -66,7 +75,7 @@
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="B5h-W7-fLc">
                                         <rect key="frame" x="2" y="63" width="236" height="2"/>
                                     </progressView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWU-Ny-faY" userLabel="ProgressBar Label">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yWU-Ny-faY" userLabel="ProgressBar Label">
                                         <rect key="frame" x="99" y="87" width="42" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -75,20 +84,24 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="yWU-Ny-faY" firstAttribute="centerX" secondItem="B5h-W7-fLc" secondAttribute="centerX" id="KIi-cu-nBW"/>
                                     <constraint firstItem="B5h-W7-fLc" firstAttribute="centerY" secondItem="Epf-qG-Pd6" secondAttribute="centerY" id="LB6-Nh-PRh"/>
-                                    <constraint firstItem="yWU-Ny-faY" firstAttribute="centerX" secondItem="Epf-qG-Pd6" secondAttribute="centerX" id="YxJ-om-pBZ"/>
-                                    <constraint firstItem="yWU-Ny-faY" firstAttribute="baseline" secondItem="B5h-W7-fLc" secondAttribute="baseline" id="aYv-dd-uEd"/>
+                                    <constraint firstItem="yWU-Ny-faY" firstAttribute="top" secondItem="B5h-W7-fLc" secondAttribute="bottom" constant="22" id="bgc-oR-MzU"/>
                                     <constraint firstItem="B5h-W7-fLc" firstAttribute="centerX" secondItem="Epf-qG-Pd6" secondAttribute="centerX" id="gUq-lE-EsY"/>
                                     <constraint firstItem="B5h-W7-fLc" firstAttribute="leading" secondItem="Epf-qG-Pd6" secondAttribute="leading" constant="2" id="rMY-95-uXS"/>
                                     <constraint firstAttribute="width" constant="240" id="sCk-6b-lWV"/>
                                     <constraint firstAttribute="height" constant="128" id="tSC-qW-vJD"/>
                                 </constraints>
                             </view>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fn2-2S-gAv">
-                                <rect key="frame" x="1" y="557" width="600" height="44"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fn2-2S-gAv">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
                                     <barButtonItem systemItem="fixedSpace" id="OEb-EH-I3A"/>
-                                    <barButtonItem systemItem="cancel" id="1TB-Lp-1JX"/>
+                                    <barButtonItem systemItem="cancel" id="1TB-Lp-1JX">
+                                        <connections>
+                                            <action selector="cancelButtonAction:" destination="nnG-7s-icg" id="scO-cD-lit"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem systemItem="flexibleSpace" id="Pi1-Iv-Eb2"/>
                                     <barButtonItem title="Load this patient?" style="plain" id="ed3-aK-TnK"/>
                                     <barButtonItem systemItem="flexibleSpace" id="Shf-4H-nSK"/>
@@ -100,12 +113,21 @@
                                     <barButtonItem systemItem="fixedSpace" id="GWP-b3-vCq"/>
                                 </items>
                             </toolbar>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DvH-j7-7mb">
+                                <rect key="frame" x="247" y="545" width="107" height="30"/>
+                                <state key="normal" title="Start Animation"/>
+                                <connections>
+                                    <action selector="startAnimationAction:" destination="nnG-7s-icg" eventType="touchUpInside" id="bay-h1-ht8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="972-rH-fKe"/>
                             <constraint firstItem="Epf-qG-Pd6" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="F99-d3-INK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Qq3-0u-JCF" secondAttribute="trailing" constant="-20" id="Jqp-wp-566"/>
+                            <constraint firstItem="DvH-j7-7mb" firstAttribute="top" secondItem="Epf-qG-Pd6" secondAttribute="bottom" constant="8" id="LYH-uW-XDp"/>
+                            <constraint firstItem="DvH-j7-7mb" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="Lqb-QS-zCh"/>
                             <constraint firstItem="xu4-sS-y4g" firstAttribute="top" secondItem="qUI-My-eKP" secondAttribute="bottom" id="Nrh-VW-fvx"/>
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="RR0-SW-Lvd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fn2-2S-gAv" secondAttribute="trailing" constant="-20" id="V8Y-s0-TgN"/>
@@ -124,12 +146,14 @@
                         <outlet property="bottomBar" destination="fn2-2S-gAv" id="JgS-7R-gqn"/>
                         <outlet property="cancelButton" destination="1TB-Lp-1JX" id="HZl-hz-ldT"/>
                         <outlet property="confirmButton" destination="Maw-0N-wZm" id="2fV-pQ-jAX"/>
+                        <outlet property="hkuLogo" destination="EQG-Wd-5sJ" id="bpW-BZ-OVs"/>
                         <outlet property="navigationBar" destination="t2h-qf-kzJ" id="41Q-hH-6a9"/>
                         <outlet property="progressBar" destination="B5h-W7-fLc" id="5cA-EB-G7c"/>
                         <outlet property="progressBarLabel" destination="yWU-Ny-faY" id="pPl-iP-bjW"/>
                         <outlet property="progressView" destination="Epf-qG-Pd6" id="AXW-c9-Bfx"/>
                         <outlet property="scanFrame" destination="98m-ue-Rsa" id="i3c-FZ-72W"/>
                         <outlet property="selectPatientFromList" destination="ed3-aK-TnK" id="eVo-ys-ijv"/>
+                        <outlet property="startAnimation" destination="DvH-j7-7mb" id="qqM-Tr-0bq"/>
                         <segue destination="IaP-Ut-hAI" kind="presentation" identifier="showModel" id="q0s-A6-450"/>
                     </connections>
                 </viewController>
@@ -229,6 +253,6 @@
         <image name="hku_logo" width="148" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NP9-cE-DUt"/>
+        <segue reference="cUX-iH-fV6"/>
     </inferredMetricsTieBreakers>
 </document>

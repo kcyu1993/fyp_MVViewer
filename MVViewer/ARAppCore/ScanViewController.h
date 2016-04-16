@@ -18,6 +18,8 @@
 
 @property (strong, nonatomic) IBOutlet UINavigationItem *navigationBar;
 
+@property (strong, nonatomic) IBOutlet UIButton *startAnimation;
+
 @property (strong, nonatomic) IBOutlet UIToolbar *bottomBar;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *confirmButton;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *cancelButton;

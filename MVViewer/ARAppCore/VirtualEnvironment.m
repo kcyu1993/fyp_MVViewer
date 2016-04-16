@@ -227,13 +227,90 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     [objects removeObject:object];
 }
 
+- (int) loadObjectMovieObjectForPatient:(VEObjectOBJMovie*) object patientName:(NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile
+{
+    
+    NSString* configFileFullPath;
+    FILE* fp;
+    char buf[MAXPATHLEN];
+    
+    ARdouble translation[3], rotation[4], scale[3];
+    int objectsAdded = 0;
+    if ([configFile hasPrefix:@"/"]) {
+        configFileFullPath = configFile;
+    }
+    else{
+        configFileFullPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:configFile];
+    }
+    
+    char configFileFullPathC[MAXPATHLEN];
+    [configFileFullPath getFileSystemRepresentation:configFileFullPathC maxLength:MAXPATHLEN];
+    if((fp = fopen(configFileFullPathC, "r"))==NULL){
+        NSLog(@"Error: unable to open the config file %@", configFileFullPath);
+        return objectsAdded;
+    }
+    
+    // Read translation
+    get_buff(buf,MAXPATHLEN,fp,1);
+#ifdef ARDOUBLE_IS_FLOAT
+    if (sscanf(buf, "%f %f %f", &translation[0], &translation[1], &translation[2]) != 3)
+#else
+        if (sscanf(buf, "%lf %lf %lf", &translation[0], &translation[1], &translation[2]) != 3)
+#endif
+        {
+            fclose(fp);
+            return (objectsAdded);
+        }
+    // Read rotation.
+    get_buff(buf, MAXPATHLEN, fp, 1);
+#ifdef ARDOUBLE_IS_FLOAT
+    if (sscanf(buf, "%f %f %f %f", &rotation[0], &rotation[1], &rotation[2], &rotation[3]) != 4)
+#else
+        if (sscanf(buf, "%lf %lf %lf %lf", &rotation[0], &rotation[1], &rotation[2], &rotation[3]) != 4)
+#endif
+        {
+            fclose(fp);
+            return (objectsAdded);
+        }
+    // Read scale.
+    get_buff(buf, MAXPATHLEN, fp, 1);
+#ifdef ARDOUBLE_IS_FLOAT
+    if (sscanf(buf, "%f %f %f", &scale[0], &scale[1], &scale[2]) != 3)
+#else
+        if (sscanf(buf, "%lf %lf %lf", &scale[0], &scale[1], &scale[2]) != 3)
+#endif
+        {
+            fclose(fp);
+            return (objectsAdded);
+        }
+    fclose(fp);
+    
+    // Got all options, then create VEObjectOBJMovie
+    
+    Class type = VEObjectRegistryGetClassForExtension(@"objs");
+    if (!type) {
+        NSLog(@"Error: unsupported model file type (%@). Ignoring.\n", @"objs");
+    }
+    
+    VEObjectOBJMovie* tempObject = object;
+    [tempObject loadPatientWithInfo:patientName baseFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale];
+//    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles: patientName baseFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale];
+    
+    if (marker) {
+        tempObject.visible = FALSE;
+        [tempObject startObservingARMarker:marker];
+    }
+    [self addObject:tempObject];
+    objectsAdded++;
+    return objectsAdded;
+}
 
 - (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile
 {
-    return [self addOBJMovieObjectsForPatient:patientName baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:marker config:configFile progress:nil];
+    return [self addOBJMovieObjectsForPatient:patientName baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:marker config:configFile scanViewController:nil];
 }
 
-- (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile progress: (NSProgress*) progress
+- (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile scanViewController:(ScanViewController*) scanVC
 {
     
     
@@ -300,7 +377,7 @@ static char *get_buff(char *buf, int n, FILE *fp, int skipblanks)
     }
     
     VEObject* tempObject;
-    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles: patientName baseFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale progress:progress];
+    tempObject = [(VEObjectOBJMovie*) [type alloc] initFromListOfFiles: patientName baseFiles:baseFiles valveFiles:valveFiles index:nil translation:translation rotation:rotation scale:scale delegate:scanVC];
     
     if (marker) {
         tempObject.visible = FALSE;

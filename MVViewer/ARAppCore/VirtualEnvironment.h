@@ -63,7 +63,7 @@
 #define VIEW_DISTANCE_MIN        5.0f          // Objects closer to the camera than this will not be displayed.
 #define VIEW_DISTANCE_MAX        2000.0f        // Objects further away from the camera than this will not be displayed.
 
-
+@class VEObjectOBJMovie;
 @class ARViewController;
 @class ScanViewController;
 
@@ -82,9 +82,12 @@
 
 - (void) removeObject:(VEObject *)object;
 
+
+- (int) loadObjectMovieObjectForPatient:(VEObjectOBJMovie*) object patientName:(NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile;
+
 - (int)  addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile;
 
-- (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile progress:(NSProgress*) progress;
+- (int) addOBJMovieObjectsForPatient: (NSString*)patientName baseFiles:(NSArray*)baseFiles valveFiles:(NSArray*) valveFiles connectToARMarker: (ARMarker *)marker config:(NSString*) configFile scanViewController:(ScanViewController*) scanVC;
 
 
 // Add objects to a VirtualEnvironment by reading object definitions

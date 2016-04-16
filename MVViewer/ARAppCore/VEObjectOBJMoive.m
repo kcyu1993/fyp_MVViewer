@@ -84,6 +84,7 @@ typedef struct RenderModel RenderModel;
     NSInvocation *movieLoopInvocation;
     float _fps;
     float _disappearLatency;
+    
 }
 
 
@@ -91,16 +92,24 @@ typedef struct RenderModel RenderModel;
     VEObjectRegistryRegister(self, @"objs");
 }
 
+-(id) initFromSettings:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
+{
+    self = [super initFromFile:nil translation:translation rotation:rotation scale:scale];
+    return self;
+}
+
 -(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
 {
-    return [self initFromListOfFiles:patientID baseFiles:baseFiles valveFiles:valveFiles index:timeStamp translation:translation rotation:rotation scale:scale progress:nil];
+    return [self initFromListOfFiles:patientID baseFiles:baseFiles valveFiles:valveFiles index:timeStamp translation:translation rotation:rotation scale:scale delegate:nil];
 }
 
 
 
--(id)initFromListOfFiles:(NSString*) patinetID  baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale progress:(NSProgress *)progress
+-(id)initFromListOfFiles:(NSString*) patinetID  baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale delegate:(ScanViewController *)scanVC
 {
     self = [super initFromFile:nil translation:translation rotation:rotation scale:scale];
+    
+    self.delegate = scanVC;
     _patientName = patinetID;
     valveSize = 0;
     // Create a new empty array.
@@ -200,6 +209,106 @@ typedef struct RenderModel RenderModel;
     return self;
 }
 
+-(void) loadPatientWithInfo:(NSString*) patinetID  baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale
+{
+    
+    _patientName = patinetID;
+    valveSize = 0;
+    // Create a new empty array.
+    renderedObjects = [[NSMutableDictionary alloc] initWithCapacity:[baseFiles count]];
+    
+    RenderModel* tmpModel;
+    NSString* file;
+    
+    if (valveFiles == nil) {
+        hasValve = NO;
+    }
+    
+    if (timeStamp == nil) {
+        NSMutableArray* tempTime = [[NSMutableArray alloc]initWithCapacity:[baseFiles count]];
+        for (int i = 0; i < [baseFiles count]; i++) {
+            [tempTime addObject:[NSNumber numberWithInt:i]];
+        }
+        timeStamp = tempTime;
+    }
+    
+    timeStampArray = timeStamp;
+    
+    // Initilaize progress bar
+    
+    int progressFinishCount = 0;
+    
+    for (int i = 0; i < [baseFiles count]; i++) {
+        
+        // Initialize the render model structure
+        tmpModel = (RenderModel*) malloc(sizeof(RenderModel));
+        
+        // Load base file
+        file = (NSString *) [baseFiles objectAtIndex:i];
+        
+        tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+        if (!tmpModel->base) {
+            NSLog(@"Error: Unable to load model %@.\n", file);
+            return ;
+        }
+        NSLog(@"MovieOBJ: Loading the base model %@.\n", file);
+        [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->base translation:translation rotation:rotation scale:scale config:nil];
+        
+        
+        // Load Valve file
+        tmpModel->hasValve = FALSE;
+        file = (NSString *) [valveFiles objectAtIndex:i];
+        if (file != nil) {
+            tmpModel->valve = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+            if (!tmpModel->valve) {
+                NSLog(@"Error: Unable to load model %@.\n", file);
+                return ;
+            }
+            tmpModel->hasValve = TRUE;
+            [VEObjectOBJMovie generateArraysWithTransformation:tmpModel->valve translation:translation rotation:rotation scale:scale config:nil];
+            valveSize++;
+            NSLog(@"MovieOBJ: Loading the valve model %@.\n", file);
+            
+            // Update progress
+            progressFinishCount++;
+            //[progress setCompletedUnitCount:progressFinishCount];
+            
+            [self.delegate incrementProgressBar];
+        }
+        
+        // NSNumber
+        tmpModel->timeStamp = [(NSNumber*) [timeStamp objectAtIndex:i] intValue];
+        /// Need to check which pointer is good for release.
+        [renderedObjects setObject: [NSValue valueWithPointer:(tmpModel)] forKey:[timeStamp  objectAtIndex:i]];
+        
+        // Update progress
+        progressFinishCount++;
+        //        [progress setCompletedUnitCount:progressFinishCount];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(incrementProgressBar)])
+            [self.delegate incrementProgressBar];
+    }
+    
+    /// Add sort later. according to the time stamps.
+    /*
+     [renderedObjects sortUsingComparator:^NSComparisonResult(RenderModel* obj1, RenderModel* obj2) {
+     return obj1->timeStamp < obj2->timeStamp ? obj1 : obj2;
+     }];
+     */
+    size = [renderedObjects count];
+    NSLog(@"VEObjectOBJMovie: in total %li base and %li valve", [renderedObjects count], valveSize);
+    current = [(NSNumber*)[timeStamp firstObject] intValue];
+    _drawable = TRUE;
+    
+    _fps = 0.1f;
+    movieLoopInvocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(nextTimeStamp)]];
+    [movieLoopInvocation setTarget:self];
+    [movieLoopInvocation setSelector:@selector(nextTimeStamp)];
+    
+    _lit = TRUE;
+    
+    _disappearLatency = .0f;
+    deferredVisibilityChangeTimer = nil;
+}
 
 
 +(GLMmodel*)generateArraysWithTransformation:(GLMmodel*) glmModel translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale config:(char *)config

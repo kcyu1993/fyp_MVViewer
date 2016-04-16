@@ -10,6 +10,7 @@
 
 @interface StartViewController : UIViewController
 
+@property (weak, nonatomic) IBOutlet UIImageView *titleView;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 
 @end

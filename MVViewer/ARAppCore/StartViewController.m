@@ -23,6 +23,9 @@
     UIGraphicsEndImageContext();
     
     self.view.backgroundColor = [UIColor colorWithPatternImage:image];
+    
+    //load title image
+    self.titleView.image = [UIImage imageNamed:@"title.png"];
         // Do any additional setup after loading the view, typically from a nib.
 }
 

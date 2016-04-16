@@ -20,19 +20,76 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DdB-AA-rEQ">
-                                <rect key="frame" x="281" y="285" width="38" height="30"/>
-                                <state key="normal" title="Start "/>
+                                <rect key="frame" x="265" y="276" width="71" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Start ">
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
                                 <connections>
                                     <action selector="startActionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MwK-3T-Fq9"/>
                                     <segue destination="nnG-7s-icg" kind="presentation" identifier="startSwitch" id="pOK-9S-ZP3"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MV Viewer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H2k-6Y-vjU">
+                                <rect key="frame" x="88" y="74" width="485" height="158"/>
+                                <fontDescription key="fontDescription" name="TamilSangamMN-Bold" family="Tamil Sangam MN" pointSize="80"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Final Year Project by Yu Kaicheng" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1QS-wc-auN">
+                                <rect key="frame" x="22" y="492" width="267" height="33"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32.5" id="74h-X9-pj5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="                       and Zheng Zhaomin" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ITa-zJ-KZy">
+                                <rect key="frame" x="22" y="524" width="267" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Supervisior: Dr. Kenneth Wong" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mni-XD-ARR">
+                                <rect key="frame" x="22" y="561" width="258" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="258" id="1tv-xg-eCs"/>
+                                    <constraint firstAttribute="height" constant="31" id="PlG-8A-Wtp"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="445px-University_of_Hong_Kong.svg.png" translatesAutoresizingMaskIntoConstraints="NO" id="alV-t1-cig">
+                                <rect key="frame" x="457" y="440" width="136" height="152"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="136" id="l3C-Jb-CUJ"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="mni-XD-ARR" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="2" id="0du-me-Xqr"/>
+                            <constraint firstItem="alV-t1-cig" firstAttribute="top" secondItem="1QS-wc-auN" secondAttribute="top" constant="-52" id="F4U-vQ-THC"/>
+                            <constraint firstItem="pw2-HH-I6c" firstAttribute="top" secondItem="alV-t1-cig" secondAttribute="bottom" constant="8" symbolic="YES" id="FFh-8w-ZJS"/>
+                            <constraint firstItem="mni-XD-ARR" firstAttribute="top" secondItem="ITa-zJ-KZy" secondAttribute="bottom" constant="8" symbolic="YES" id="MU6-Rc-Ffn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="alV-t1-cig" secondAttribute="trailing" constant="-13" id="OHn-0R-UKQ"/>
+                            <constraint firstItem="mni-XD-ARR" firstAttribute="top" secondItem="1QS-wc-auN" secondAttribute="bottom" constant="36.5" id="dbl-Ga-XOg"/>
+                            <constraint firstItem="mni-XD-ARR" firstAttribute="trailing" secondItem="ITa-zJ-KZy" secondAttribute="trailing" constant="-9" id="k7h-Iv-agl"/>
+                            <constraint firstItem="mni-XD-ARR" firstAttribute="trailing" secondItem="1QS-wc-auN" secondAttribute="trailing" constant="-9" id="kko-uc-0ai"/>
                             <constraint firstItem="DdB-AA-rEQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mss-sQ-3AS"/>
+                            <constraint firstItem="ITa-zJ-KZy" firstAttribute="centerY" secondItem="mni-XD-ARR" secondAttribute="centerY" id="pEa-vU-yPA"/>
                             <constraint firstItem="DdB-AA-rEQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="q2L-n0-cHB"/>
+                            <constraint firstItem="1QS-wc-auN" firstAttribute="width" secondItem="ITa-zJ-KZy" secondAttribute="width" id="ven-FB-VwI"/>
+                            <constraint firstItem="mni-XD-ARR" firstAttribute="leading" secondItem="1QS-wc-auN" secondAttribute="leading" id="z4D-JG-26i"/>
+                            <constraint firstItem="pw2-HH-I6c" firstAttribute="top" secondItem="mni-XD-ARR" secondAttribute="bottom" constant="8" id="zoi-sd-oUa"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="pEa-vU-yPA"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="startButton" destination="DdB-AA-rEQ" id="LOU-gI-Bzp"/>
@@ -158,6 +215,9 @@
             <point key="canvasLocation" x="2578" y="463"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="445px-University_of_Hong_Kong.svg.png" width="445" height="500"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="pOK-9S-ZP3"/>
     </inferredMetricsTieBreakers>

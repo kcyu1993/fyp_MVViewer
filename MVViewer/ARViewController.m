@@ -88,7 +88,7 @@
     
     // Init instance variables.
     glView = nil;
-    virtualEnvironment = nil;
+//    virtualEnvironment = nil;
     markers = nil;
     gVid = NULL;
     gCparamLT = NULL;
@@ -100,10 +100,19 @@
     running = FALSE;
     videoPaused = FALSE;
     runLoopTimePrevious = CFAbsoluteTimeGetCurrent();
+    
+    
+    // NSLog(@"ARViewController viewDidLoad");
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // NSLog(@"ARViewController viewWillAppear");
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
+     // NSLog(@"ARViewController viewDidAppear");
     [super viewDidAppear:animated];
     [self start];
 }
@@ -366,14 +375,11 @@ static void startCallback(void* userData) {
      
      */
     
-    _patientInfo = @"B939XXXX-1";
     
-    modelHandler = [[ModelHandler alloc] init];
-    [modelHandler readPatientFoldersWithRootFolder: [self getFullPath:@"Data/mvmodels"]];
-    NSArray* baseFiles = [modelHandler getPatientBaseModelPaths:_patientInfo];
-    NSArray* valveFiles = [modelHandler getPatientValveModelPaths:_patientInfo];
     
-    [self.virtualEnvironment addOBJMovieObjectsForPatient:_patientInfo baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:[markers firstObject] config: [self getFullPath: @"Data/param.dat"]];
+    
+    
+    [self.virtualEnvironment connectPatientWithMarker:[markers firstObject] :_patientInfo];
     
     
     /*

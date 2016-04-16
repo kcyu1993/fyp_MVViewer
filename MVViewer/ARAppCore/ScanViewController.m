@@ -285,7 +285,7 @@
 
 - (void) startCaptureSession
 {
-    [self.captureSession stopRunning];
+    [self.captureSession startRunning];
     [_previewLayer setHidden:TRUE];
     [_previewLayer setHidden:FALSE];
     [_bottomBar setHidden:TRUE];
@@ -356,8 +356,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"showModel"]){
         ARViewController *controller = (ARViewController *)segue.destinationViewController;
-        [controller loadPatient:self.messageLabel.text];
-        controller.modelName = self.messageLabel.text;
+        controller.patientInfo = correctPatientID;
         controller.virtualEnvironment = _virtualEnvironment;
     }
 }

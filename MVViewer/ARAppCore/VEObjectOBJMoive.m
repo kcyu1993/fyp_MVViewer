@@ -109,7 +109,7 @@ typedef struct RenderModel RenderModel;
 {
     self = [super initFromFile:nil translation:translation rotation:rotation scale:scale];
     
-    self.delegate = scanVC;
+    // self.delegate = scanVC;
     _patientName = patinetID;
     valveSize = 0;
     // Create a new empty array.
@@ -145,6 +145,7 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [baseFiles objectAtIndex:i];
         
         tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+        glmVertexNormals(tmpModel->base, 90);
         if (!tmpModel->base) {
             NSLog(@"Error: Unable to load model %@.\n", file);
             return (nil);
@@ -158,6 +159,7 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [valveFiles objectAtIndex:i];
         if (file != nil) {
             tmpModel->valve = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+            glmVertexNormals(tmpModel->valve, 90);
             if (!tmpModel->valve) {
                 NSLog(@"Error: Unable to load model %@.\n", file);
                 return (nil);
@@ -247,6 +249,8 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [baseFiles objectAtIndex:i];
         
         tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+        glmFacetNormals(tmpModel->base);
+        glmVertexNormals(tmpModel->base, 30);
         if (!tmpModel->base) {
             NSLog(@"Error: Unable to load model %@.\n", file);
             return ;
@@ -260,6 +264,8 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [valveFiles objectAtIndex:i];
         if (file != nil) {
             tmpModel->valve = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
+            glmFacetNormals(tmpModel->valve);
+            glmVertexNormals(tmpModel->valve, 30);
             if (!tmpModel->valve) {
                 NSLog(@"Error: Unable to load model %@.\n", file);
                 return ;
@@ -383,6 +389,7 @@ typedef struct RenderModel RenderModel;
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             glClearDepthf(1.0f);
             glEnable(GL_DEPTH_TEST);
+            glEnable(GL_NORMALIZE);
             glDepthFunc(GL_LEQUAL);
             glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
             glShadeModel(GL_SMOOTH);                // Do not flat shade polygons.
@@ -421,7 +428,7 @@ typedef struct RenderModel RenderModel;
             glStateCacheEnableLighting();
         } else glStateCacheDisableLighting();
        
-        // glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
+        glClear(GL_DEPTH_BUFFER_BIT);
         
         
         if (valveModel != NULL) {

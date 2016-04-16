@@ -41,7 +41,6 @@
 
 /* Helen */
 // @property (nonatomic) NSArray *cObjects;
-@property (nonatomic) NSString *modelName;
 
 /** KC defined attributes */
 @property (nonatomic, setter=loadPatient: ) NSString* patientInfo;

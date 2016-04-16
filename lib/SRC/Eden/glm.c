@@ -1959,6 +1959,82 @@ glmReadOBJ3(const char *filename, const int contextIndex, const GLboolean readTe
 }
 
 
+GLMmodel*
+glmReadOBJ4(const char *filename, const int contextIndex, const GLboolean readTexturesNow, const GLboolean flipTextureV, GLboolean generateNormal)
+{
+    GLMmodel* model;
+    FILE*   file;
+    
+    /* open the file */
+    file = fopen(filename, "r");
+    if (!file) {
+        EDEN_LOGe("glmReadOBJ() failed: can't open data file \"%s\".\n", filename);
+        return (NULL);
+    }
+    
+    /* allocate a new model */
+    model = (GLMmodel*)malloc(sizeof(GLMmodel));
+    model->pathname		= strdup(filename);
+    model->mtllibname	= NULL;
+    model->numvertices	= 0;
+    model->vertices		= NULL;
+    model->numnormals	= 0;
+    model->normals		= NULL;
+    model->numtexcoords	= 0;
+    model->texcoords	= NULL;
+    model->numfacetnorms	= 0;
+    model->facetnorms	= NULL;
+    model->numtriangles	= 0;
+    model->triangles	= NULL;
+    model->nummaterials	= 0;
+    model->materials	= NULL;
+    model->numgroups	= 0;
+    model->groups		= NULL;
+    model->arrays       = NULL;
+    model->arrayMode    = 0;
+    model->readTextureRequired = !readTexturesNow;
+    model->flipTextureV        = flipTextureV;
+    
+    /* make a first pass through the file to get a count of the number
+     of vertices, normals, texcoords & triangles */
+    glmFirstPass(model, file, contextIndex, readTexturesNow);
+    
+    /* allocate memory */
+    model->vertices = (GLfloat*)malloc(sizeof(GLfloat) *
+                                       3 * (model->numvertices + 1));			// Uses + 1 because vertices, normals and texcoords are numbered from 1, not 0.
+    model->triangles = (GLMtriangle*)malloc(sizeof(GLMtriangle) *
+                                            model->numtriangles);
+    if (model->numnormals) {
+        
+        model->normals = (GLfloat*)malloc(sizeof(GLfloat) *
+                                          3 * (model->numnormals + 1));		// Uses + 1 because vertices, normals and texcoords are numbered from 1, not 0.
+    }
+    else {
+    }
+        
+    if (model->numtexcoords) {
+        model->texcoords = (GLfloat*)malloc(sizeof(GLfloat) *
+                                            2 * (model->numtexcoords + 1));		// Uses + 1 because vertices, normals and texcoords are numbered from 1, not 0.
+    }
+    
+    EDEN_LOGe("glmReadObj3() model reading: Num triangle %d, Num of normals %d, Num of Texture %d", model->numtriangles, model->numnormals, model->numtexcoords);
+    /* rewind to beginning of file and read in the data this pass */
+    rewind(file);
+    
+    glmSecondPass(model, file);
+    if (generateNormal) {
+        glmVertexNormals(model, 90);
+    }
+    
+    /* close the file */
+    fclose(file);
+    
+    return model;
+}
+
+
+
+
 
 /* glmWriteOBJ: Writes a model description in Wavefront .OBJ format to
  * a file.

@@ -1,56 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hvW-VB-PZS">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Start View Controller-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="StartViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="2No-Tr-qOj"/>
-                        <viewControllerLayoutGuide type="bottom" id="pw2-HH-I6c"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DdB-AA-rEQ">
-                                <rect key="frame" x="281" y="285" width="38" height="30"/>
-                                <state key="normal" title="Start "/>
-                                <connections>
-                                    <action selector="startActionButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MwK-3T-Fq9"/>
-                                    <segue destination="nnG-7s-icg" kind="presentation" identifier="startSwitch" id="pOK-9S-ZP3"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QL4-0H-sJ2">
-                                <rect key="frame" x="277" y="375" width="46" height="30"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="buttonShowAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5oE-5z-aKk"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="QL4-0H-sJ2" firstAttribute="top" secondItem="DdB-AA-rEQ" secondAttribute="bottom" constant="60" id="186-O3-uyr"/>
-                            <constraint firstItem="QL4-0H-sJ2" firstAttribute="leading" secondItem="DdB-AA-rEQ" secondAttribute="leading" id="HeO-eC-vCE"/>
-                            <constraint firstItem="QL4-0H-sJ2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="TFd-WK-hpp"/>
-                            <constraint firstItem="DdB-AA-rEQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mss-sQ-3AS"/>
-                            <constraint firstItem="DdB-AA-rEQ" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="q2L-n0-cHB"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="startButton" destination="DdB-AA-rEQ" id="TR4-fC-ffy"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1223" y="469"/>
-        </scene>
         <!--Scan View Controller-->
         <scene sceneID="bcF-TI-v4i">
             <objects>
@@ -98,7 +53,7 @@
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <state key="normal" title="Back"/>
                                                 <connections>
-                                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="returnStart" id="a1g-lo-SmD"/>
+                                                    <segue destination="hvW-VB-PZS" kind="show" id="pHQ-qg-hdX"/>
                                                 </connections>
                                             </button>
                                         </barButtonItem>
@@ -203,8 +158,77 @@
             </objects>
             <point key="canvasLocation" x="2578" y="463"/>
         </scene>
+        <!--Start View Controller-->
+        <scene sceneID="IvB-mA-9ph">
+            <objects>
+                <viewController id="hvW-VB-PZS" customClass="StartViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aAO-IR-jV1"/>
+                        <viewControllerLayoutGuide type="bottom" id="px3-wx-jDW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hT3-jM-q0O">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AgG-Qj-5z2">
+                                <rect key="frame" x="265" y="276" width="71" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="Start ">
+                                    <color key="titleShadowColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="startActionButton:" destination="hvW-VB-PZS" eventType="touchUpInside" id="fC7-eT-75N"/>
+                                    <segue destination="nnG-7s-icg" kind="show" id="NP9-cE-DUt"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="MV Viewer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" highlighted="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MgT-VH-GW3">
+                                <rect key="frame" x="0.0" y="0.0" width="354.5" height="80"/>
+                                <fontDescription key="fontDescription" name="TamilSangamMN-Bold" family="Tamil Sangam MN" pointSize="80"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="highlightedColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" text="Final Year Project by       Yu Kaicheng       Zheng Zhaomin Supervisor:       Dr. Kenneth Wong" translatesAutoresizingMaskIntoConstraints="NO" id="3Oi-mq-3ba">
+                                <rect key="frame" x="20" y="456.5" width="292" height="130.5"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="3Oi-mq-3ba" secondAttribute="height" multiplier="15:8" id="Bf7-UA-vh3"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="hku_logo" translatesAutoresizingMaskIntoConstraints="NO" id="vU4-XW-nfy">
+                                <rect key="frame" x="444" y="421" width="136" height="166"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="136" id="GE6-7J-tkA"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AgG-Qj-5z2" firstAttribute="centerY" secondItem="hT3-jM-q0O" secondAttribute="centerY" id="0NU-03-NS4"/>
+                            <constraint firstItem="vU4-XW-nfy" firstAttribute="leading" secondItem="3Oi-mq-3ba" secondAttribute="trailing" constant="90" id="8Q5-ht-RUW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vU4-XW-nfy" secondAttribute="trailing" constant="-13" id="URK-Mc-ZHy"/>
+                            <constraint firstItem="px3-wx-jDW" firstAttribute="top" secondItem="vU4-XW-nfy" secondAttribute="bottom" constant="8" symbolic="YES" id="V9m-0t-UvJ"/>
+                            <constraint firstItem="3Oi-mq-3ba" firstAttribute="width" secondItem="vU4-XW-nfy" secondAttribute="width" id="nZF-QR-Ura"/>
+                            <constraint firstItem="px3-wx-jDW" firstAttribute="top" secondItem="3Oi-mq-3ba" secondAttribute="bottom" constant="13" id="oEp-mx-Hws"/>
+                            <constraint firstAttribute="leadingMargin" secondItem="3Oi-mq-3ba" secondAttribute="leading" id="w9V-xA-h1w"/>
+                            <constraint firstItem="AgG-Qj-5z2" firstAttribute="centerX" secondItem="hT3-jM-q0O" secondAttribute="centerX" id="zGn-0U-2Dq"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="startButton" destination="AgG-Qj-5z2" id="0U5-GK-gPC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QGC-sg-cg0" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1223" y="469"/>
+        </scene>
     </scenes>
+    <resources>
+        <image name="hku_logo" width="148" height="166"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pOK-9S-ZP3"/>
+        <segue reference="NP9-cE-DUt"/>
     </inferredMetricsTieBreakers>
 </document>

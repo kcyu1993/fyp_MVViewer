@@ -7,6 +7,7 @@
 //
 
 #import "../ModelHandler.h"
+#import "VEObjectOBJMovie.h"
 #import "ScanViewController.h"
 #import "ARViewController.h"
 #import <AVFoundation/AVFoundation.h>
@@ -14,7 +15,7 @@
 
 #define hsb(_H, _S, _B) [UIColor colorWithHue:_H/360.0f saturation:_S/100.0f brightness:_B/100.0f alpha:1.0]
 
-@interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate>
+@interface ScanViewController () <AVCaptureMetadataOutputObjectsDelegate, UIAlertViewDelegate,VEObjectOBJMovieLoadingIncrementProgressBarDelegate>
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *previewLayer;
 @property (nonatomic, strong) CALayer *targetLayer;
 @property (nonatomic, strong) AVCaptureSession *captureSession;
@@ -52,18 +53,32 @@
 }
 - (IBAction)confirmAction:(UIBarButtonItem *)sender {
     
-    
-    
     NSArray* baseFiles = [_modelHandler getPatientBaseModelPaths: correctPatientID];
     NSArray* valveFiles = [_modelHandler getPatientValveModelPaths:correctPatientID];
     
+    [_progressView setHidden:FALSE];
     loadingProgress = [NSProgress progressWithTotalUnitCount:baseFiles.count + valveFiles.count];
     
-    [_progressView setHidden:FALSE];
-    [_progressBar setObservedProgress:loadingProgress];
-    [[NSNotificationCenter defaultCenter] addObserver:loadingProgress selector:@selector(updateProgressBarLabel) name:@"progressBarLabel" object:nil];
+    [self performSelectorInBackground:@selector(loadCurrentPatientModel) withObject:nil];
     
-    [self.virtualEnvironment addOBJMovieObjectsForPatient:correctPatientID baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:nil config: [self getFullPath: @"Data/param.dat"] progress: nil];
+}
+
+- (void) loadCurrentPatientModel
+{
+    NSArray* baseFiles = [_modelHandler getPatientBaseModelPaths: correctPatientID];
+    NSArray* valveFiles = [_modelHandler getPatientValveModelPaths:correctPatientID];
+    
+    //loadingProgress = [NSProgress progressWithTotalUnitCount:baseFiles.count + valveFiles.count];
+    
+    //[_progressBar setObservedProgress:loadingProgress];
+     // [[NSNotificationCenter defaultCenter] addObserver:loadingProgress selector:@selector(updateProgressBarLabel) name:@"progressBarLabel" object:nil];
+    
+    [self.virtualEnvironment addOBJMovieObjectsForPatient:correctPatientID baseFiles:baseFiles valveFiles:valveFiles connectToARMarker:nil config: [self getFullPath: @"Data/param.dat"]];
+    
+}
+
+- (void) workDone
+{
     
 }
 
@@ -341,6 +356,15 @@
     NSString* publicDocumentsDir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSUInteger size2 = [_modelHandler readPatientFoldersWithRootFolder:publicDocumentsDir];
     NSLog(@"Load model from location 1 %d and location 2 %d", (int) size1, (int) size2);
+}
+
+#pragma mark VEOBjectMovieDelegate
+
+-(void) incrementProgressBar
+{
+    NSLog(@"Increment the progress bar");
+    [loadingProgress setCompletedUnitCount:[loadingProgress completedUnitCount] +1];
+    [_progressBar setProgress: [loadingProgress fractionCompleted]];
 }
 
 @end

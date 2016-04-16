@@ -50,6 +50,8 @@
 */
 
 
+
+
 Class RenderModels;
 
 struct RenderModel {
@@ -62,7 +64,9 @@ struct RenderModel {
 typedef struct RenderModel RenderModel;
 
 
-@implementation VEObjectOBJMovie{
+
+
+@implementation VEObjectOBJMovie {
     // NSMutableArray *baseOBJArray;
     // NSMutableArray *valveOBJArray;
     // NSMutableIndexSet *timeStampArray;
@@ -156,7 +160,9 @@ typedef struct RenderModel RenderModel;
             
             // Update progress
             progressFinishCount++;
-            [progress setCompletedUnitCount:progressFinishCount];
+            //[progress setCompletedUnitCount:progressFinishCount];
+            
+            [self.delegate incrementProgressBar];
         }
         
         // NSNumber
@@ -166,7 +172,9 @@ typedef struct RenderModel RenderModel;
         
         // Update progress
         progressFinishCount++;
-        [progress setCompletedUnitCount:progressFinishCount];
+//        [progress setCompletedUnitCount:progressFinishCount];
+        if (self.delegate && [self.delegate respondsToSelector:@selector(incrementProgressBar)])
+            [self.delegate incrementProgressBar];
     }
     
     /// Add sort later. according to the time stamps.

@@ -14,6 +14,8 @@
 
 #import "VEObject.h"
 
+@protocol VEObjectOBJMovieLoadingIncrementProgressBarDelegate;
+
 @interface VEObjectOBJMovie : VEObject{
 
     
@@ -24,6 +26,8 @@
 @property(readonly) NSComparator renderedObjectComparator;
 @property(getter=currentTimeStamp, readonly) int currentTimeStamp;
 @property(nonatomic,getter=getPatientName) NSString* patientName;
+@property(nonatomic, weak) id <VEObjectOBJMovieLoadingIncrementProgressBarDelegate> delegate;
+
 
 -(void) nextTimeStamp;
 /**
@@ -31,5 +35,12 @@
  */
 -(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale;
 -(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale progress: (NSProgress*) progress;
+
+
+@end
+
+@protocol VEObjectOBJMovieLoadingIncrementProgressBarDelegate <NSObject>
+@required
+-(void) incrementProgressBar;
 
 @end

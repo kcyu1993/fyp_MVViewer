@@ -279,16 +279,16 @@
 {
     [self.captureSession stopRunning];
     [_previewLayer setHidden:TRUE];
-    [_previewLayer setHidden:FALSE];
+    [_hkuLogo setHidden:FALSE];
     
 }
 
 - (void) startCaptureSession
 {
     [self.captureSession startRunning];
-    [_previewLayer setHidden:TRUE];
     [_previewLayer setHidden:FALSE];
     [_bottomBar setHidden:TRUE];
+    [_hkuLogo setHidden:TRUE];
 }
 
 #pragma mark IBAction

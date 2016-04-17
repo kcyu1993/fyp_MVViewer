@@ -52,6 +52,7 @@
     NSArray *cObjects;
     
     ModelHandler* modelHandler;
+    IBOutlet UINavigationItem *navigationBar;
     
 }
 
@@ -79,6 +80,7 @@
     UIView *irisView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:irisImage]];
     irisView.userInteractionEnabled = YES;
     self.view = irisView;
+    
 }
 
 
@@ -103,6 +105,10 @@
     
     
     // NSLog(@"ARViewController viewDidLoad");
+}
+- (IBAction)edgeBack:(UIScreenEdgePanGestureRecognizer *)sender {
+    
+    [self performSegueWithIdentifier:@"backToScanViewSegue" sender:sender];
 }
 
 - (void)viewWillAppear:(BOOL)animated

@@ -63,7 +63,7 @@
     
     NSProgress* loadingProgress;
     
-    //NSTimer* notificationToolBarTimer;
+    NSTimer* notificationToolBarTimer;
     NSArray*    patientList;
     BOOL        patientFound;
 }
@@ -258,7 +258,9 @@
         if (metadataObj.stringValue != nil){
             
             NSString* patientName = self.messageLabel.text = metadataObj.stringValue;
+            
             if ([_modelHandler checkPatientExistence:patientName]) {
+                [CRToastManager dismissAllNotifications:TRUE];
                 [self patientFoundMessage:metadataObj.stringValue patientFound:YES];
                 [_bottomBar setHidden:NO];
                 patientFound = TRUE;
@@ -267,8 +269,13 @@
                 
             }
             else{
-                [self patientFoundMessage:metadataObj.stringValue patientFound:NO];
+                if (![lastCheckQRCodeString isEqualToString:patientName]) {
+                    [self patientFoundMessage:metadataObj.stringValue patientFound:NO];
+                    notificationToolBarTimer = [NSTimer scheduledTimerWithTimeInterval:1.0f invocation:[NSInvocation invocationWithMethodSignature: [self methodSignatureForSelector:@selector(resetLastLoadedQRCode)]] repeats:NO];
+                }
+                
             }
+            lastCheckQRCodeString = patientName;
             
         }
 
@@ -391,6 +398,11 @@
     
 }
 
+- (void) resetLastLoadedQRCode
+{
+    lastCheckQRCodeString = @"";
+}
+
 #pragma mark Model Loading
 
 - (void) loadCurrentPatientModel
@@ -468,14 +480,14 @@
         NSLog(@"Found message %@ ",patientID);
         patientFoundMessangeSubTitle = [@"ID: " stringByAppendingString:patientID];
         
-        [CRToastManager dismissAllNotifications:TRUE];
+        
         [self makeAndShowMessageWithOptionsSpecs:patientFoundMessageTitle subtitle:patientFoundMessangeSubTitle color:green activityBar:NO showImage:_success];
         
         
         
     }
     else{
-        [CRToastManager dismissAllNotifications:TRUE];
+        
         noPatientFoundMessangeSubTitle = [NSString stringWithFormat:@"Patinet with ID %@ is not found!",patientID];
         [self makeAndShowMessageWithOptionsSpecs:noPatientFoundMessageTitle subtitle:noPatientFoundMessangeSubTitle color:red activityBar:NO showImage:_failure];
     }

@@ -157,6 +157,7 @@
 - (void) connectPatientWithMarker: (ARMarker* )marker :(NSString *) patientName;
 - (NSArray*) getAllPatients;
 - (BOOL) findPatient:(NSString*) patientName;
+- (VEObjectOBJMovie*) findPatientObject:(NSString*) patientName;
 
 
 // Weak reference to the parent view controller.

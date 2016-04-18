@@ -72,7 +72,7 @@ typedef struct RenderModel RenderModel;
     // NSMutableIndexSet *timeStampArray;
     
     NSMutableDictionary* renderedObjects;
-    NSArray* timeStampArray;
+
     NSUInteger size;
     NSUInteger valveSize;
     BOOL hasValve;
@@ -130,7 +130,7 @@ typedef struct RenderModel RenderModel;
         timeStamp = tempTime;
     }
     
-    timeStampArray = timeStamp;
+    _timeStampArray = timeStamp;
     
     // Initilaize progress bar
     
@@ -234,7 +234,7 @@ typedef struct RenderModel RenderModel;
         timeStamp = tempTime;
     }
     
-    timeStampArray = timeStamp;
+    _timeStampArray = timeStamp;
     
     // Initilaize progress bar
     
@@ -249,8 +249,8 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [baseFiles objectAtIndex:i];
         
         tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
-        glmFacetNormals(tmpModel->base);
-        glmVertexNormals(tmpModel->base, 30);
+//        glmFacetNormals(tmpModel->base);
+//        glmVertexNormals(tmpModel->base, 30);
         if (!tmpModel->base) {
             NSLog(@"Error: Unable to load model %@.\n", file);
             return ;
@@ -264,8 +264,8 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [valveFiles objectAtIndex:i];
         if (file != nil) {
             tmpModel->valve = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
-            glmFacetNormals(tmpModel->valve);
-            glmVertexNormals(tmpModel->valve, 30);
+//            glmFacetNormals(tmpModel->valve);
+//            glmVertexNormals(tmpModel->valve, 30);
             if (!tmpModel->valve) {
                 NSLog(@"Error: Unable to load model %@.\n", file);
                 return ;
@@ -383,9 +383,7 @@ typedef struct RenderModel RenderModel;
         glMultMatrixf(_poseInEyeSpace.T);
         glMultMatrixf(_localPose.T);
         if (_lit) {
-            
-            /** Specilaized GL settings getting from Audrey. */
-            
+            /** Specilaized GL settings getting from MV project from CVLab. */
             glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             glClearDepthf(1.0f);
             glEnable(GL_DEPTH_TEST);
@@ -401,8 +399,6 @@ typedef struct RenderModel RenderModel;
             glLightfv(GL_LIGHT1, GL_POSITION,pos);
             glLightfv(GL_LIGHT1, GL_AMBIENT, light_ambient);
             glLightfv(GL_LIGHT1, GL_DIFFUSE, light_diffuse);
-            
-            
             
             /* Material */
             GLfloat no_mat[] = { 0.0f, 0.0f, 0.0f, 1.0f };
@@ -421,24 +417,24 @@ typedef struct RenderModel RenderModel;
             
             /* Set light model */
             GLfloat lmodel_ambient[] = { 0.4f, 0.4f, 0.4f, 1.0f };
-            //            GLfloat local_view[] = { 0, 0 };
             glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
-            //            glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, local_view);
+            
+            /* Not available in OpenGL ES 1 */
+            //GLfloat local_view[] = { 0, 0 };
+            //glLightModelfv(GL_LIGHT_MODEL_LOCAL_VIEWER, local_view);
             
             glStateCacheEnableLighting();
         } else glStateCacheDisableLighting();
        
         glClear(GL_DEPTH_BUFFER_BIT);
         
-        
         if (valveModel != NULL) {
             glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, red);
             glmDrawArrays(valveModel, 0);
         }
 
-        
         glEnable(GL_BLEND); // Add this to generate blend effect, for transparency.
-//        glDepthMask(false);
+        // glDepthMask(false);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE);
         if (baseModel != NULL){
             glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, green);
@@ -525,13 +521,13 @@ typedef struct RenderModel RenderModel;
 
 -(void) nextTimeStamp
 {
-    NSUInteger index = [timeStampArray indexOfObject:[NSNumber numberWithInt: current]];
+    NSUInteger index = [_timeStampArray indexOfObject:[NSNumber numberWithInt: current]];
     index++;
-    if (index == [timeStampArray count]) {
+    if (index == [_timeStampArray count]) {
         index = 0;
     }
     
-    current = [[timeStampArray objectAtIndex:index] intValue];
+    current = [[_timeStampArray objectAtIndex:index] intValue];
 }
 
 - (void)dealloc{

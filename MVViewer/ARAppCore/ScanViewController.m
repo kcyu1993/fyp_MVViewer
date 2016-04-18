@@ -16,7 +16,8 @@
 #import "../ModelHandler.h"
 #import "VEObjectOBJMovie.h"
 #import "ScanViewController.h"
-#import "ARViewController.h"
+// #import "ARViewController.h"
+#import "AnimationControlViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <CRToast/CRToast.h>
 
@@ -122,6 +123,8 @@
     [_bottomBar setHidden:TRUE];
     [_startAnimation setHidden:TRUE];
     [_hkuLogo setHidden:TRUE];
+    
+    [_startAnimation setHidden:FALSE];
     
 }
 
@@ -362,7 +365,8 @@
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier isEqualToString:@"showModel"]){
-        ARViewController *controller = (ARViewController *)segue.destinationViewController;
+        
+        AnimationControlViewController *controller = (AnimationControlViewController *)segue.destinationViewController;
         controller.patientInfo = correctPatientID;
         controller.virtualEnvironment = _virtualEnvironment;
     }

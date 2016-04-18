@@ -1,0 +1,38 @@
+=============================================================
+Final Year Project 15011
+Mobile Application for 4D Visualization of
+Echocardiogram with Augmented Reality
+
+Supervisor: Dr. Kenneth Wong
+Member:     Mr. Yu Kaicheng,    Jack
+            Ms. Zheng Zhaomin,  Helen
+
+=============================================================
+=============================================================
+
+--------------------------------------
+
+Installation and running instruction
+--------------------------------------
+1. Install latest XCode from Apple's developer website
+
+2. Install CocoaPods with instructions available online
+
+3. Open terminal and locate the project root folder, type the
+
+    pod install
+
+4. Open the .xcworkspace file accordingly
+
+5. Plug in an iPhone or iPad, the app could not run on simulator.
+
+6. Select the target "MVViewer"
+
+7. Click "Run" and enjoy!
+
+--------------------------------------
+
+
+The project is tested on iPhone 6 and iPad Air 2, it shall support
+the latest model as well as the old ones.
+

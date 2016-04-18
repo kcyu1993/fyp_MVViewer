@@ -52,7 +52,7 @@
     NSArray *cObjects;
     
     ModelHandler* modelHandler;
-    IBOutlet UINavigationItem *navigationBar;
+    
     
 }
 
@@ -105,10 +105,6 @@
     
     
     // NSLog(@"ARViewController viewDidLoad");
-}
-- (IBAction)edgeBack:(UIScreenEdgePanGestureRecognizer *)sender {
-    
-    [self performSegueWithIdentifier:@"backToScanViewSegue" sender:sender];
 }
 
 - (void)viewWillAppear:(BOOL)animated

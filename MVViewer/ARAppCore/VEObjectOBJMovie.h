@@ -25,7 +25,8 @@
 
 @property(nonatomic, getter=isPaused) BOOL paused;
 @property(readonly) NSComparator renderedObjectComparator;
-@property(getter=currentTimeStamp, readonly) int currentTimeStamp;
+@property(readwrite, getter=currentTimeStamp) int currentTimeStamp;
+@property(readonly) NSArray* timeStampArray;
 @property(nonatomic,getter=getPatientName) NSString* patientName;
 @property(nonatomic, weak) id <VEObjectOBJMovieLoadingIncrementProgressBarDelegate> delegate;
 
@@ -38,6 +39,8 @@
 -(id)initFromListOfFiles: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale delegate: (ScanViewController*) scanVC;
 -(id) initFromSettings:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale;
 -(void)loadPatientWithInfo: (NSString*) patientID baseFiles:(NSArray *)baseFiles valveFiles:(NSArray *) valveFiles index:(NSArray*) timeStamp translation:(const ARdouble [3])translation rotation:(const ARdouble [4])rotation scale:(const ARdouble [3])scale;
+
+
 @end
 
 @protocol VEObjectOBJMovieLoadingIncrementProgressBarDelegate <NSObject>

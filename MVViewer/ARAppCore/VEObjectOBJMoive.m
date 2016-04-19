@@ -76,7 +76,7 @@ typedef struct RenderModel RenderModel;
     NSUInteger size;
     NSUInteger valveSize;
     BOOL hasValve;
-    int current;
+    // int current;
     
     // From VEObjiectMovie
     NSTimer *deferredVisibilityChangeTimer;
@@ -196,7 +196,7 @@ typedef struct RenderModel RenderModel;
      */
     size = [renderedObjects count];
     NSLog(@"VEObjectOBJMovie: in total %li base and %li valve", [renderedObjects count], valveSize);
-    current = [(NSNumber*)[timeStamp firstObject] intValue];
+    _current = (NSNumber*)[timeStamp firstObject] ;
     _drawable = TRUE;
     
     _fps = 0.1f;
@@ -249,8 +249,8 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [baseFiles objectAtIndex:i];
         
         tmpModel->base = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
-//        glmFacetNormals(tmpModel->base);
-//        glmVertexNormals(tmpModel->base, 30);
+        glmFacetNormals(tmpModel->base);
+        glmVertexNormals(tmpModel->base, 30);
         if (!tmpModel->base) {
             NSLog(@"Error: Unable to load model %@.\n", file);
             return ;
@@ -264,8 +264,8 @@ typedef struct RenderModel RenderModel;
         file = (NSString *) [valveFiles objectAtIndex:i];
         if (file != nil) {
             tmpModel->valve = glmReadOBJ3([file UTF8String], 0, FALSE, FALSE);
-//            glmFacetNormals(tmpModel->valve);
-//            glmVertexNormals(tmpModel->valve, 30);
+            glmFacetNormals(tmpModel->valve);
+            glmVertexNormals(tmpModel->valve, 30);
             if (!tmpModel->valve) {
                 NSLog(@"Error: Unable to load model %@.\n", file);
                 return ;
@@ -302,7 +302,9 @@ typedef struct RenderModel RenderModel;
      */
     size = [renderedObjects count];
     NSLog(@"VEObjectOBJMovie: in total %li base and %li valve", [renderedObjects count], valveSize);
-    current = [(NSNumber*)[timeStamp firstObject] intValue];
+    // _current = (NSNumber*)[timeStamp firstObject];
+    [self setValue:(NSNumber*)[timeStamp firstObject] forKey:@"current"];
+    
     _drawable = TRUE;
     
     _fps = 0.1f;
@@ -363,7 +365,7 @@ typedef struct RenderModel RenderModel;
     const GLfloat green[] = {0, 1, 0, 0.3};
     const GLfloat red[] = {1 , 0, 0, 0.7};
     
-    RenderModel* renderCurrentModel = (RenderModel*) [(NSValue*)[renderedObjects objectForKey:[NSNumber numberWithInt:current]] pointerValue];
+    RenderModel* renderCurrentModel = (RenderModel*) [(NSValue*)[renderedObjects objectForKey:_current] pointerValue];
     if (renderCurrentModel == nil) {
         return;
     }
@@ -494,11 +496,16 @@ typedef struct RenderModel RenderModel;
     }
     
     if (visibleIn) {
-        movieLoopingTimer = [NSTimer scheduledTimerWithTimeInterval:(double) _fps invocation:movieLoopInvocation repeats:YES];
+        if (!self.paused && movieLoopingTimer == nil) {
+            movieLoopingTimer = [NSTimer scheduledTimerWithTimeInterval:(double) _fps invocation:movieLoopInvocation repeats:YES];
+        }
     }
     else{
-        [movieLoopingTimer invalidate];
-        movieLoopingTimer = nil;
+        if (movieLoopingTimer) {
+            [movieLoopingTimer invalidate];
+            movieLoopingTimer = nil;
+        }
+       
     }
     [super setVisible:visibleIn];
 }
@@ -511,23 +518,24 @@ typedef struct RenderModel RenderModel;
         [movieLoopingTimer invalidate];
         movieLoopingTimer = nil;
     }
-}
-
-- (BOOL) isPaused
-{
-    return self.paused;
+    if (!isPaused && !movieLoopingTimer) {
+        movieLoopingTimer = [NSTimer scheduledTimerWithTimeInterval:(double) _fps invocation:movieLoopInvocation repeats:YES];
+    }
+    
 }
 
 
 -(void) nextTimeStamp
 {
-    NSUInteger index = [_timeStampArray indexOfObject:[NSNumber numberWithInt: current]];
+    NSUInteger index = [_timeStampArray indexOfObject:_current];
     index++;
     if (index == [_timeStampArray count]) {
         index = 0;
     }
     
-    current = [[_timeStampArray objectAtIndex:index] intValue];
+    // _current = [_timeStampArray objectAtIndex:index];
+    [self setValue:[_timeStampArray objectAtIndex:index] forKey:@"current"];
+
 }
 
 - (void)dealloc{

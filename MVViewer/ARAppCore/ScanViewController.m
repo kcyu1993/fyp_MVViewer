@@ -124,7 +124,7 @@
     [_startAnimation setHidden:TRUE];
     [_hkuLogo setHidden:TRUE];
     
-    [_startAnimation setHidden:FALSE];
+    //[_startAnimation setHidden:FALSE];
     
 }
 

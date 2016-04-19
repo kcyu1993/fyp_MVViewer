@@ -23,14 +23,14 @@
 }
 
 
-@property(nonatomic, getter=isPaused) BOOL paused;
+@property(nonatomic) BOOL paused;
 @property(readonly) NSComparator renderedObjectComparator;
-@property(readwrite, getter=currentTimeStamp) int currentTimeStamp;
+@property(readwrite, nonatomic) NSNumber* current;
 @property(readonly) NSArray* timeStampArray;
 @property(nonatomic,getter=getPatientName) NSString* patientName;
 @property(nonatomic, weak) id <VEObjectOBJMovieLoadingIncrementProgressBarDelegate> delegate;
 
-
+-(void) setMoviePaused:(BOOL) isPaused;
 -(void) nextTimeStamp;
 /**
  *  Initialize list of files.

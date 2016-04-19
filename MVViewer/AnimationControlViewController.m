@@ -12,6 +12,7 @@
 @interface AnimationControlViewController ()
 @property (strong, nonatomic) IBOutlet UIView *arViewContainerView;
 @property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (weak, nonatomic) IBOutlet UISlider *slider;
 @property (nonatomic)         int      current;
 @end
 
@@ -21,11 +22,6 @@
     
     
     NSArray*        timeStampArray;
-    UISlider*       slider;
-    
-    NSTimer*        movieLoopingTimer;
-    NSInvocation*   movieLoopInvocation;
-    float           fps;
     
     
 }
@@ -42,25 +38,29 @@
     [[self view] bringSubviewToFront:_navigationBar];
     
     
-    slider = (UISlider*) [_slideBar target];
-    
-//    [slider setContinuous:FALSE];
+    [_slider setContinuous:FALSE];
     
     
     VEObjectOBJMovie* object = [_virtualEnvironment findPatientObject:_patientInfo];
     timeStampArray = object.timeStampArray;
     movieObject = object;
-    _current = (int) timeStampArray.firstObject;
+    [movieObject setMoviePaused:TRUE];
     
-//    [slider setMinimumValue: (float) (NSUInteger) timeStampArray.firstObject];
-//    [slider setMaximumValue: (float) (NSUInteger) timeStampArray.lastObject];
-//    [slider setValue:(float) (NSUInteger) timeStampArray.firstObject animated:FALSE];
+    float min =  [((NSNumber*) [timeStampArray firstObject]) floatValue];
+    float max = [((NSNumber*) [timeStampArray lastObject]) floatValue];
+    _current = (int) min;
+    [_slider setMinimumValue: (float) min];
+    [_slider setMaximumValue: (float) max];
+    [_slider setValue: _current animated:FALSE];
+    
+   
+    
+    
 //    _textSlide.title = [NSString stringWithFormat:@"%d", (int) slider.value];
     
     
     // [self addObserver:self forKeyPath:@"_current" options:NSKeyValueObservingOptionPrior context: NULL];
-   // [object addObserver:self forKeyPath:@"current" options:NSKeyValueObservingOptionNew context:NULL];
-    
+    [movieObject addObserver:self forKeyPath:@"current" options:NSKeyValueObservingOptionNew context:NULL];
     
 }
 
@@ -80,8 +80,13 @@
 - (IBAction)doubleTapHandle:(UITapGestureRecognizer *)sender {
     if ([sender state] == UIGestureRecognizerStateEnded) {
         NSLog(@"Double tap!");
-        
+        [self togglePlay];
     }
+}
+- (IBAction)slideBarValue:(UISlider *)sender {
+    _current = (int) sender.value;
+    _textSlide.title = [NSString stringWithFormat:@"%d",_current];
+    
 }
 
 - (void) performSegueWithIdentifier:(NSString *)identifier sender:(id)sender
@@ -115,17 +120,9 @@
 
 - (void) togglePlay
 {
-    if ([arController isPaused]) {
-        
-        [_controlBar setNeedsDisplay];
-        //[arController start];
-        
-    }
-    else{
-        [arController stop];
-    }
     
-    [self setPlayPauseButton: ! [arController isPaused]];
+    [movieObject setMoviePaused: movieObject.paused ? FALSE : TRUE];
+    [self setPlayPauseButton: movieObject.paused];
     
 }
 
@@ -169,18 +166,6 @@
     }
 }
 
-
--(void) nextTimeStamp
-{
-    NSUInteger index = [timeStampArray indexOfObject:[NSNumber numberWithInt: _current]];
-    index++;
-    if (index == [timeStampArray count]) {
-        index = 0;
-    }
-    
-    _current = [[timeStampArray objectAtIndex:index] intValue];
-}
-
 - (void) updateTimeStamp
 {
     NSLog(@"Update time stamp");
@@ -207,15 +192,21 @@
     if ([keyPath isEqualToString:@"current"]) {
         // Update all time point display accordingly.
         
-        _current = ((VEObjectOBJMovie*) object).currentTimeStamp;
-        [slider setValue:(float) _current animated:TRUE];
+        _current = [((VEObjectOBJMovie*) object).current intValue];
+        [_slider setValue:(float) _current animated:TRUE];
         _textSlide.title = [NSString stringWithFormat:@"%d", _current];
-        [slider setNeedsDisplay];
+        [_slider setNeedsDisplay];
         [_controlBar setNeedsDisplay];
         
         NSLog(@"KVO observe current changed to %d", _current);
         
     }
+}
+
+
+- (void) dealloc
+{
+    [movieObject removeObserver:self forKeyPath:@"current"];
 }
 
 @end

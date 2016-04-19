@@ -115,7 +115,7 @@
                                 </items>
                             </toolbar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DvH-j7-7mb">
-                                <rect key="frame" x="473" y="458" width="107" height="30"/>
+                                <rect key="frame" x="247" y="545" width="107" height="30"/>
                                 <state key="normal" title="Start Animation"/>
                                 <connections>
                                     <action selector="startAnimationAction:" destination="nnG-7s-icg" eventType="touchUpInside" id="bay-h1-ht8"/>
@@ -127,8 +127,8 @@
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="972-rH-fKe"/>
                             <constraint firstItem="Epf-qG-Pd6" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="F99-d3-INK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Qq3-0u-JCF" secondAttribute="trailing" constant="-20" id="Jqp-wp-566"/>
-                            <constraint firstItem="DvH-j7-7mb" firstAttribute="top" secondItem="Epf-qG-Pd6" secondAttribute="bottom" constant="-79" id="LYH-uW-XDp"/>
-                            <constraint firstItem="DvH-j7-7mb" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" constant="226.5" id="Lqb-QS-zCh"/>
+                            <constraint firstItem="DvH-j7-7mb" firstAttribute="top" secondItem="Epf-qG-Pd6" secondAttribute="bottom" constant="8" id="LYH-uW-XDp"/>
+                            <constraint firstItem="DvH-j7-7mb" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" constant="0.5" id="Lqb-QS-zCh"/>
                             <constraint firstItem="xu4-sS-y4g" firstAttribute="top" secondItem="qUI-My-eKP" secondAttribute="bottom" id="Nrh-VW-fvx"/>
                             <constraint firstItem="98m-ue-Rsa" firstAttribute="centerX" secondItem="mvS-zM-FyJ" secondAttribute="centerX" id="RR0-SW-Lvd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fn2-2S-gAv" secondAttribute="trailing" constant="-20" id="V8Y-s0-TgN"/>
@@ -180,7 +180,7 @@
                                     <segue destination="IaP-Ut-hAI" kind="embed" identifier="loadARViewSegue" id="pJG-TU-8fT"/>
                                 </connections>
                             </containerView>
-                            <navigationBar alpha="0.55000000000000004" contentMode="scaleToFill" backIndicatorImage="254D78A7-84EE-46F8-A2E0-6E04CEACD106" translatesAutoresizingMaskIntoConstraints="NO" id="LkL-Sv-S4U">
+                            <navigationBar alpha="0.55000000000000004" contentMode="scaleToFill" backIndicatorImage="A80AA870-F1E9-4946-B7E5-6C17AACD3A33" translatesAutoresizingMaskIntoConstraints="NO" id="LkL-Sv-S4U">
                                 <rect key="frame" x="0.0" y="20" width="600" height="44"/>
                                 <items>
                                     <navigationItem id="nYj-q9-V01">
@@ -195,14 +195,14 @@
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ku9-TD-O35">
                                 <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                 <items>
-                                    <barButtonItem style="plain" id="Sgy-YA-Tud">
-                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="5O9-Ie-GEe">
-                                            <rect key="frame" x="18" y="6.5" width="331" height="31"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        </slider>
-                                    </barButtonItem>
                                     <barButtonItem title="0" id="KxJ-36-IPS">
                                         <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" id="Sgy-YA-Tud">
+                                        <slider key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" id="5O9-Ie-GEe">
+                                            <rect key="frame" x="41" y="6.5" width="331" height="31"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </slider>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Uc2-lq-chf"/>
                                     <barButtonItem systemItem="rewind" id="GKT-ZT-63J"/>
@@ -377,7 +377,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="254D78A7-84EE-46F8-A2E0-6E04CEACD106" width="227" height="227">
+        <image name="A80AA870-F1E9-4946-B7E5-6C17AACD3A33" width="227" height="227">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

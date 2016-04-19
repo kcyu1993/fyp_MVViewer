@@ -28,7 +28,7 @@
 
 
 @property (weak, nonatomic) IBOutlet UIToolbar *controlBar;
-@property (weak, nonatomic) IBOutlet UISlider *slideBar;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *slideBar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *textSlide;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *previousSlice;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *playButton;

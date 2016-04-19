@@ -173,7 +173,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "29"
             endingLineNumber = "29"
-            landmarkName = "patientName"
+            landmarkName = "timeStampArray"
             landmarkType = "19">
          </BreakpointContent>
       </BreakpointProxy>
@@ -372,7 +372,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "MVViewer/ARAppCore/VEObjectOBJMoive.m"

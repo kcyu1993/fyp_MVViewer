@@ -17,9 +17,11 @@
 
 @implementation AnimationControlViewController {
     ARViewController* arController; // Hold
+    VEObjectOBJMovie* movieObject;
+    
     
     NSArray*        timeStampArray;
-  
+    UISlider*       slider;
     
     NSTimer*        movieLoopingTimer;
     NSInvocation*   movieLoopInvocation;
@@ -38,19 +40,28 @@
     // Calibrate the GUI
     [_arViewContainerView setHidden:FALSE];
     [[self view] bringSubviewToFront:_navigationBar];
-    [_slideBar setContinuous:FALSE];
+    
+    
+    slider = (UISlider*) [_slideBar target];
+    
+    [slider setContinuous:FALSE];
     
     
     VEObjectOBJMovie* object = [_virtualEnvironment findPatientObject:_patientInfo];
     timeStampArray = object.timeStampArray;
+    movieObject = object;
     _current = (int) timeStampArray.firstObject;
     
-    [_slideBar setMinimumValue: (float) (NSUInteger) timeStampArray.firstObject];
-    [_slideBar setMaximumValue: (float) (NSUInteger) timeStampArray.lastObject];
-    [_slideBar setValue:(float) (NSUInteger) timeStampArray.firstObject animated:FALSE];
-    _textSlide.title = [NSString stringWithFormat:@"%d", (int) _slideBar.value];
+    [slider setMinimumValue: (float) (NSUInteger) timeStampArray.firstObject];
+    [slider setMaximumValue: (float) (NSUInteger) timeStampArray.lastObject];
+    [slider setValue:(float) (NSUInteger) timeStampArray.firstObject animated:FALSE];
+    _textSlide.title = [NSString stringWithFormat:@"%d", (int) slider.value];
     
-    [[NSNotificationCenter defaultCenter] addObserver:_current selector:@selector(updateTimeStamp) name:@"UpdateTimeStamp" object:nil];
+    
+    // [self addObserver:self forKeyPath:@"_current" options:NSKeyValueObservingOptionPrior context: NULL];
+   // [object addObserver:self forKeyPath:@"current" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -106,7 +117,8 @@
     if ([arController isPaused]) {
         
         [_controlBar setNeedsDisplay];
-        [arController start];
+        //[arController start];
+        
     }
     else{
         [arController stop];
@@ -186,5 +198,23 @@
     return UIStatusBarAnimationFade;
 }
 
+
+#pragma mark KVO
+
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
+{
+    if ([keyPath isEqualToString:@"current"]) {
+        // Update all time point display accordingly.
+        
+        _current = ((VEObjectOBJMovie*) object).currentTimeStamp;
+        [slider setValue:(float) _current animated:TRUE];
+        _textSlide.title = [NSString stringWithFormat:@"%d", _current];
+        [slider setNeedsDisplay];
+        [_controlBar setNeedsDisplay];
+        
+        NSLog(@"KVO observe current changed to %d", _current);
+        
+    }
+}
 
 @end

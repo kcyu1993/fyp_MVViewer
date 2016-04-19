@@ -44,7 +44,7 @@
     
     slider = (UISlider*) [_slideBar target];
     
-    [slider setContinuous:FALSE];
+//    [slider setContinuous:FALSE];
     
     
     VEObjectOBJMovie* object = [_virtualEnvironment findPatientObject:_patientInfo];
@@ -52,10 +52,10 @@
     movieObject = object;
     _current = (int) timeStampArray.firstObject;
     
-    [slider setMinimumValue: (float) (NSUInteger) timeStampArray.firstObject];
-    [slider setMaximumValue: (float) (NSUInteger) timeStampArray.lastObject];
-    [slider setValue:(float) (NSUInteger) timeStampArray.firstObject animated:FALSE];
-    _textSlide.title = [NSString stringWithFormat:@"%d", (int) slider.value];
+//    [slider setMinimumValue: (float) (NSUInteger) timeStampArray.firstObject];
+//    [slider setMaximumValue: (float) (NSUInteger) timeStampArray.lastObject];
+//    [slider setValue:(float) (NSUInteger) timeStampArray.firstObject animated:FALSE];
+//    _textSlide.title = [NSString stringWithFormat:@"%d", (int) slider.value];
     
     
     // [self addObserver:self forKeyPath:@"_current" options:NSKeyValueObservingOptionPrior context: NULL];
@@ -99,7 +99,8 @@
 {
     if ([segue.identifier isEqualToString:@"loadARViewSegue"]) {
         arController = (ARViewController *) segue.destinationViewController;
-        
+        arController.virtualEnvironment = _virtualEnvironment;
+        arController.patientInfo = _patientInfo;
     }
 }
 

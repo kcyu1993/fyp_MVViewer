@@ -32,6 +32,8 @@
 @property (nonatomic, strong) UIImage *failure;
 @property (nonatomic, strong) VirtualEnvironment* virtualEnvironment;
 @property (nonatomic, strong) ModelHandler* modelHandler;
+@property (strong, nonatomic) IBOutlet UILabel *patientIDLabel;
+@property (strong, nonatomic) IBOutlet UILabel *patientStaticLabel;
 
 
 @property (strong, nonatomic) IBOutlet UIImageView *hkuLogo;
@@ -123,6 +125,10 @@
     [_bottomBar setHidden:TRUE];
     [_startAnimation setHidden:TRUE];
     [_hkuLogo setHidden:TRUE];
+    
+    [_patientIDLabel setHidden:TRUE];
+    [_patientIDLabel setText:@""];
+    [_patientStaticLabel setHidden:TRUE];
     
     //[_startAnimation setHidden:FALSE];
     
@@ -288,17 +294,23 @@
 - (void) stopCaptureSession
 {
     [self.captureSession stopRunning];
+    [_patientIDLabel setText:correctPatientID];
     [_previewLayer setHidden:TRUE];
     [_hkuLogo setHidden:FALSE];
+    [_patientStaticLabel setHidden:FALSE];
+    [_patientIDLabel setHidden:FALSE];
     
 }
 
 - (void) startCaptureSession
 {
     [self.captureSession startRunning];
+    [_patientIDLabel setText:@""];
     [_previewLayer setHidden:FALSE];
     [_bottomBar setHidden:TRUE];
     [_hkuLogo setHidden:TRUE];
+    [_patientIDLabel setHidden:TRUE];
+    [_patientStaticLabel setHidden:TRUE];
 }
 
 #pragma mark IBAction

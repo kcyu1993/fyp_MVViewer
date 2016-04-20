@@ -26,12 +26,18 @@
 @property(nonatomic) BOOL paused;
 @property(readonly) NSComparator renderedObjectComparator;
 @property(readwrite, nonatomic) NSNumber* current;
+@property(readwrite, nonatomic) NSNumber* cftp;
 @property(readonly) NSArray* timeStampArray;
 @property(nonatomic,getter=getPatientName) NSString* patientName;
 @property(nonatomic, weak) id <VEObjectOBJMovieLoadingIncrementProgressBarDelegate> delegate;
 
 -(void) setMoviePaused:(BOOL) isPaused;
 -(void) nextTimeStamp;
+-(void) previousTimeStamp;
+-(void) setTimeStamp:(NSNumber*) timeStamp;
+-(void) increaseFPS;
+-(void) decreaseFPS;
+
 /**
  *  Initialize list of files.
  */

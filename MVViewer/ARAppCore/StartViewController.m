@@ -39,4 +39,19 @@
 }
 
 
+#pragma mark Status bar
+
+- (BOOL) prefersStatusBarHidden
+{
+    return YES;
+}
+
+
+- (UIStatusBarAnimation) preferredStatusBarUpdateAnimation
+{
+    return UIStatusBarAnimationFade;
+}
+
+
+
 @end

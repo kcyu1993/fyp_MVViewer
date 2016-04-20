@@ -1,5 +1,6 @@
 # Number of markers
-4
+1
+
 
 # Entries for each marker. Format is:
 #
@@ -12,6 +13,10 @@
 #                  value is AR_FILTER_TRANS_MAT_CUTOFF_FREQ_DEFAULT, which
 #                  at time of writing, equals 5.0.
 # A blank line
+
+mv.patt
+SINGLE
+80
 
 patt.hiro
 SINGLE

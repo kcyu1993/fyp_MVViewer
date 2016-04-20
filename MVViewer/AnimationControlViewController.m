@@ -9,11 +9,17 @@
 #import "ARAppCore/VEObjectOBJMovie.h"
 #import "AnimationControlViewController.h"
 
-@interface AnimationControlViewController ()
+@interface AnimationControlViewController () <UIGestureRecognizerDelegate>
 @property (strong, nonatomic) IBOutlet UIView *arViewContainerView;
-@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
+//@property (strong, nonatomic) IBOutlet UINavigationBar *navigationBar;
+@property (strong, nonatomic) IBOutlet UIToolbar *navigationToolBar;
 @property (weak, nonatomic) IBOutlet UISlider *slider;
+@property (strong, nonatomic) IBOutlet UISlider *fpsSlider;
 @property (nonatomic)         int      current;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *minFPS;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *maxFPS;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *patientInfoText;
+
 @end
 
 @implementation AnimationControlViewController {
@@ -23,7 +29,7 @@
     
     NSArray*        timeStampArray;
     
-    
+    UISwipeGestureRecognizer* swipe;
 }
 
 
@@ -35,7 +41,7 @@
     
     // Calibrate the GUI
     [_arViewContainerView setHidden:FALSE];
-    [[self view] bringSubviewToFront:_navigationBar];
+    [[self view] bringSubviewToFront:_navigationToolBar];
     
     
     [_slider setContinuous:FALSE];
@@ -53,14 +59,26 @@
     [_slider setMaximumValue: (float) max];
     [_slider setValue: _current animated:FALSE];
     
-   
+    [_fpsSlider setMaximumValue: (float) 1200];
+    [_fpsSlider setMinimumValue:(float) 200];
     
+    [_fpsSlider setValue: 600.0f animated:FALSE];
+    [_fpsSlider setContinuous: FALSE];
+    [_fpsSlider setEnabled:FALSE];
+    _maxFPS.title = [NSString stringWithFormat: @"%d", (int) (600)];
+    
+    [_patientInfoText setTitle: _patientInfo];
     
 //    _textSlide.title = [NSString stringWithFormat:@"%d", (int) slider.value];
     
     
     // [self addObserver:self forKeyPath:@"_current" options:NSKeyValueObservingOptionPrior context: NULL];
     [movieObject addObserver:self forKeyPath:@"current" options:NSKeyValueObservingOptionNew context:NULL];
+    [movieObject addObserver:self forKeyPath:@"cftp" options:NSKeyValueObservingOptionNew context:NULL];
+    
+    [self togglePlay];
+    [self togglePlay];
+    
     
 }
 
@@ -83,22 +101,50 @@
         [self togglePlay];
     }
 }
+- (IBAction)pauseButton:(UIBarButtonItem *)sender {
+    [self togglePlay];
+}
+
 - (IBAction)slideBarValue:(UISlider *)sender {
-    _current = (int) sender.value;
-    _textSlide.title = [NSString stringWithFormat:@"%d",_current];
+    
+    [movieObject setTimeStamp:[NSNumber numberWithInt:(int)sender.value]];
     
 }
 
-- (void) performSegueWithIdentifier:(NSString *)identifier sender:(id)sender
-{
-    if ([[sender identifier] isEqualToString:@"loadARViewSegue"]) {
-        NSLog(@"Look here!");
-        arController = (ARViewController*) self.childViewControllers.lastObject;
-        arController.virtualEnvironment = _virtualEnvironment;
-        arController.patientInfo = _patientInfo;
-    
-    }
+- (IBAction)nextTimeStampButtonAction:(UIBarButtonItem *)sender {
+    //[self next];
+    [self next];
 }
+
+- (IBAction)previousTimeStampButtionAction:(UIBarButtonItem *)sender {
+    [self previous];
+}
+
+
+- (IBAction)swipeAction:(UISwipeGestureRecognizer *)sender {
+    if (movieObject.paused) {
+        if (sender.direction == UISwipeGestureRecognizerDirectionRight) {
+            [self next];
+        }
+        else if ( sender.direction == UISwipeGestureRecognizerDirectionLeft) {
+            [self previous];
+        }
+    }
+    
+    if (sender.direction == UISwipeGestureRecognizerDirectionUp) {
+        [self increaseFPS];
+    }
+    if (sender.direction == UISwipeGestureRecognizerDirectionDown) {
+        [self decreaseFPS];
+
+    }
+    
+}
+- (IBAction)playButtonAction:(UIBarButtonItem *)sender {
+    [self togglePlay];
+}
+
+
 
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -109,12 +155,16 @@
     }
 }
 
+- (IBAction)edgePanGestureBack:(UIScreenEdgePanGestureRecognizer *)sender {
+    [self performSegueWithIdentifier:@"backToScan" sender:sender];
+}
+
 
 #pragma mark Executor for UI Event
 
 - (void) toggleControl
 {
-    [self.navigationBar setHidden: [self.navigationBar isHidden]? FALSE : TRUE ];
+    [self.navigationToolBar setHidden: [self.navigationToolBar isHidden]? FALSE : TRUE ];
     [self.controlBar setHidden: [self.controlBar isHidden]? FALSE : YES];
 }
 
@@ -122,8 +172,52 @@
 {
     
     [movieObject setMoviePaused: movieObject.paused ? FALSE : TRUE];
-    [self setPlayPauseButton: movieObject.paused];
+    [self setControlBarItemWithPaused: movieObject.paused];
     
+}
+
+- (void) setControlBarItemWithPaused: (BOOL) paused
+{
+    if (paused) {
+        [_slider setEnabled:TRUE];
+        [_nextSlice setEnabled:TRUE];
+        [_previousSlice setEnabled:TRUE];
+        [_pauseButton setEnabled:FALSE];
+        [_playButton setEnabled:TRUE];
+    }
+    else{
+        [_slider setEnabled:FALSE];
+        [_nextSlice setEnabled:FALSE];
+        [_previousSlice setEnabled:FALSE];
+        [_pauseButton setEnabled:TRUE];
+        [_playButton setEnabled:FALSE];
+    }
+    
+}
+
+- (void) next
+{
+    [movieObject nextTimeStamp];
+}
+
+- (void) previous
+{
+    [movieObject previousTimeStamp];
+}
+
+- (void) setTimeStamp: (NSNumber *) timeStamp
+{
+    [movieObject setTimeStamp:timeStamp];
+}
+
+- (void) increaseFPS
+{
+    [movieObject increaseFPS];
+}
+
+- (void) decreaseFPS
+{
+    [movieObject decreaseFPS];
 }
 
 - (void) setPlayPauseButton:(BOOL)isPlaying
@@ -201,12 +295,20 @@
         NSLog(@"KVO observe current changed to %d", _current);
         
     }
+    
+    if ([keyPath isEqualToString:@"cftp"]) {
+        [_fpsSlider setValue: [((VEObjectOBJMovie *) object).cftp intValue] animated:TRUE];
+        _maxFPS.title = [NSString stringWithFormat:@"%d", [((VEObjectOBJMovie *) object).cftp intValue]];
+    }
 }
 
 
 - (void) dealloc
 {
     [movieObject removeObserver:self forKeyPath:@"current"];
+    [movieObject removeObserver:self forKeyPath:@"cftp"];
+    
+    
 }
 
 @end

@@ -1,4 +1,4 @@
-//
+                                                                                                            //
 //  VEObjectOBJMoive.m
 //  ARToolKit5iOS
 //
@@ -307,7 +307,10 @@ typedef struct RenderModel RenderModel;
     
     _drawable = TRUE;
     
-    _fps = 0.1f;
+    _cftp = [NSNumber numberWithInt:600];
+    _fps = 60.0f / [_cftp floatValue];
+    [self setValue: [NSNumber numberWithInt:600] forKey:@"cftp"];
+    
     movieLoopInvocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(nextTimeStamp)]];
     [movieLoopInvocation setTarget:self];
     [movieLoopInvocation setSelector:@selector(nextTimeStamp)];
@@ -527,15 +530,58 @@ typedef struct RenderModel RenderModel;
 
 -(void) nextTimeStamp
 {
+    
     NSUInteger index = [_timeStampArray indexOfObject:_current];
     index++;
     if (index == [_timeStampArray count]) {
         index = 0;
     }
     
-    // _current = [_timeStampArray objectAtIndex:index];
+    [self setValue:[_timeStampArray objectAtIndex:index] forKey:@"current"];
+}
+
+
+-(void) previousTimeStamp
+{
+    
+    NSInteger index = [_timeStampArray indexOfObject:_current];
+    index--;
+    if (index < 0 ) {
+        index = [_timeStampArray count] - 1;
+    }
     [self setValue:[_timeStampArray objectAtIndex:index] forKey:@"current"];
 
+}
+
+-(void) setTimeStamp:(NSNumber*) timeStamp
+{
+    // Check and set
+    if ([_timeStampArray indexOfObject:timeStamp] != NSNotFound) {
+        _current = timeStamp;
+    }
+}
+
+-(void) increaseFPS
+{
+    if ([_cftp intValue] < 1200) {
+        [self setValue: [NSNumber numberWithInt: [_cftp intValue] + 200] forKey:@"cftp"];
+        _fps = 60.0f / [_cftp floatValue];
+    }
+    [movieLoopingTimer invalidate];
+    movieLoopingTimer = nil;
+    movieLoopingTimer = [NSTimer scheduledTimerWithTimeInterval:(double) _fps invocation:movieLoopInvocation repeats:YES];
+}
+
+-(void) decreaseFPS
+{
+    if ([_cftp intValue] > 200) {
+        [self setValue: [NSNumber numberWithInt: [_cftp intValue] - 200] forKey:@"cftp"];
+        _fps = 60.0f / [_cftp floatValue];
+        
+    }
+    [movieLoopingTimer invalidate];
+    movieLoopingTimer = nil;
+    movieLoopingTimer = [NSTimer scheduledTimerWithTimeInterval:(double) _fps invocation:movieLoopInvocation repeats:YES];
 }
 
 - (void)dealloc{
